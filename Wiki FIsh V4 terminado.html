@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WIKI FISH — Catálogo Marino</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,700;0,900;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    :root {
+      --primary: #0077b6;
+      --accent: #00b4d8;
+      --bg: #030712;
+      --card-bg: rgba(15, 23, 42, 0.7);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --select-bg: rgba(15, 23, 42, 0.85);
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 30px 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-color: #030712;
+      background-image: 
+        radial-gradient(at 15% 15%, rgba(0, 119, 182, 0.25) 0px, transparent 50%),
+        radial-gradient(at 85% 20%, rgba(15, 23, 42, 0.9) 0px, transparent 50%),
+        radial-gradient(at 50% 60%, rgba(0, 180, 216, 0.12) 0px, transparent 65%),
+        radial-gradient(at 80% 85%, rgba(2, 62, 138, 0.2) 0px, transparent 50%),
+        radial-gradient(at 10% 90%, rgba(3, 7, 18, 1) 0px, transparent 50%);
+      filter: blur(20px);
+    }
+
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    header {
+      text-align: center;
+      max-width: 950px;
+      margin: 0 auto 35px;
+    }
+
+    header h1 {
+      font-size: 3.8rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 20%, #90e0ef 60%, #00b4d8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    header p {
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .filter-panel, .form-panel {
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px 22px;
+      margin-top: 25px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .filter-panel {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-add-species {
+      flex: 1 1 180px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--accent);
+      background: rgba(0, 119, 182, 0.3);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-add-species:hover {
+      background: var(--accent);
+      color: #030712;
+      box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
+    }
+
+    .form-panel {
+      display: none;
+      max-width: 950px;
+      margin: 20px auto 10px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-panel h3 {
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .full-width { grid-column: 1 / -1; }
+
+    .file-input-wrapper {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .file-input-label {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: white;
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      grid-column: 1 / -1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent);
+      box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--select-bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .search-bar:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.15);
+    }
+
+    .select-wrapper {
+      position: relative;
+      flex: 1 1 170px;
+      display: flex;
+      align-items: center;
+    }
+
+    .select-wrapper::after {
+      content: "";
+      position: absolute;
+      right: 15px;
+      pointer-events: none;
+      width: 10px;
+      height: 6px;
+      background-color: var(--text-muted);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transition: transform 0.25s ease, background-color 0.25s ease;
+    }
+
+    .custom-select {
+      width: 100%;
+      appearance: none;
+      padding: 12px 38px 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--select-bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .custom-select option { background-color: #0f172a; color: var(--text); }
+
+    .filter-fav-btn {
+      flex: 1 1 150px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--select-bg);
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .filter-fav-btn.active {
+      background: #ff4d6d;
+      color: #fff;
+      border-color: #ff4d6d;
+      box-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
+    }
+
+    .grid-peces {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+      perspective: 1000px;
+    }
+
+    .card-pez {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    .img-container { position: relative; height: 180px; overflow: hidden; }
+    .card-pez img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .badge { position: absolute; top: 10px; right: 10px; background: rgba(15, 23, 42, 0.85); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; border: 1px solid var(--border); z-index: 5; }
+    
+    .fav-btn {
+      position: absolute; top: 10px; left: 10px; background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border); color: #fff; width: 34px; height: 34px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 6; font-size: 1rem;
+    }
+    .fav-btn.active { color: #ff4d6d; }
+
+    .btn-actions-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn-edit-modal {
+      background: rgba(0, 180, 216, 0.1); color: var(--accent);
+      border: 1px solid var(--accent); padding: 10px 18px; border-radius: 10px;
+      font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-edit-modal:hover { background: var(--accent); color: #030712; box-shadow: 0 0 12px rgba(0, 180, 216, 0.4); }
+
+    .btn-delete-modal {
+      background: rgba(239, 68, 68, 0.1); color: var(--danger);
+      border: 1px solid var(--danger); padding: 10px 18px; border-radius: 10px;
+      font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-delete-modal:hover { background: var(--danger); color: #fff; box-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
+
+    .thumb-edit-wrapper { position: relative; display: inline-block; }
+    .btn-remove-thumb {
+      position: absolute; top: -5px; right: -5px; background: var(--danger);
+      color: #fff; border: none; border-radius: 50%; width: 20px; height: 20px;
+      font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+
+    .info { padding: 18px; position: relative; z-index: 3; }
+    .info h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); }
+    .info .especie { font-size: 0.85rem; color: var(--accent); font-style: italic; margin-top: 2px; }
+    .info .meta-tag { font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; font-weight: 300; }
+
+    .modal {
+      display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+    }
+
+    .modal-wrapper {
+      background: #0f172a; border: 1px solid var(--border); border-radius: 20px;
+      max-width: 750px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;
+    }
+
+    .gallery-container { 
+      position: relative; 
+      width: 100%; 
+      height: 320px; 
+      background: #000; 
+      overflow: hidden; 
+      cursor: pointer;
+    }
+
+    .main-slide { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      user-select: none;
+    }
+
+    .zoom-hint {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .slide-location { position: absolute; bottom: 15px; left: 15px; background: rgba(15, 23, 42, 0.85); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--border); pointer-events: none; z-index: 5; }
+    .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 5; }
+    .nav-arrow.left { left: 10px; } .nav-arrow.right { right: 10px; }
+    .thumbnails { display: flex; gap: 10px; padding: 12px 15px; background: rgba(15, 23, 42, 0.6); overflow-x: auto; }
+    .thumb { width: 65px; height: 45px; object-fit: cover; border-radius: 6px; cursor: pointer; opacity: 0.5; border: 2px solid transparent; }
+    .thumb.active { opacity: 1; border-color: var(--accent); }
+    .modal-info { padding: 20px; }
+    #mapaAvistamiento { width: 100%; height: 200px; border-radius: 12px; margin-top: 15px; border: 1px solid var(--border); }
+    .close-btn { position: absolute; top: 15px; right: 15px; color: #fff; font-size: 24px; cursor: pointer; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; }
+
+    .zoom-modal {
+      display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(15px); z-index: 2000; flex-direction: column; justify-content: center; align-items: center; overflow: hidden;
+    }
+
+    .zoom-viewport {
+      width: 90vw; height: 80vh; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; cursor: grab;
+    }
+    .zoom-viewport:active { cursor: grabbing; }
+    .zoom-viewport img { max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: center center; transition: transform 0.05s ease-out; user-select: none; }
+
+    .zoom-controls {
+      position: absolute; bottom: 25px; display: flex; gap: 12px; background: rgba(15, 23, 42, 0.85); padding: 10px 20px; border-radius: 30px; border: 1px solid var(--border); z-index: 2005;
+    }
+
+    .zoom-btn {
+      background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border); color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    }
+    .zoom-btn:hover { background: var(--accent); color: #000; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-mesh"></div>
+  <div class="bg-overlay"></div>
+
+  <header>
+    <h1>Wiki Fish</h1>
+    <p>Base de datos de especies y avistamientos</p>
+
+    <div class="filter-panel">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Buscar por pez o especie..." onkeyup="renderPeces()">
+
+      <div class="select-wrapper">
+        <select id="selectEntorno" class="custom-select" onchange="renderPeces()">
+          <option value="todos">🌴 Todos los entornos</option>
+          <option value="Playa">🏖️ Playas</option>
+          <option value="Cala">🪨 Calas</option>
+        </select>
+      </div>
+
+      <div class="select-wrapper">
+        <select id="selectUbicacion" class="custom-select" onchange="renderPeces()">
+          <option value="todas">📍 Todas las ubicaciones</option>
+          <option value="La Herradura">La Herradura</option>
+          <option value="Cala del Cañuelo">Cala del Cañuelo</option>
+        </select>
+      </div>
+
+      <div class="select-wrapper">
+        <select id="selectProfundidad" class="custom-select" onchange="renderPeces()">
+          <option value="todas">🌊 Toda profundidad</option>
+          <option value="0-2m">Superficie (0-2m)</option>
+          <option value="2-5m">Poco profundo (2-5m)</option>
+          <option value="5m+">Buceo profundo (5m+)</option>
+        </select>
+      </div>
+
+      <button id="btnFavoritos" class="filter-fav-btn" onclick="toggleFiltroFav()">
+        🤍 Mis Favoritos
+      </button>
+
+      <button class="btn-add-species" onclick="toggleFormulario()">
+        ➕ Registrar nueva especie
+      </button>
+    </div>
+
+    <div id="panelFormulario" class="form-panel">
+      <h3>➕ Registrar nueva especie</h3>
+      <form id="formEspecie" class="form-grid" onsubmit="guardarNuevaEspecie(event)">
+        <input type="text" id="addNombre" class="search-bar" placeholder="Nombre común (ej: Pez León) *" required>
+        <input type="text" id="addEspecie" class="search-bar" placeholder="Especie (opcional)">
+        
+        <div class="file-input-wrapper">
+          <label class="file-input-label">📁 Subir imagen local (opcional):</label>
+          <input type="file" id="addFile" class="search-bar" accept="image/*">
+        </div>
+
+        <input type="url" id="addUrl" class="search-bar full-width" placeholder="O pega la URL de una Imagen web (opcional)">
+
+        <input type="text" id="addLugar" class="search-bar" placeholder="Lugar (opcional, ej: La Herradura)">
+        
+        <select id="addTipo" class="custom-select">
+          <option value="Playa">🏖️ Playa</option>
+          <option value="Cala">🪨 Cala</option>
+        </select>
+
+        <select id="addProfundidad" class="custom-select">
+          <option value="0-2m">Superficie (0-2m)</option>
+          <option value="2-5m">Poco profundo (2-5m)</option>
+          <option value="5m+">Buceo profundo (5m+)</option>
+        </select>
+
+        <input type="text" id="addCamara" class="search-bar" placeholder="Cámara (opcional, ej: GoPro)">
+        <input type="text" id="addGmaps" class="search-bar full-width" placeholder="Enlace de Google Maps (opcional)">
+
+        <button type="submit" class="btn-submit">Guardar Especie</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="grid-peces" id="gridPeces"></main>
+
+  <!-- MODAL PRINCIPAL DE ESPECIE -->
+  <div id="miModal" class="modal" onclick="cerrarModal(event)">
+    <div class="modal-wrapper">
+      <span class="close-btn" onclick="cerrarModalDirecto()">&times;</span>
+      
+      <div id="galleryContainer" class="gallery-container" onclick="abrirVentanaZoom()">
+        <span class="zoom-hint">🔍 Clic para ampliar en ventana</span>
+        <button class="nav-arrow left" onclick="cambiarFoto(event, -1)">❮</button>
+        <img id="modalMainImg" class="main-slide" src="" alt="">
+        <span id="modalLocation" class="slide-location"></span>
+        <button class="nav-arrow right" onclick="cambiarFoto(event, 1)">❯</button>
+      </div>
+
+      <div id="thumbContainer" class="thumbnails"></div>
+
+      <div class="modal-info">
+        <h2 id="modalTitle"></h2>
+        <span id="modalEspecie" style="color: var(--accent); font-style: italic;"></span>
+        <p id="modalMeta" style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted);"></p>
+        <div id="mapaAvistamiento"></div>
+        
+        <div class="btn-actions-group">
+          <button id="btnEditarModal" class="btn-edit-modal">✏️ Modificar esta especie</button>
+          <button id="btnBorrarModal" class="btn-delete-modal">🗑️ Eliminar esta especie</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE EDICIÓN / MODIFICACIÓN -->
+  <div id="modalEditar" class="modal" onclick="cerrarModalEditar(event)">
+    <div class="modal-wrapper" style="padding: 25px;">
+      <span class="close-btn" onclick="cerrarModalEditarDirecto()">&times;</span>
+      <h3 style="color: var(--accent); text-transform: uppercase; margin-bottom: 15px;">✏️ Editar Especie</h3>
+      
+      <form id="formEditarEspecie" class="form-grid" onsubmit="guardarCambiosEspecie(event)">
+        <input type="hidden" id="editPezId">
+        
+        <input type="text" id="editNombre" class="search-bar" placeholder="Nombre común *" required>
+        <input type="text" id="editEspecie" class="search-bar" placeholder="Especie">
+        
+        <div class="full-width">
+          <label class="file-input-label">🖼️ Fotos actuales:</label>
+          <div id="listaFotosEditar" style="display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0;"></div>
+        </div>
+
+        <div class="file-input-wrapper">
+          <label class="file-input-label">➕ Añadir nueva foto local:</label>
+          <input type="file" id="editFile" class="search-bar" accept="image/*">
+        </div>
+
+        <input type="url" id="editUrl" class="search-bar full-width" placeholder="O pega la URL de una nueva foto web">
+
+        <input type="text" id="editLugar" class="search-bar" placeholder="Lugar">
+        
+        <select id="editTipo" class="custom-select">
+          <option value="Playa">🏖️ Playa</option>
+          <option value="Cala">🪨 Cala</option>
+        </select>
+
+        <select id="editProfundidad" class="custom-select">
+          <option value="0-2m">Superficie (0-2m)</option>
+          <option value="2-5m">Poco profundo (2-5m)</option>
+          <option value="5m+">Buceo profundo (5m+)</option>
+        </select>
+
+        <input type="text" id="editCamara" class="search-bar" placeholder="Cámara">
+        <input type="text" id="editGmaps" class="search-bar full-width" placeholder="Enlace de Google Maps">
+
+        <button type="submit" class="btn-submit">Guardar Cambios</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- VENTANA DE ZOOM -->
+  <div id="zoomModal" class="zoom-modal" onclick="cerrarVentanaZoom(event)">
+    <span class="close-btn" onclick="cerrarVentanaZoomDirecto()">&times;</span>
+    <div class="zoom-viewport" id="zoomViewport">
+      <img id="zoomImage" src="" alt="Vista ampliada">
+    </div>
+    <div class="zoom-controls">
+      <button class="zoom-btn" onclick="ajustarZoomManual(0.25)">+</button>
+      <button class="zoom-btn" onclick="ajustarZoomManual(-0.25)">-</button>
+      <button class="zoom-btn" onclick="resetTransformations()">🔄</button>
+    </div>
+  </div>
+
+  <!-- LIBRERÍAS Y SCRIPT PRINCIPAL -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    // Inicialización correcta del cliente Supabase
+    const SUPABASE_URL = 'https://rlzpeghfolrjkyallxaa.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsenBlZ2hmb2xyamt5YWxseGFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwMjQ4OTYsImV4cCI6MjEwMzYwMDg5Nn0.DOJ8hQvVLsyqF4nhsMn_ws6ZK6k7vbrMWsiWWhsqyCo';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let listaPeces = [];
+    let soloFavoritos = false;
+    let fotosModalActuales = [];
+    let fotosTemporalesEdicion = [];
+    let indiceFotoActual = 0;
+    let mapInstance = null, markerInstance = null;
+    let zoomScale = 1, translateX = 0, translateY = 0, isDragging = false, startX = 0, startY = 0;
+
+    async function cargarPeces() {
+      const { data, error } = await supabaseClient.from('peces').select('*').order('id', { ascending: false });
+      if (error) {
+        console.error('Error cargando peces:', error);
+      } else {
+        listaPeces = data || [];
+        renderPeces();
+      }
+    }
+
+    async function guardarNuevaEspecie(e) {
+      e.preventDefault();
+      try {
+        const inputUrlGmaps = document.getElementById('addGmaps').value;
+        const coords = obtenerCoordenadasDeUrl(inputUrlGmaps) || { lat: 36.7342, lng: -3.7378 };
+        const fileInput = document.getElementById('addFile');
+        const urlInput = document.getElementById('addUrl').value;
+        let imagenFinalUrl = 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1000';
+
+        if (fileInput.files && fileInput.files[0]) {
+          imagenFinalUrl = await leerImagenComoBase64(fileInput.files[0]);
+        } else if (urlInput.trim() !== '') {
+          imagenFinalUrl = urlInput.trim();
+        }
+
+        const nuevoPez = {
+          nombre: document.getElementById('addNombre').value,
+          especie: document.getElementById('addEspecie').value || "Especie no especificada",
+          is_fav: false,
+          fotos: [{
+            url: imagenFinalUrl,
+            lugar: document.getElementById('addLugar').value || "Ubicación desconocida",
+            tipo: document.getElementById('addTipo').value,
+            profundidad: document.getElementById('addProfundidad').value,
+            camara: document.getElementById('addCamara').value || "No especificada",
+            lat: coords.lat,
+            lng: coords.lng
+          }]
+        };
+
+        const { error } = await supabaseClient.from('peces').insert([nuevoPez]);
+        if (error) {
+          alert("Error al guardar en Supabase: " + error.message);
+        } else {
+          document.getElementById('formEspecie').reset();
+          toggleFormulario();
+          cargarPeces();
+        }
+      } catch (err) {
+        alert("Ocurrió un error inesperado al procesar los datos: " + err.message);
+      }
+    }
+
+    async function borrarPez(id) {
+      const pezABorrar = listaPeces.find(p => p.id === id);
+      if (confirm(`¿Estás seguro de que deseas eliminar "${pezABorrar.nombre}"?`)) {
+        const { error } = await supabaseClient.from('peces').delete().eq('id', id);
+        if (error) {
+          alert("Error al eliminar: " + error.message);
+        } else {
+          cerrarModalDirecto();
+          cargarPeces();
+        }
+      }
+    }
+
+    function abrirModalEditar(id) {
+      const pez = listaPeces.find(p => p.id === id);
+      if (!pez) return;
+
+      document.getElementById('editPezId').value = pez.id;
+      document.getElementById('editNombre').value = pez.nombre;
+      document.getElementById('editEspecie').value = pez.especie;
+      
+      fotosTemporalesEdicion = JSON.parse(JSON.stringify(pez.fotos || []));
+      
+      if (fotosTemporalesEdicion.length > 0) {
+        const f0 = fotosTemporalesEdicion[0];
+        document.getElementById('editLugar').value = f0.lugar || '';
+        document.getElementById('editTipo').value = f0.tipo || 'Playa';
+        document.getElementById('editProfundidad').value = f0.profundidad || '0-2m';
+        document.getElementById('editCamara').value = f0.camara || '';
+        document.getElementById('editGmaps').value = (f0.lat && f0.lng) ? `${f0.lat}, ${f0.lng}` : '';
+      }
+
+      renderFotosEdicion();
+      document.getElementById('modalEditar').style.display = 'flex';
+    }
+
+    function renderFotosEdicion() {
+      const cont = document.getElementById('listaFotosEditar');
+      cont.innerHTML = fotosTemporalesEdicion.map((f, index) => `
+        <div class="thumb-edit-wrapper">
+          <img src="${f.url}" style="width: 60px; height: 45px; object-fit: cover; border-radius: 6px;">
+          <button type="button" class="btn-remove-thumb" onclick="eliminarFotoEdicion(${index})">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    function eliminarFotoEdicion(index) {
+      fotosTemporalesEdicion.splice(index, 1);
+      renderFotosEdicion();
+    }
+
+    async function guardarCambiosEspecie(e) {
+      e.preventDefault();
+      const id = parseInt(document.getElementById('editPezId').value);
+      
+      const inputUrlGmaps = document.getElementById('editGmaps').value;
+      const coords = obtenerCoordenadasDeUrl(inputUrlGmaps) || { lat: 36.7342, lng: -3.7378 };
+
+      const fileInput = document.getElementById('editFile');
+      const urlInput = document.getElementById('editUrl').value;
+      
+      let nuevaImagenUrl = null;
+      if (fileInput.files && fileInput.files[0]) {
+        nuevaImagenUrl = await leerImagenComoBase64(fileInput.files[0]);
+      } else if (urlInput.trim() !== '') {
+        nuevaImagenUrl = urlInput.trim();
+      }
+
+      if (nuevaImagenUrl) {
+        fotosTemporalesEdicion.push({
+          url: nuevaImagenUrl,
+          lugar: document.getElementById('editLugar').value || "Ubicación desconocida",
+          tipo: document.getElementById('editTipo').value,
+          profundidad: document.getElementById('editProfundidad').value,
+          camara: document.getElementById('editCamara').value || "No especificada",
+          lat: coords.lat,
+          lng: coords.lng
+        });
+      } else if (fotosTemporalesEdicion.length > 0) {
+        fotosTemporalesEdicion = fotosTemporalesEdicion.map(f => ({
+          ...f,
+          lugar: document.getElementById('editLugar').value || f.lugar,
+          tipo: document.getElementById('editTipo').value || f.tipo,
+          profundidad: document.getElementById('editProfundidad').value || f.profundidad,
+          camara: document.getElementById('editCamara').value || f.camara,
+          lat: coords.lat,
+          lng: coords.lng
+        }));
+      }
+
+      const datosActualizados = {
+        nombre: document.getElementById('editNombre').value,
+        especie: document.getElementById('editEspecie').value || "Especie no especificada",
+        fotos: fotosTemporalesEdicion
+      };
+
+      const { error } = await supabaseClient.from('peces').update(datosActualizados).eq('id', id);
+
+      if (error) {
+        alert("Error al actualizar en Supabase: " + error.message);
+      } else {
+        cerrarModalEditarDirecto();
+        cerrarModalDirecto();
+        cargarPeces();
+      }
+    }
+
+    async function toggleFav(e, id) {
+      e.stopPropagation();
+      const pez = listaPeces.find(p => p.id === id);
+      const { error } = await supabaseClient.from('peces').update({ is_fav: !pez.is_fav }).eq('id', id);
+      if (!error) cargarPeces();
+    }
+
+    function renderPeces() {
+      const busqueda = document.getElementById('searchInput').value.toLowerCase();
+      const filtroEntorno = document.getElementById('selectEntorno').value;
+      const filtroUbicacion = document.getElementById('selectUbicacion').value;
+      const filtroProf = document.getElementById('selectProfundidad').value;
+      const grid = document.getElementById('gridPeces');
+      grid.innerHTML = '';
+
+      listaPeces.forEach(pez => {
+        const esFav = pez.is_fav;
+        const fotosValidas = (pez.fotos || []).filter(f => {
+          const cEntorno = filtroEntorno === 'todos' || f.tipo === filtroEntorno;
+          const cUbi = filtroUbicacion === 'todas' || f.lugar.includes(filtroUbicacion);
+          const cProf = filtroProf === 'todas' || f.profundidad === filtroProf;
+          return cEntorno && cUbi && cProf;
+        });
+
+        const cBusqueda = pez.nombre.toLowerCase().includes(busqueda) || pez.especie.toLowerCase().includes(busqueda);
+        const cFav = !soloFavoritos || esFav;
+
+        if (fotosValidas.length > 0 && cBusqueda && cFav) {
+          const f0 = fotosValidas[0];
+          const card = document.createElement('article');
+          card.className = 'card-pez';
+          card.innerHTML = `
+            <button class="fav-btn ${esFav ? 'active' : ''}" onclick="toggleFav(event, ${pez.id})">
+              ${esFav ? '❤️' : '🤍'}
+            </button>
+            <div class="img-container" onclick="abrirModal(${pez.id})">
+              <span class="badge">${f0.tipo}</span>
+              <img src="${f0.url}" alt="${pez.nombre}">
+            </div>
+            <div class="info" onclick="abrirModal(${pez.id})">
+              <h2>${pez.nombre}</h2>
+              <div class="especie">${pez.especie}</div>
+              <div class="meta-tag">📍 ${f0.lugar} (${f0.profundidad})</div>
+            </div>
+          `;
+          card.addEventListener('mousemove', handleHoloEffect);
+          card.addEventListener('mouseleave', resetHoloEffect);
+          grid.appendChild(card);
+        }
+      });
+    }
+
+    function toggleFormulario() { const p = document.getElementById('panelFormulario'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
+    function toggleFiltroFav() { soloFavoritos = !soloFavoritos; const b = document.getElementById('btnFavoritos'); b.classList.toggle('active', soloFavoritos); b.innerText = soloFavoritos ? '❤️ Ver Favoritos' : '🤍 Mis Favoritos'; renderPeces(); }
+    function obtenerCoordenadasDeUrl(t) { if (!t) return null; const m = t.match(/@(-?\d+\.\d+),(-?\d+\.\d+)|q=(-?\d+\.\d+),(-?\d+\.\d+)|(-?\d+\.\d+),\s*(-?\d+\.\d+)/); return m ? { lat: parseFloat(m[1]||m[3]||m[5]), lng: parseFloat(m[2]||m[4]||m[6]) } : null; }
+    function leerImagenComoBase64(f) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = e => rej(e); r.readAsDataURL(f); }); }
+    function handleHoloEffect(e) { const c = e.currentTarget, r = c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; c.style.transform = `perspective(1000px) rotateX(${((y - r.height/2)/(r.height/2))*-4}deg) rotateY(${((x - r.width/2)/(r.width/2))*4}deg) translateY(-4px)`; }
+    function resetHoloEffect(e) { e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)'; }
+
+    function abrirModal(id) {
+      const pez = listaPeces.find(p => p.id === id);
+      fotosModalActuales = pez.fotos;
+      indiceFotoActual = 0;
+      document.getElementById('modalTitle').innerText = pez.nombre;
+      document.getElementById('modalEspecie').innerText = pez.especie;
+      
+      document.getElementById('btnEditarModal').onclick = () => abrirModalEditar(pez.id);
+      document.getElementById('btnBorrarModal').onclick = () => borrarPez(pez.id);
+
+      document.getElementById('thumbContainer').innerHTML = pez.fotos.map((f, i) => `<img src="${f.url}" class="thumb ${i===0?'active':''}" onclick="seleccionarFoto(${i})">`).join('');
+      document.getElementById('miModal').style.display = 'flex';
+      actualizarVisor();
+    }
+
+    function actualizarVisor() { const f = fotosModalActuales[indiceFotoActual]; document.getElementById('modalMainImg').src = f.url; document.getElementById('modalLocation').innerText = `📍 Avistado en: ${f.lugar}`; document.getElementById('modalMeta').innerHTML = `📷 <strong>Cámara:</strong> ${f.camara} | 🌊 <strong>Profundidad:</strong> ${f.profundidad}`; document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === indiceFotoActual)); actualizarMapa(f.lat, f.lng, f.lugar); }
+    function actualizarMapa(lat, lng, t) { setTimeout(() => { if (!mapInstance) { mapInstance = L.map('mapaAvistamiento').setView([lat, lng], 13); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance); markerInstance = L.marker([lat, lng]).addTo(mapInstance); } else { mapInstance.setView([lat, lng], 13); markerInstance.setLatLng([lat, lng]); } markerInstance.bindPopup(t).openPopup(); mapInstance.invalidateSize(); }, 200); }
+    function cambiarFoto(e, d) { e.stopPropagation(); indiceFotoActual = (indiceFotoActual + d + fotosModalActuales.length) % fotosModalActuales.length; actualizarVisor(); }
+    function seleccionarFoto(i) { indiceFotoActual = i; actualizarVisor(); }
+    function cerrarModal(e) { if (e.target.classList.contains('modal')) document.getElementById('miModal').style.display = 'none'; }
+    function cerrarModalDirecto() { document.getElementById('miModal').style.display = 'none'; }
+    function cerrarModalEditar(e) { if (e.target.id === 'modalEditar') document.getElementById('modalEditar').style.display = 'none'; }
+    function cerrarModalEditarDirecto() { document.getElementById('modalEditar').style.display = 'none'; }
+    
+    function abrirVentanaZoom() { document.getElementById('zoomImage').src = document.getElementById('modalMainImg').src; resetTransformations(); document.getElementById('zoomModal').style.display = 'flex'; }
+    function cerrarVentanaZoom(e) { if (e.target.id === 'zoomModal' || e.target.id === 'zoomViewport') document.getElementById('zoomModal').style.display = 'none'; }
+    function cerrarVentanaZoomDirecto() { document.getElementById('zoomModal').style.display = 'none'; }
+    function aplicarTransformacion() { document.getElementById('zoomImage').style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomScale})`; }
+    function ajustarZoomManual(d) { zoomScale = Math.min(Math.max(1, zoomScale + d), 5); if (zoomScale === 1) { translateX = 0; translateY = 0; } aplicarTransformacion(); }
+    function resetTransformations() { zoomScale = 1; translateX = 0; translateY = 0; aplicarTransformacion(); }
+
+    document.getElementById('zoomViewport').addEventListener('wheel', (e) => { e.preventDefault(); ajustarZoomManual(e.deltaY < 0 ? 0.2 : -0.2); });
+    document.getElementById('zoomViewport').addEventListener('mousedown', (e) => { if (zoomScale > 1) { isDragging = true; startX = e.clientX - translateX; startY = e.clientY - translateY; } });
+    window.addEventListener('mousemove', (e) => { if (isDragging) { translateX = e.clientX - startX; translateY = e.clientY - startY; aplicarTransformacion(); } });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Carga inicial
+    cargarPeces();
+  </script>
+</body>
+</html>
