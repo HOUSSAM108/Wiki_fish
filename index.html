@@ -581,7 +581,23 @@
   <!-- LIBRERÍAS Y SCRIPT PRINCIPAL -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // === CONTROL DE ACCESO ===
+    const CLAVE_CORRECTA = "wikifish_safarimallorca";
+    const claveIngresada = prompt("Introduce la contraseña para ver la Wiki Fish:");
 
+    if (claveIngresada !== CLAVE_CORRECTA) {
+      document.body.innerHTML = `
+        <div style="text-align:center; padding:50px; font-family:sans-serif;">
+          <h1>Acceso denegado 🚫</h1>
+          <p>Contraseña incorrecta. Recarga la página para intentarlo de nuevo.</p>
+        </div>
+      `;
+      throw new Error("Acceso no autorizado");
+    }
+
+    // === AQUÍ CONTINÚA TU CÓDIGO DE SUPABASE Y LÓGICA DE LA WIKI ===
+  </script>
   <script>
     // Inicialización correcta del cliente Supabase
     const SUPABASE_URL = 'https://rlzpeghfolrjkyallxaa.supabase.co';
