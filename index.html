@@ -38,10 +38,7 @@
     }
 
     .bg-mesh {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background-color: #030712;
+      position: fixed; inset: 0; z-index: -2; background-color: #030712;
       background-image: 
         radial-gradient(at 15% 15%, rgba(0, 119, 182, 0.25) 0px, transparent 50%),
         radial-gradient(at 85% 20%, rgba(15, 23, 42, 0.9) 0px, transparent 50%),
@@ -52,777 +49,206 @@
     }
 
     .bg-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
+      position: fixed; inset: 0; z-index: -1;
       background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
-      background-size: 24px 24px;
-      pointer-events: none;
+      background-size: 24px 24px; pointer-events: none;
     }
 
-    header {
-      text-align: center;
-      max-width: 950px;
-      margin: 0 auto 35px;
-    }
+    header { text-align: center; max-width: 950px; margin: 0 auto 35px; }
 
     header h1 {
-      font-size: 3.8rem;
-      font-weight: 900;
-      letter-spacing: 4px;
-      text-transform: uppercase;
+      font-size: 3.8rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
       background: linear-gradient(135deg, #ffffff 20%, #90e0ef 60%, #00b4d8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
-      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 6px; text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
-    header p {
-      font-weight: 300;
-      letter-spacing: 2px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      opacity: 0.9;
-    }
+    header p { font-weight: 300; letter-spacing: 2px; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; opacity: 0.9; }
 
-    .auth-bar {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 12px;
-      max-width: 1200px;
-      margin: 0 auto 20px;
-    }
+    .auth-bar { display: flex; justify-content: flex-end; align-items: center; gap: 12px; max-width: 1200px; margin: 0 auto 20px; }
 
     .user-badge {
-      font-size: 0.85rem;
-      color: var(--accent);
-      font-weight: 700;
-      background: rgba(15, 23, 42, 0.6);
-      padding: 8px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: all 0.25s ease;
+      font-size: 0.85rem; color: var(--accent); font-weight: 700; background: rgba(15, 23, 42, 0.6);
+      padding: 8px 14px; border-radius: 10px; border: 1px solid var(--border); cursor: pointer; transition: all 0.25s ease;
     }
-
-    .user-badge:hover {
-      background: rgba(0, 180, 216, 0.2);
-      border-color: var(--accent);
-      box-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
-    }
+    .user-badge:hover { background: rgba(0, 180, 216, 0.2); border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 180, 216, 0.3); }
 
     .btn-auth {
-      background: rgba(0, 180, 216, 0.15);
-      border: 1px solid var(--accent);
-      color: var(--text);
-      padding: 8px 16px;
-      border-radius: 10px;
-      font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.25s ease;
+      background: rgba(0, 180, 216, 0.15); border: 1px solid var(--accent); color: var(--text);
+      padding: 8px 16px; border-radius: 10px; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease;
     }
-
-    .btn-auth:hover {
-      background: var(--accent);
-      color: #030712;
-    }
+    .btn-auth:hover { background: var(--accent); color: #030712; }
 
     .filter-panel, .form-panel {
-      background: rgba(15, 23, 42, 0.5);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 18px 22px;
-      margin-top: 25px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border); border-radius: 20px; padding: 18px 22px; margin-top: 25px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
 
-    .filter-panel {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-    }
+    .filter-panel { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: center; }
 
     .btn-add-species {
-      flex: 1 1 180px;
-      padding: 12px 18px;
-      border-radius: 12px;
-      border: 1px solid var(--accent);
-      background: rgba(0, 119, 182, 0.3);
-      color: #fff;
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex: 1 1 180px; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--accent);
+      background: rgba(0, 119, 182, 0.3); color: #fff; font-family: inherit; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; user-select: none; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-
-    .btn-add-species:hover {
-      background: var(--accent);
-      color: #030712;
-      box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
-    }
+    .btn-add-species:hover { background: var(--accent); color: #030712; box-shadow: 0 0 15px rgba(0, 180, 216, 0.4); }
 
     .burbuja-chat-flotante {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: #fff;
-      font-size: 1.8rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 999;
-      box-shadow: 0 8px 25px rgba(0, 180, 216, 0.5);
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+      position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; border-radius: 50%;
+      background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%); border: 2px solid rgba(255, 255, 255, 0.3);
+      color: #fff; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; cursor: pointer;
+      z-index: 999; box-shadow: 0 8px 25px rgba(0, 180, 216, 0.5); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
     }
+    .burbuja-chat-flotante:hover { transform: scale(1.15) rotate(-8deg); box-shadow: 0 12px 30px rgba(0, 180, 216, 0.8); border-color: #fff; }
 
-    .burbuja-chat-flotante:hover {
-      transform: scale(1.15) rotate(-8deg);
-      box-shadow: 0 12px 30px rgba(0, 180, 216, 0.8);
-      border-color: #fff;
-    }
+    .form-panel { display: none; max-width: 950px; margin: 20px auto 10px; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .burbuja-chat-flotante:active {
-      transform: scale(0.95);
-    }
+    .form-panel h3 { color: var(--accent); font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
 
-    .form-panel {
-      display: none;
-      max-width: 950px;
-      margin: 20px auto 10px;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .form-panel h3 {
-      color: var(--accent);
-      font-size: 1.1rem;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-align: center;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-    }
-
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
     .full-width { grid-column: 1 / -1; }
 
-    .file-input-wrapper {
-      grid-column: 1 / -1;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .file-input-label {
-      font-size: 0.8rem;
-      color: var(--accent);
-      font-weight: 700;
-    }
+    .file-input-wrapper { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; }
+    .file-input-label { font-size: 0.8rem; color: var(--accent); font-weight: 700; }
 
     .btn-submit {
-      background: var(--primary);
-      color: white;
-      border: 1px solid var(--accent);
-      border-radius: 12px;
-      padding: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      grid-column: 1 / -1;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      background: var(--primary); color: white; border: 1px solid var(--accent); border-radius: 12px;
+      padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.25s ease; grid-column: 1 / -1;
+      text-transform: uppercase; letter-spacing: 1px;
     }
-
-    .btn-submit:hover {
-      background: var(--accent);
-      box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
-    }
+    .btn-submit:hover { background: var(--accent); box-shadow: 0 0 15px rgba(0, 180, 216, 0.4); }
 
     .search-bar {
-      width: 100%;
-      padding: 12px 18px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--select-bg);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.9rem;
-      outline: none;
-      transition: all 0.25s ease;
+      width: 100%; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--select-bg); color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; transition: all 0.25s ease;
     }
+    .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.15); }
 
-    .search-bar:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.15);
-    }
-
-    .select-wrapper {
-      position: relative;
-      flex: 1 1 170px;
-      display: flex;
-      align-items: center;
-    }
-
+    .select-wrapper { position: relative; flex: 1 1 170px; display: flex; align-items: center; }
     .select-wrapper::after {
-      content: "";
-      position: absolute;
-      right: 15px;
-      pointer-events: none;
-      width: 10px;
-      height: 6px;
-      background-color: var(--text-muted);
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      transition: transform 0.25s ease, background-color 0.25s ease;
+      content: ""; position: absolute; right: 15px; pointer-events: none; width: 10px; height: 6px;
+      background-color: var(--text-muted); clip-path: polygon(0 0, 100% 0, 50% 100%); transition: transform 0.25s ease;
     }
 
     .custom-select {
-      width: 100%;
-      appearance: none;
-      padding: 12px 38px 12px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--select-bg);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 500;
-      outline: none;
-      cursor: pointer;
-      transition: all 0.25s ease;
+      width: 100%; appearance: none; padding: 12px 38px 12px 16px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--select-bg); color: var(--text); font-family: inherit; font-size: 0.88rem; font-weight: 500; outline: none; cursor: pointer; transition: all 0.25s ease;
     }
-
     .custom-select option { background-color: #0f172a; color: var(--text); }
+    .custom-select option:disabled { color: var(--text-muted); opacity: 0.6; }
 
     .filter-fav-btn {
-      flex: 1 1 150px;
-      padding: 12px 18px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--select-bg);
-      color: var(--text-muted);
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
+      flex: 1 1 150px; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--select-bg); color: var(--text-muted); font-family: inherit; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; user-select: none;
     }
+    .filter-fav-btn.active { background: #ff4d6d; color: #fff; border-color: #ff4d6d; box-shadow: 0 0 15px rgba(255, 77, 109, 0.3); }
 
-    .filter-fav-btn.active {
-      background: #ff4d6d;
-      color: #fff;
-      border-color: #ff4d6d;
-      box-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
-    }
-
-    .grid-peces {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 25px;
-      max-width: 1200px;
-      margin: 0 auto;
-      perspective: 1000px;
-    }
+    .grid-peces { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; perspective: 1000px; }
 
     .card-pez {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
-      transform-style: preserve-3d;
+      background: var(--card-bg); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px; overflow: hidden; cursor: pointer; position: relative; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease; transform-style: preserve-3d;
     }
 
     .img-container { position: relative; height: 180px; overflow: hidden; }
     .card-pez img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
     
-    .badge { 
-      position: absolute; 
-      top: 10px; 
-      right: 10px; 
-      background: rgba(15, 23, 42, 0.85); 
-      padding: 4px 10px; 
-      border-radius: 12px; 
-      font-size: 0.75rem; 
-      border: 1px solid var(--border); 
-      z-index: 5;
-      transition: all 0.25s ease;
-    }
-
-    .badge:hover {
-      background: var(--accent);
-      color: #030712;
-      border-color: var(--accent);
-      box-shadow: 0 0 10px rgba(0, 180, 216, 0.4);
-    }
-    
-    .fav-btn {
-      position: absolute; top: 10px; left: 10px; background: rgba(15, 23, 42, 0.85);
-      border: 1px solid var(--border); color: #fff; width: 34px; height: 34px;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 6; font-size: 1rem;
-    }
+    .badge { position: absolute; top: 10px; right: 10px; background: rgba(15, 23, 42, 0.85); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; border: 1px solid var(--border); z-index: 5; }
+    .fav-btn { position: absolute; top: 10px; left: 10px; background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border); color: #fff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 6; font-size: 1rem; }
     .fav-btn.active { color: #ff4d6d; }
 
-    .btn-actions-group {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-      flex-wrap: wrap;
-    }
+    .btn-actions-group { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+    .btn-edit-modal { background: rgba(0, 180, 216, 0.1); color: var(--accent); border: 1px solid var(--accent); padding: 10px 18px; border-radius: 10px; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-edit-modal:hover { background: var(--accent); color: #030712; }
 
-    .btn-edit-modal {
-      background: rgba(0, 180, 216, 0.1); color: var(--accent);
-      border: 1px solid var(--accent); padding: 10px 18px; border-radius: 10px;
-      font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer;
-      transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px;
-    }
-    .btn-edit-modal:hover { background: var(--accent); color: #030712; box-shadow: 0 0 12px rgba(0, 180, 216, 0.4); }
+    .btn-delete-photo-modal { background: rgba(245, 158, 11, 0.1); color: var(--warning); border: 1px solid var(--warning); padding: 10px 18px; border-radius: 10px; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-delete-photo-modal:hover { background: var(--warning); color: #000; }
 
-    .btn-delete-photo-modal {
-      background: rgba(245, 158, 11, 0.1); color: var(--warning);
-      border: 1px solid var(--warning); padding: 10px 18px; border-radius: 10px;
-      font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer;
-      transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px;
-    }
-    .btn-delete-photo-modal:hover { background: var(--warning); color: #000; box-shadow: 0 0 12px rgba(245, 158, 11, 0.4); }
+    .btn-delete-modal { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); padding: 10px 18px; border-radius: 10px; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-delete-modal:hover { background: var(--danger); color: #fff; }
 
-    .btn-delete-modal {
-      background: rgba(239, 68, 68, 0.1); color: var(--danger);
-      border: 1px solid var(--danger); padding: 10px 18px; border-radius: 10px;
-      font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer;
-      transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px;
-    }
-    .btn-delete-modal:hover { background: var(--danger); color: #fff; box-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
+    .thumb-edit-card { border: 1px solid var(--border); background: rgba(255, 255, 255, 0.03); border-radius: 10px; padding: 10px; display: flex; gap: 12px; align-items: center; width: 100%; position: relative; }
+    .thumb-edit-card.is-main { border: 1px solid var(--accent); background: rgba(0, 180, 216, 0.08); }
+    .badge-main-photo { font-size: 0.7rem; background: var(--accent); color: #030712; font-weight: bold; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-top: 4px; }
+    .btn-set-main-photo { background: rgba(0, 180, 216, 0.15); border: 1px solid var(--accent); color: var(--accent); padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; margin-top: 4px; }
+    .btn-set-main-photo:hover { background: var(--accent); color: #030712; }
 
-    .thumb-edit-card { 
-      border: 1px solid var(--border); 
-      background: rgba(255, 255, 255, 0.03); 
-      border-radius: 10px; 
-      padding: 10px; 
-      display: flex; 
-      gap: 12px; 
-      align-items: center; 
-      width: 100%;
-      position: relative;
-      transition: border-color 0.25s ease;
-    }
-
-    .thumb-edit-card.is-main {
-      border: 1px solid var(--accent);
-      background: rgba(0, 180, 216, 0.08);
-    }
-
-    .badge-main-photo {
-      font-size: 0.7rem;
-      background: var(--accent);
-      color: #030712;
-      font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 4px;
-    }
-
-    .btn-set-main-photo {
-      background: rgba(0, 180, 216, 0.15);
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      margin-top: 4px;
-    }
-
-    .btn-set-main-photo:hover {
-      background: var(--accent);
-      color: #030712;
-    }
-
-    .btn-remove-thumb {
-      background: var(--danger);
-      color: #fff; 
-      border: none; 
-      border-radius: 50%; 
-      width: 24px; 
-      height: 24px;
-      font-size: 14px; 
-      cursor: pointer; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      position: absolute; 
-      top: 8px; 
-      right: 8px;
-      transition: transform 0.2s ease;
-    }
-    .btn-remove-thumb:hover {
-      transform: scale(1.15);
-    }
+    .btn-remove-thumb { background: var(--danger); color: #fff; border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: absolute; top: 8px; right: 8px; }
 
     .info { padding: 18px; position: relative; z-index: 3; }
     .info h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); }
     .info .especie { font-size: 0.85rem; color: var(--accent); font-style: italic; margin-top: 2px; }
     .info .meta-tag { font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; font-weight: 300; }
 
-    .modal {
-      display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
-    }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+    .modal-wrapper { background: #0f172a; border: 1px solid var(--border); border-radius: 20px; max-width: 750px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
 
-    .modal-wrapper {
-      background: #0f172a; border: 1px solid var(--border); border-radius: 20px;
-      max-width: 750px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;
-    }
+    .gallery-container { position: relative; width: 100%; height: 320px; background: #000; overflow: hidden; cursor: pointer; }
+    .main-slide { width: 100%; height: 100%; object-fit: cover; user-select: none; }
 
-    .gallery-container { 
-      position: relative; 
-      width: 100%; 
-      height: 320px; 
-      background: #000; 
-      overflow: hidden; 
-      cursor: pointer;
-    }
-
-    .main-slide { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
-      user-select: none;
-    }
-
-    .zoom-hint {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      background: rgba(15, 23, 42, 0.8);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      border: 1px solid var(--border);
-      color: var(--accent);
-      pointer-events: none;
-      z-index: 4;
-    }
-
-    .photo-counter {
-      position: absolute;
-      top: 15px;
-      right: 60px;
-      background: rgba(15, 23, 42, 0.85);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      border: 1px solid var(--border);
-      color: #fff;
-      font-weight: 700;
-      z-index: 4;
-    }
-
+    .zoom-hint { position: absolute; top: 15px; left: 15px; background: rgba(15, 23, 42, 0.8); padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; border: 1px solid var(--border); color: var(--accent); pointer-events: none; z-index: 4; }
+    .photo-counter { position: absolute; top: 15px; right: 60px; background: rgba(15, 23, 42, 0.85); padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; border: 1px solid var(--border); color: #fff; font-weight: 700; z-index: 4; }
     .slide-location { position: absolute; bottom: 15px; left: 15px; background: rgba(15, 23, 42, 0.85); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--border); pointer-events: none; z-index: 5; }
     .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 5; }
     .nav-arrow.left { left: 10px; } .nav-arrow.right { right: 10px; }
+
     .thumbnails { display: flex; gap: 10px; padding: 12px 15px; background: rgba(15, 23, 42, 0.6); overflow-x: auto; }
     .thumb { width: 65px; height: 45px; object-fit: cover; border-radius: 6px; cursor: pointer; opacity: 0.5; border: 2px solid transparent; }
     .thumb.active { opacity: 1; border-color: var(--accent); }
     .modal-info { padding: 20px; }
     #mapaAvistamiento { width: 100%; height: 200px; border-radius: 12px; margin-top: 15px; border: 1px solid var(--border); }
-    
+
     .close-btn { position: absolute; top: 15px; right: 15px; color: #fff; font-size: 24px; cursor: pointer; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
-    .zoom-modal {
-      display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(15px); z-index: 2000; flex-direction: column; justify-content: center; align-items: center; overflow: hidden;
-    }
-
-    .zoom-viewport {
-      width: 90vw; height: 80vh; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; cursor: grab;
-    }
+    .zoom-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); z-index: 2000; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
+    .zoom-viewport { width: 90vw; height: 80vh; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; cursor: grab; }
     .zoom-viewport:active { cursor: grabbing; }
     .zoom-viewport img { max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: center center; transition: transform 0.05s ease-out; user-select: none; }
 
-    .zoom-controls {
-      position: absolute; 
-      bottom: 25px; 
-      display: flex; 
-      align-items: center;
-      gap: 12px; 
-      background: rgba(15, 23, 42, 0.85); 
-      padding: 10px 20px; 
-      border-radius: 30px; 
-      border: 1px solid var(--border); 
-      z-index: 2005;
-      backdrop-filter: blur(8px);
-    }
-
-    .zoom-btn {
-      background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border); color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
-    }
+    .zoom-controls { position: absolute; bottom: 25px; display: flex; align-items: center; gap: 12px; background: rgba(15, 23, 42, 0.85); padding: 10px 20px; border-radius: 30px; border: 1px solid var(--border); z-index: 2005; backdrop-filter: blur(8px); }
+    .zoom-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border); color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .zoom-btn:hover { background: var(--accent); color: #000; }
 
-    .btn-volver-atras {
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid rgba(239, 68, 68, 0.5);
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-      margin-left: 8px;
-    }
-
-    .btn-volver-atras:hover {
-      background: rgba(239, 68, 68, 0.9);
-      border-color: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
-    }
+    .btn-volver-atras { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); color: #fff; padding: 8px 16px; border-radius: 20px; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; }
+    .btn-volver-atras:hover { background: rgba(239, 68, 68, 0.9); }
 
     .auth-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
     .auth-tab { flex: 1; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; border-radius: 8px; text-align: center; font-weight: bold; }
     .auth-tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
 
     .btn-cerrar-principal {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 32px !important;
-        height: 32px !important;
-        position: absolute !important;
-        top: 15px !important;
-        right: 15px !important;
-        z-index: 99999 !important;
-        background: rgba(15, 23, 42, 0.85) !important;
-        backdrop-filter: blur(8px) !important;
-        -webkit-backdrop-filter: blur(8px) !important;
-        color: #f8fafc !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        font-size: 16px !important;
-        font-weight: 600 !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        border-radius: 50% !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-        cursor: pointer !important;
-        transition: background-color 0.2s ease, border-color 0.2s ease !important;
+      display: inline-flex !important; align-items: center !important; justify-content: center !important;
+      width: 32px !important; height: 32px !important; position: absolute !important; top: 15px !important; right: 15px !important; z-index: 99999 !important;
+      background: rgba(15, 23, 42, 0.85) !important; color: #f8fafc !important; font-size: 16px !important; font-weight: 600 !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important; border-radius: 50% !important; cursor: pointer !important;
     }
+    .btn-cerrar-principal:hover { background: rgba(239, 68, 68, 0.95) !important; color: #ffffff !important; }
 
-    .btn-cerrar-principal:hover {
-        background: rgba(239, 68, 68, 0.95) !important;
-        border-color: rgba(255, 255, 255, 0.6) !important;
-        color: #ffffff !important;
-    }
+    .chat-layout { display: flex; height: 480px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); background: rgba(15, 23, 42, 0.8); margin-top: 15px; }
+    .chat-sidebar { width: 220px; border-right: 1px solid var(--border); background: rgba(3, 7, 18, 0.5); display: flex; flex-direction: column; }
+    .chat-sidebar-header { padding: 12px 15px; font-size: 0.8rem; font-weight: 700; color: var(--accent); border-bottom: 1px solid var(--border); text-transform: uppercase; }
+    .chat-user-list { flex: 1; overflow-y: auto; }
+    .chat-user-item { padding: 12px 15px; font-size: 0.85rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); display: flex; align-items: center; gap: 8px; }
+    .chat-user-item.public-room { background: rgba(0, 180, 216, 0.1); font-weight: 700; color: var(--text); }
+    .chat-user-item:hover, .chat-user-item.active { background: rgba(0, 180, 216, 0.25); color: var(--accent); }
+    .chat-main { flex: 1; display: flex; flex-direction: column; }
+    .chat-header { padding: 12px 20px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 0.9rem; color: var(--accent); background: rgba(15, 23, 42, 0.4); }
+    .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+    .chat-msg { max-width: 75%; padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; line-height: 1.4; word-break: break-word; }
+    .chat-msg-sender { font-size: 0.72rem; font-weight: bold; color: var(--accent); margin-bottom: 3px; }
+    .chat-msg.sent { align-self: flex-end; background: var(--primary); color: #fff; border-bottom-right-radius: 2px; }
+    .chat-msg.received { align-self: flex-start; background: rgba(255, 255, 255, 0.1); color: var(--text); border-bottom-left-radius: 2px; }
+    .chat-msg-time { font-size: 0.65rem; opacity: 0.7; margin-top: 4px; text-align: right; }
+    .chat-input-area { padding: 12px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
 
-    .btn-cerrar-principal:active {
-        background: rgba(220, 38, 38, 1) !important;
-    }
+    .danger-box { border: 2px solid var(--danger) !important; box-shadow: 0 0 35px rgba(239, 68, 68, 0.35) !important; }
+    .warning-box { border: 2px solid var(--warning) !important; box-shadow: 0 0 35px rgba(245, 158, 11, 0.35) !important; }
+    .math-challenge-box { background: rgba(239, 68, 68, 0.1); border: 1px dashed var(--danger); border-radius: 12px; padding: 15px; margin: 15px 0; text-align: center; }
+    .math-expression { font-size: 1.8rem; font-weight: 900; color: #fff; letter-spacing: 2px; margin: 10px 0; }
+    .warning-text-danger { color: var(--danger) !important; font-weight: 700; display: block; margin-top: 8px; }
 
-    /* ESTILOS DEL CHAT (PÚBLICO Y PRIVADO) */
-    .chat-layout {
-      display: flex;
-      height: 480px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: rgba(15, 23, 42, 0.8);
-      margin-top: 15px;
-    }
-
-    .chat-sidebar {
-      width: 220px;
-      border-right: 1px solid var(--border);
-      background: rgba(3, 7, 18, 0.5);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chat-sidebar-header {
-      padding: 12px 15px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--accent);
-      border-bottom: 1px solid var(--border);
-      text-transform: uppercase;
-    }
-
-    .chat-user-list {
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .chat-user-item {
-      padding: 12px 15px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-      transition: background 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .chat-user-item.public-room {
-      background: rgba(0, 180, 216, 0.1);
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .chat-user-item:hover, .chat-user-item.active {
-      background: rgba(0, 180, 216, 0.25);
-      color: var(--accent);
-    }
-
-    .chat-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chat-header {
-      padding: 12px 20px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: var(--accent);
-      background: rgba(15, 23, 42, 0.4);
-    }
-
-    .chat-messages {
-      flex: 1;
-      padding: 15px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .chat-msg {
-      max-width: 75%;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      line-height: 1.4;
-      word-break: break-word;
-    }
-
-    .chat-msg-sender {
-      font-size: 0.72rem;
-      font-weight: bold;
-      color: var(--accent);
-      margin-bottom: 3px;
-    }
-
-    .chat-msg.sent {
-      align-self: flex-end;
-      background: var(--primary);
-      color: #fff;
-      border-bottom-right-radius: 2px;
-    }
-
-    .chat-msg.received {
-      align-self: flex-start;
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text);
-      border-bottom-left-radius: 2px;
-    }
-
-    .chat-msg-time {
-      font-size: 0.65rem;
-      opacity: 0.7;
-      margin-top: 4px;
-      text-align: right;
-    }
-
-    .chat-input-area {
-      padding: 12px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      gap: 10px;
-    }
-
-    /* ESTILOS DE VENTANAS DE SEGURIDAD */
-    .danger-box {
-      border: 2px solid var(--danger) !important;
-      box-shadow: 0 0 35px rgba(239, 68, 68, 0.35) !important;
-    }
-
-    .warning-box {
-      border: 2px solid var(--warning) !important;
-      box-shadow: 0 0 35px rgba(245, 158, 11, 0.35) !important;
-    }
-    
-    .math-challenge-box {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px dashed var(--danger);
-      border-radius: 12px;
-      padding: 15px;
-      margin: 15px 0;
-      text-align: center;
-    }
-
-    .math-expression {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 2px;
-      margin: 10px 0;
-    }
-
-    .warning-text-danger {
-      color: var(--danger) !important;
-      font-weight: 700;
-      display: block;
-      margin-top: 8px;
-    }
-
-    img {
-        user-select: none !important;
-        -webkit-user-drag: none !important;
-        -webkit-user-select: none !important;
-        touch-action: pan-x pan-y;
-    }
+    img { user-select: none !important; -webkit-user-drag: none !important; -webkit-user-select: none !important; touch-action: pan-x pan-y; }
   </style>
 </head>
 <body>
@@ -843,7 +269,6 @@
     <div class="filter-panel">
       <input type="text" id="searchInput" class="search-bar" placeholder="Buscar por pez o especie..." onkeyup="renderPeces()">
 
-      <!-- REORDENADO: Primero Ubicaciones, luego Entornos -->
       <div class="select-wrapper">
         <select id="selectUbicacion" class="custom-select" onchange="renderPeces()">
           <option value="todas">📍 Todas las ubicaciones</option>
@@ -876,11 +301,28 @@
       </button>
     </div>
 
+    <!-- FORMULARIO CON OPCIONES DESACTIVADAS POR DEFECTO -->
     <div id="panelFormulario" class="form-panel">
       <h3>➕ Registrar nueva especie</h3>
       <form id="formEspecie" class="form-grid" onsubmit="guardarNuevaEspecie(event)">
-        <input type="text" id="addNombre" class="search-bar" placeholder="Nombre común (ej: Pez León) *" required>
-        <input type="text" id="addEspecie" class="search-bar" placeholder="Especie (opcional)">
+        
+        <!-- DESPLEGABLE NOMBRE COMÚN -->
+        <div class="select-wrapper">
+          <select id="addNombreSelect" class="custom-select" onchange="gestionarSeleccionNombre('add')">
+            <option value="" disabled selected>🐟 Seleccionar pez registrado...</option>
+            <option value="__NUEVO__">➕ Escribir nombre nuevo...</option>
+          </select>
+        </div>
+        <input type="text" id="addNombreCustom" class="search-bar" placeholder="Nombre común (ej: Sargo) *" style="display: none;" onkeyup="autocompletarEspeciePorTexto('add')">
+
+        <!-- DESPLEGABLE ESPECIE -->
+        <div class="select-wrapper">
+          <select id="addEspecieSelect" class="custom-select" onchange="gestionarCampoSeleccionado('add', 'Especie')">
+            <option value="" disabled selected>🧬 Seleccionar especie registrada...</option>
+            <option value="__NUEVO__">➕ Escribir especie nueva...</option>
+          </select>
+        </div>
+        <input type="text" id="addEspecieCustom" class="search-bar" placeholder="Nombre científico / especie (ej: Diplodus sargus)" style="display: none;">
         
         <div class="file-input-wrapper">
           <label class="file-input-label">📁 Subir imagen local (opcional):</label>
@@ -889,8 +331,15 @@
 
         <input type="url" id="addUrl" class="search-bar full-width" placeholder="O pega la URL de una Imagen web (opcional)">
 
-        <input type="text" id="addLugar" class="search-bar" placeholder="Lugar (ej: Calagat, La Herradura)">
-        
+        <!-- DESPLEGABLE LUGAR / UBICACIÓN INTELIGENTE -->
+        <div class="select-wrapper">
+          <select id="addLugarSelect" class="custom-select" onchange="gestionarLugarSeleccionado('add')">
+            <option value="" disabled selected>📍 Seleccionar lugar habitual...</option>
+            <option value="__NUEVO__">➕ Escribir lugar nuevo...</option>
+          </select>
+        </div>
+        <input type="text" id="addLugarCustom" class="search-bar" placeholder="Escribe el nuevo lugar *" style="display: none;">
+
         <select id="addTipo" class="custom-select">
           <option value="Playa">🏖️ Playa</option>
           <option value="Cala">🪨 Cala</option>
@@ -902,8 +351,16 @@
           <option value="5m+">Buceo profundo (5m+)</option>
         </select>
 
-        <input type="text" id="addCamara" class="search-bar" placeholder="Cámara (opcional, ej: GoPro)">
-        <input type="text" id="addGmaps" class="search-bar full-width" placeholder="Enlace de Google Maps (opcional)">
+        <!-- DESPLEGABLE CÁMARA INTELIGENTE -->
+        <div class="select-wrapper">
+          <select id="addCamaraSelect" class="custom-select" onchange="gestionarCampoSeleccionado('add', 'Camara')">
+            <option value="" disabled selected>📷 Seleccionar cámara habitual...</option>
+            <option value="__NUEVO__">➕ Escribir cámara nueva...</option>
+          </select>
+        </div>
+        <input type="text" id="addCamaraCustom" class="search-bar" placeholder="Escribe la nueva cámara" style="display: none;">
+
+        <input type="text" id="addGmaps" class="search-bar full-width" placeholder="Enlace de Google Maps (opcional o automático si eliges un lugar habitual)">
 
         <button type="submit" class="btn-submit">Guardar Especie</button>
       </form>
@@ -912,12 +369,11 @@
 
   <main class="grid-peces" id="gridPeces"></main>
 
-  <!-- BOTÓN FLOTANTE BURBUJA CHAT SÓLO CON EL PEZ -->
   <button class="burbuja-chat-flotante" onclick="abrirModalChat()" title="Abrir Chat">
     🐟
   </button>
 
-  <!-- MODAL DE CHAT (PÚBLICO Y PRIVADO) -->
+  <!-- MODAL DE CHAT -->
   <div id="modalChat" class="modal">
     <div class="modal-wrapper" style="max-width: 800px; padding: 20px;">
       <span class="close-btn" onclick="cerrarModalChat()">&times;</span>
@@ -932,9 +388,7 @@
         <div class="chat-main">
           <div id="chatHeader" class="chat-header">🌐 Chat Público (General)</div>
           <div id="chatMessages" class="chat-messages">
-            <p style="text-align: center; color: var(--text-muted); margin: auto; font-size: 0.85rem;">
-              Cargando chat...
-            </p>
+            <p style="text-align: center; color: var(--text-muted); margin: auto; font-size: 0.85rem;">Cargando chat...</p>
           </div>
           <form id="chatForm" class="chat-input-area" onsubmit="enviarMensajeChat(event)">
             <input type="text" id="chatInput" class="search-bar" placeholder="Escribe un mensaje..." autocomplete="off">
@@ -1046,8 +500,14 @@
 
         <input type="url" id="editUrl" class="search-bar full-width" placeholder="O pega la URL de una nueva foto web">
 
-        <input type="text" id="editLugar" class="search-bar" placeholder="Ubicación de esta nueva foto">
-        
+        <div class="select-wrapper">
+          <select id="editLugarSelect" class="custom-select" onchange="gestionarLugarSeleccionado('edit')">
+            <option value="" disabled selected>📍 Seleccionar lugar habitual...</option>
+            <option value="__NUEVO__">➕ Escribir lugar nuevo...</option>
+          </select>
+        </div>
+        <input type="text" id="editLugarCustom" class="search-bar" placeholder="Escribe el nuevo lugar" style="display: none;">
+
         <select id="editTipo" class="custom-select">
           <option value="Playa">🏖️ Playa</option>
           <option value="Cala">🪨 Cala</option>
@@ -1059,7 +519,14 @@
           <option value="5m+">Buceo profundo (5m+)</option>
         </select>
 
-        <input type="text" id="editCamara" class="search-bar" placeholder="Cámara">
+        <div class="select-wrapper">
+          <select id="editCamaraSelect" class="custom-select" onchange="gestionarCampoSeleccionado('edit', 'Camara')">
+            <option value="" disabled selected>📷 Seleccionar cámara habitual...</option>
+            <option value="__NUEVO__">➕ Escribir cámara nueva...</option>
+          </select>
+        </div>
+        <input type="text" id="editCamaraCustom" class="search-bar" placeholder="Escribe la nueva cámara" style="display: none;">
+
         <input type="text" id="editGmaps" class="search-bar full-width" placeholder="Enlace de Google Maps">
 
         <button type="submit" class="btn-submit">Guardar Cambios</button>
@@ -1067,64 +534,38 @@
     </div>
   </div>
 
-  <!-- VENTANA DE CONFIRMACIÓN DE BORRAR FOTO (OPCIONES SÍ / NO) -->
+  <!-- MODALES DE CONFIRMACIÓN Y ZOOM -->
   <div id="modalConfirmarBorrarFoto" class="modal">
     <div class="modal-wrapper warning-box" style="padding: 25px; max-width: 420px; text-align: center;">
       <span class="close-btn" onclick="cerrarModalConfirmarFoto()">&times;</span>
-      
-      <h3 style="color: var(--warning); text-transform: uppercase; margin-bottom: 12px; font-size: 1.1rem;">
-        📸 ¿Eliminar esta foto?
-      </h3>
-      
-      <p id="textoModalConfirmarFoto" style="font-size: 0.9rem; color: #f8fafc; margin-bottom: 20px; line-height: 1.4;">
-        ¿Estás seguro de que deseas eliminar solo la imagen actual de esta especie?
-      </p>
-
+      <h3 style="color: var(--warning); text-transform: uppercase; margin-bottom: 12px; font-size: 1.1rem;">📸 ¿Eliminar esta foto?</h3>
+      <p id="textoModalConfirmarFoto" style="font-size: 0.9rem; color: #f8fafc; margin-bottom: 20px; line-height: 1.4;"></p>
       <div style="display: flex; gap: 12px; justify-content: center;">
-        <button type="button" class="btn-submit" style="background: rgba(255,255,255,0.1); border-color: var(--border); flex: 1;" onclick="cerrarModalConfirmarFoto()">
-          ❌ No, cancelar
-        </button>
-        <button type="button" class="btn-submit" style="background: var(--warning); color: #000; border-color: var(--warning); flex: 1;" onclick="ejecutarBorradoFoto()">
-          ✅ Sí, eliminar
-        </button>
+        <button type="button" class="btn-submit" style="background: rgba(255,255,255,0.1); border-color: var(--border); flex: 1;" onclick="cerrarModalConfirmarFoto()">❌ No, cancelar</button>
+        <button type="button" class="btn-submit" style="background: var(--warning); color: #000; border-color: var(--warning); flex: 1;" onclick="ejecutarBorradoFoto()">✅ Sí, eliminar</button>
       </div>
     </div>
   </div>
 
-  <!-- VENTANA DE EMERGENCIA / MINIJUEGO PARA BORRAR TODA LA ESPECIE -->
   <div id="modalEmergenciaBorrar" class="modal">
     <div class="modal-wrapper danger-box" style="padding: 25px; max-width: 450px;">
       <span class="close-btn" onclick="cerrarModalEmergencia()">&times;</span>
-      
-      <h3 style="color: var(--danger); text-transform: uppercase; text-align: center; font-size: 1.2rem; margin-bottom: 10px;">
-        ⚠️ ¡Acción Crítica!
-      </h3>
-      
+      <h3 style="color: var(--danger); text-transform: uppercase; text-align: center; font-size: 1.2rem; margin-bottom: 10px;">⚠️ ¡Acción Crítica!</h3>
       <p style="font-size: 0.88rem; color: #f8fafc; text-align: center; line-height: 1.5;">
-        Estás a punto de eliminar por completo la especie <strong id="nombreEspecieABorrar" style="color: var(--accent);"></strong>. 
-        <br><span style="color: var(--danger); font-size: 0.8rem;">Se perderán permanentemente todas las imágenes y datos asociados.</span>
+        Estás a punto de eliminar por completo la especie <strong id="nombreEspecieABorrar" style="color: var(--accent);"></strong>.
       </p>
-
       <div class="math-challenge-box">
-        <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">
-          Resuelve la suma de seguridad para confirmar:
-        </p>
+        <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Resuelve la suma para confirmar:</p>
         <div id="mathChallengeText" class="math-expression"></div>
         <input type="number" id="mathAnswerInput" class="search-bar" placeholder="Resultado *" style="text-align: center; font-weight: bold; font-size: 1.1rem;" autocomplete="off">
       </div>
-
       <div style="display: flex; gap: 10px; margin-top: 15px;">
-        <button type="button" class="btn-submit" style="background: rgba(255,255,255,0.1); border-color: var(--border);" onclick="cerrarModalEmergencia()">
-          Cancelar
-        </button>
-        <button type="button" class="btn-submit" style="background: var(--danger); border-color: var(--danger);" onclick="confirmarBorradoConMinijuego()">
-          Confirmar Borrado
-        </button>
+        <button type="button" class="btn-submit" style="background: rgba(255,255,255,0.1); border-color: var(--border);" onclick="cerrarModalEmergencia()">Cancelar</button>
+        <button type="button" class="btn-submit" style="background: var(--danger); border-color: var(--danger);" onclick="confirmarBorradoConMinijuego()">Confirmar Borrado</button>
       </div>
     </div>
   </div>
 
-  <!-- VENTANA DE ZOOM -->
   <div id="zoomModal" class="zoom-modal">
     <div class="zoom-viewport" id="zoomViewport">
       <img id="zoomImage" src="" alt="Vista ampliada">
@@ -1133,14 +574,11 @@
       <button class="zoom-btn" onclick="ajustarZoomManual(0.25)">+</button>
       <button class="zoom-btn" onclick="ajustarZoomManual(-0.25)">-</button>
       <button class="zoom-btn" onclick="resetTransformations()">🔄</button>
-      
-      <button class="btn-volver-atras" onclick="cerrarVentanaZoomDirecto()">
-        ⬅ Volver Atrás
-      </button>
+      <button class="btn-volver-atras" onclick="cerrarVentanaZoomDirecto()">⬅ Volver Atrás</button>
     </div>
   </div>
 
-  <!-- LIBRERÍAS Y SCRIPT PRINCIPAL -->
+  <!-- SCRIPT PRINCIPAL -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   
@@ -1154,6 +592,8 @@
     let modoAuth = 'login';
 
     let listaPeces = [];
+    let mapaLugaresInfo = {};
+    let mapaNombresYESpecies = {};
     let soloFavoritos = false;
     let fotosModalActuales = [];
     let fotosTemporalesEdicion = [];
@@ -1162,17 +602,14 @@
     let mapInstance = null, markerInstance = null;
     let zoomScale = 1, translateX = 0, translateY = 0, isDragging = false, startX = 0, startY = 0;
 
-    // Variables de verificación para borrados
     let sumaCorrectaEsperada = 0;
     let idPezABorrarPendiente = null;
 
-    // Variables de Chat
     let modoChat = 'publico';
     let receptorChatActual = null;
     let canalChatRealtime = null;
     let listaUsuariosChat = [];
 
-    // === GESTIÓN DE SESIÓN Y PERFIL ===
     async function chequearSesion() {
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
@@ -1211,13 +648,9 @@
       }
     }
 
-    // === SISTEMA DE CHAT (PÚBLICO Y PRIVADO) ===
+    // === CHAT ===
     async function abrirModalChat() {
-      if (!usuarioActual) {
-        alert("Debes iniciar sesión para acceder al chat.");
-        abrirModalAuth();
-        return;
-      }
+      if (!usuarioActual) { alert("Debes iniciar sesión para acceder al chat."); abrirModalAuth(); return; }
       document.getElementById('modalChat').style.display = 'flex';
       await cargarListaUsuariosChat();
       seleccionarChatPublico();
@@ -1225,10 +658,7 @@
 
     function cerrarModalChat() {
       document.getElementById('modalChat').style.display = 'none';
-      if (canalChatRealtime) {
-        supabaseClient.removeChannel(canalChatRealtime);
-        canalChatRealtime = null;
-      }
+      if (canalChatRealtime) { supabaseClient.removeChannel(canalChatRealtime); canalChatRealtime = null; }
     }
 
     async function cargarListaUsuariosChat() {
@@ -1254,95 +684,54 @@
     }
 
     async function seleccionarChatPublico() {
-      modoChat = 'publico';
-      receptorChatActual = null;
+      modoChat = 'publico'; receptorChatActual = null;
       document.getElementById('chatHeader').innerText = `🌐 Chat Público (General)`;
-      
-      await cargarListaUsuariosChat();
-      await cargarHistorialMensajes();
-
+      await cargarListaUsuariosChat(); await cargarHistorialMensajes();
       if (canalChatRealtime) supabaseClient.removeChannel(canalChatRealtime);
-
-      canalChatRealtime = supabaseClient
-        .channel('chat_publico')
-        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mensajes_publicos' }, payload => {
-          renderizarMensaje(payload.new);
-        })
-        .subscribe();
+      canalChatRealtime = supabaseClient.channel('chat_publico').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mensajes_publicos' }, payload => renderizarMensaje(payload.new)).subscribe();
     }
 
     async function seleccionarUsuarioChat(usuarioDestino) {
-      modoChat = 'privado';
-      receptorChatActual = usuarioDestino;
+      modoChat = 'privado'; receptorChatActual = usuarioDestino;
       document.getElementById('chatHeader').innerText = `🔒 Chat Privado con @${usuarioDestino.nickname || usuarioDestino.nombre}`;
-
-      await cargarListaUsuariosChat();
-      await cargarHistorialMensajes();
-
+      await cargarListaUsuariosChat(); await cargarHistorialMensajes();
       if (canalChatRealtime) supabaseClient.removeChannel(canalChatRealtime);
-
-      canalChatRealtime = supabaseClient
-        .channel('chat_privado')
-        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mensajes_privados' }, payload => {
-          const m = payload.new;
-          if (
-            (m.emisor_id === usuarioActual.id && m.receptor_id === receptorChatActual.id) ||
-            (m.emisor_id === receptorChatActual.id && m.receptor_id === usuarioActual.id)
-          ) {
-            renderizarMensaje(m);
-          }
-        })
-        .subscribe();
+      canalChatRealtime = supabaseClient.channel('chat_privado').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mensajes_privados' }, payload => {
+        const m = payload.new;
+        if ((m.emisor_id === usuarioActual.id && m.receptor_id === receptorChatActual.id) || (m.emisor_id === receptorChatActual.id && m.receptor_id === usuarioActual.id)) renderizarMensaje(m);
+      }).subscribe();
     }
 
     async function cargarHistorialMensajes() {
       const cont = document.getElementById('chatMessages');
       cont.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:var(--text-muted);">Cargando historial...</p>';
-
       let mensajes = [];
-      let error = null;
-
       if (modoChat === 'publico') {
-        const res = await supabaseClient
-          .from('mensajes_publicos')
-          .select('*')
-          .order('created_at', { ascending: true });
+        const res = await supabaseClient.from('mensajes_publicos').select('*').order('created_at', { ascending: true });
         mensajes = res.data;
-        error = res.error;
       } else {
-        const res = await supabaseClient
-          .from('mensajes_privados')
-          .select('*')
-          .or(`and(emisor_id.eq.${usuarioActual.id},receptor_id.eq.${receptorChatActual.id}),and(emisor_id.eq.${receptorChatActual.id},receptor_id.eq.${usuarioActual.id})`)
-          .order('created_at', { ascending: true });
+        const res = await supabaseClient.from('mensajes_privados').select('*').or(`and(emisor_id.eq.${usuarioActual.id},receptor_id.eq.${receptorChatActual.id}),and(emisor_id.eq.${receptorChatActual.id},receptor_id.eq.${usuarioActual.id})`).order('created_at', { ascending: true });
         mensajes = res.data;
-        error = res.error;
       }
-
       cont.innerHTML = '';
-      if (error || !mensajes || mensajes.length === 0) {
-        cont.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:var(--text-muted); margin-top: auto;">No hay mensajes aún. ¡Escribe el primero!</p>';
+      if (!mensajes || mensajes.length === 0) {
+        cont.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:var(--text-muted); margin-top: auto;">No hay mensajes aún.</p>';
         return;
       }
-
       mensajes.forEach(m => renderizarMensaje(m));
     }
 
     function renderizarMensaje(m) {
       const cont = document.getElementById('chatMessages');
       const esMio = m.emisor_id === usuarioActual.id;
-
       const msgDiv = document.createElement('div');
       msgDiv.className = `chat-msg ${esMio ? 'sent' : 'received'}`;
-      
       const hora = new Date(m.created_at || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
       msgDiv.innerHTML = `
         ${modoChat === 'publico' && !esMio ? `<div class="chat-msg-sender">@${m.emisor_nickname || 'Usuario'}</div>` : ''}
         <div>${m.contenido}</div>
         <div class="chat-msg-time">${hora}</div>
       `;
-
       cont.appendChild(msgDiv);
       cont.scrollTop = cont.scrollHeight;
     }
@@ -1351,35 +740,18 @@
       e.preventDefault();
       const input = document.getElementById('chatInput');
       const texto = input.value.trim();
-
       if (!texto) return;
-
       const miNickname = perfilUsuario ? perfilUsuario.nickname : 'Usuario';
-
       input.value = '';
 
       if (modoChat === 'publico') {
-        const nuevoMsg = {
-          emisor_id: usuarioActual.id,
-          emisor_nickname: miNickname,
-          contenido: texto,
-          created_at: new Date().toISOString()
-        };
-        const { error } = await supabaseClient.from('mensajes_publicos').insert([nuevoMsg]);
-        if (error) renderizarMensaje(nuevoMsg);
+        await supabaseClient.from('mensajes_publicos').insert([{ emisor_id: usuarioActual.id, emisor_nickname: miNickname, contenido: texto, created_at: new Date().toISOString() }]);
       } else if (modoChat === 'privado' && receptorChatActual) {
-        const nuevoMsg = {
-          emisor_id: usuarioActual.id,
-          receptor_id: receptorChatActual.id,
-          contenido: texto,
-          created_at: new Date().toISOString()
-        };
-        const { error } = await supabaseClient.from('mensajes_privados').insert([nuevoMsg]);
-        if (error) renderizarMensaje(nuevoMsg);
+        await supabaseClient.from('mensajes_privados').insert([{ emisor_id: usuarioActual.id, receptor_id: receptorChatActual.id, contenido: texto, created_at: new Date().toISOString() }]);
       }
     }
 
-    // === MODAL DE PERFIL ===
+    // === PERFIL Y AUTH ===
     function abrirModalPerfil() {
       if (!perfilUsuario) return;
       document.getElementById('editPerfilNombre').value = perfilUsuario.nombre || '';
@@ -1388,28 +760,17 @@
       document.getElementById('editPerfilEmail').value = usuarioActual.email;
       document.getElementById('modalPerfil').style.display = 'flex';
     }
-
     function cerrarModalPerfilDirecto() { document.getElementById('modalPerfil').style.display = 'none'; }
 
     async function guardarPerfilUsuario(e) {
       e.preventDefault();
-      const nombre = document.getElementById('editPerfilNombre').value.trim();
-      const apellido = document.getElementById('editPerfilApellido').value.trim();
-      const nickname = document.getElementById('editPerfilNickname').value.trim();
-
-      const { error } = await supabaseClient
-        .from('profiles')
-        .update({ nombre, apellido, nickname })
-        .eq('id', usuarioActual.id);
-
-      if (error) {
-        alert("Error al actualizar el perfil: " + error.message);
-      } else {
-        alert("¡Perfil actualizado con éxito!");
-        cerrarModalPerfilDirecto();
-        await cargarPerfilUsuario();
-        actualizarInterfazAuth();
-      }
+      const { error } = await supabaseClient.from('profiles').update({
+        nombre: document.getElementById('editPerfilNombre').value.trim(),
+        apellido: document.getElementById('editPerfilApellido').value.trim(),
+        nickname: document.getElementById('editPerfilNickname').value.trim()
+      }).eq('id', usuarioActual.id);
+      if (error) alert("Error: " + error.message);
+      else { alert("¡Perfil actualizado!"); cerrarModalPerfilDirecto(); await cargarPerfilUsuario(); actualizarInterfazAuth(); }
     }
 
     function abrirModalAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
@@ -1419,91 +780,47 @@
       modoAuth = modo;
       document.getElementById('tabLogin').classList.toggle('active', modo === 'login');
       document.getElementById('tabRegistro').classList.toggle('active', modo === 'registro');
-      
       const esRegistro = modo === 'registro';
       document.getElementById('camposRegistro').style.display = esRegistro ? 'flex' : 'none';
       document.getElementById('authIdentifier').style.display = esRegistro ? 'none' : 'block';
       document.getElementById('btnSubmitAuth').innerText = esRegistro ? 'Registrarse' : 'Ingresar';
-      
-      document.getElementById('authNombre').required = esRegistro;
-      document.getElementById('authApellido').required = esRegistro;
-      document.getElementById('authNickname').required = esRegistro;
-      document.getElementById('authEmail').required = esRegistro;
-      document.getElementById('authIdentifier').required = !esRegistro;
     }
 
     async function procesarAutenticacion(e) {
       e.preventDefault();
       const password = document.getElementById('authPassword').value;
-
       if (modoAuth === 'login') {
-        const identifier = document.getElementById('authIdentifier').value.trim();
-        let emailAProcesar = identifier;
-
-        if (!identifier.includes('@')) {
-          const { data: perfil, error: errPerfil } = await supabaseClient
-            .from('profiles')
-            .select('email')
-            .ilike('nickname', identifier)
-            .maybeSingle();
-
-          if (errPerfil || !perfil) {
-            alert("No se encontró ningún usuario con ese Nickname.");
-            return;
-          }
-          emailAProcesar = perfil.email;
+        let email = document.getElementById('authIdentifier').value.trim();
+        if (!email.includes('@')) {
+          const { data } = await supabaseClient.from('profiles').select('email').ilike('nickname', email).maybeSingle();
+          if (data) email = data.email;
         }
-
-        const { data, error } = await supabaseClient.auth.signInWithPassword({ 
-          email: emailAProcesar, 
-          password 
-        });
-
-        if (error) {
-          alert("Error al ingresar: Contraseña o usuario incorrectos.");
-        } else {
-          cerrarModalAuthDirecto();
-          chequearSesion();
-        }
-
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) alert("Error al ingresar.");
+        else { cerrarModalAuthDirecto(); chequearSesion(); }
       } else {
-        const nombre = document.getElementById('authNombre').value;
-        const apellido = document.getElementById('authApellido').value;
-        const nickname = document.getElementById('authNickname').value;
-        const email = document.getElementById('authEmail').value;
-
-        const { data, error } = await supabaseClient.auth.signUp({
-          email,
+        const { error } = await supabaseClient.auth.signUp({
+          email: document.getElementById('authEmail').value,
           password,
-          options: {
-            data: { nombre, apellido, nickname }
-          }
+          options: { data: { nombre: document.getElementById('authNombre').value, apellido: document.getElementById('authApellido').value, nickname: document.getElementById('authNickname').value } }
         });
-
-        if (error) alert("Error en el registro: " + error.message);
-        else {
-          alert("¡Cuenta creada exitosamente!");
-          cerrarModalAuthDirecto();
-          chequearSesion();
-        }
+        if (error) alert("Error: " + error.message);
+        else { alert("¡Registrado!"); cerrarModalAuthDirecto(); chequearSesion(); }
       }
     }
 
     async function cerrarSesion() {
       await supabaseClient.auth.signOut();
-      usuarioActual = null;
-      perfilUsuario = null;
-      actualizarInterfazAuth();
-      cargarPeces();
+      usuarioActual = null; perfilUsuario = null; actualizarInterfazAuth(); cargarPeces();
     }
 
-    // === PECES Y PERMISOS ===
+    // === CARGA Y GESTIÓN DE PECES ===
     async function cargarPeces() {
       const { data, error } = await supabaseClient.from('peces').select('*').order('id', { ascending: false });
-      if (error) console.error('Error cargando peces:', error);
-      else {
+      if (!error) {
         listaPeces = data || [];
         poblarOpcionesUbicacion();
+        poblarDesplegablesFormulario();
         renderPeces();
       }
     }
@@ -1512,37 +829,181 @@
       const selectUbicacion = document.getElementById('selectUbicacion');
       const valorSeleccionado = selectUbicacion.value;
       const ubicaciones = new Set();
+      mapaLugaresInfo = {};
+      mapaNombresYESpecies = {};
 
       listaPeces.forEach(pez => {
+        if (pez.nombre && pez.especie) {
+          mapaNombresYESpecies[pez.nombre.trim().toLowerCase()] = pez.especie.trim();
+        }
+
         if (Array.isArray(pez.fotos)) {
           pez.fotos.forEach(foto => {
             if (foto.lugar && foto.lugar.trim() !== '') {
-              ubicaciones.add(foto.lugar.trim());
+              const lugarTrim = foto.lugar.trim();
+              ubicaciones.add(lugarTrim);
+              mapaLugaresInfo[lugarTrim] = {
+                tipo: foto.tipo || 'Playa',
+                lat: foto.lat || 36.7342,
+                lng: foto.lng || -3.7378
+              };
             }
           });
         }
       });
 
-      let opcionesHTML = '<option value="todas">📍 Todas las ubicaciones</option>';
-      Array.from(ubicaciones).sort().forEach(ubi => {
-        opcionesHTML += `<option value="${ubi}">${ubi}</option>`;
+      let html = '<option value="todas">📍 Todas las ubicaciones</option>';
+      Array.from(ubicaciones).sort().forEach(ubi => { html += `<option value="${ubi}">${ubi}</option>`; });
+      selectUbicacion.innerHTML = html;
+      selectUbicacion.value = valorSeleccionado;
+    }
+
+    function poblarDesplegablesFormulario() {
+      const nombres = new Set();
+      const especies = new Set();
+      const lugares = new Set();
+      const camaras = new Set();
+
+      listaPeces.forEach(pez => {
+        if (pez.nombre) nombres.add(pez.nombre.trim());
+        if (pez.especie) especies.add(pez.especie.trim());
+        if (Array.isArray(pez.fotos)) {
+          pez.fotos.forEach(f => {
+            if (f.lugar && f.lugar.trim() !== '') lugares.add(f.lugar.trim());
+            if (f.camara && f.camara.trim() !== '' && f.camara !== 'No especificada') camaras.add(f.camara.trim());
+          });
+        }
       });
 
-      selectUbicacion.innerHTML = opcionesHTML;
-      selectUbicacion.value = valorSeleccionado;
+      const rellenar = (elemId, set, placeholder, prefijo) => {
+        const elem = document.getElementById(elemId);
+        let html = `<option value="" disabled selected>${prefijo} Seleccionar habitual...</option><option value="__NUEVO__">➕ Escribir otro...</option>`;
+        Array.from(set).sort().forEach(v => { html += `<option value="${v}">${v}</option>`; });
+        elem.innerHTML = html;
+      };
+
+      rellenar('addNombreSelect', nombres, 'Nombre', '🐟');
+      rellenar('addEspecieSelect', especies, 'Especie', '🧬');
+      rellenar('addLugarSelect', lugares, 'Lugar', '📍');
+      rellenar('addCamaraSelect', camaras, 'Cámara', '📷');
+
+      rellenar('editLugarSelect', lugares, 'Lugar', '📍');
+      rellenar('editCamaraSelect', camaras, 'Cámara', '📷');
+    }
+
+    function gestionarCampoSeleccionado(prefix, campo) {
+      const select = document.getElementById(`${prefix}${campo}Select`);
+      const customInput = document.getElementById(`${prefix}${campo}Custom`);
+
+      if (select.value === '__NUEVO__') {
+        customInput.style.display = 'block';
+        customInput.focus();
+      } else {
+        customInput.style.display = 'none';
+        customInput.value = '';
+      }
+    }
+
+    function gestionarSeleccionNombre(prefix) {
+      gestionarCampoSeleccionado(prefix, 'Nombre');
+      const nombreSelect = document.getElementById(`${prefix}NombreSelect`).value;
+
+      if (nombreSelect && nombreSelect !== '__NUEVO__') {
+        aplicarEspecieAutocompletada(prefix, nombreSelect);
+      }
+    }
+
+    function autocompletarEspeciePorTexto(prefix) {
+      const textoIngresado = document.getElementById(`${prefix}NombreCustom`).value.trim();
+      if (textoIngresado) {
+        aplicarEspecieAutocompletada(prefix, textoIngresado);
+      }
+    }
+
+    function aplicarEspecieAutocompletada(prefix, nombreBuscado) {
+      const nombreClave = nombreBuscado.trim().toLowerCase();
+      const especieEspecia = mapaNombresYESpecies[nombreClave];
+
+      if (especieEspecia) {
+        const especieSelect = document.getElementById(`${prefix}EspecieSelect`);
+        const especieCustom = document.getElementById(`${prefix}EspecieCustom`);
+
+        let existeEnSelect = false;
+        for (let i = 0; i < especieSelect.options.length; i++) {
+          if (especieSelect.options[i].value.toLowerCase() === especieEspecia.toLowerCase()) {
+            especieSelect.selectedIndex = i;
+            existeEnSelect = true;
+            break;
+          }
+        }
+
+        if (!existeEnSelect) {
+          especieSelect.value = '__NUEVO__';
+          especieCustom.style.display = 'block';
+          especieCustom.value = especieEspecia;
+        } else {
+          especieCustom.style.display = 'none';
+          especieCustom.value = '';
+        }
+      }
+    }
+
+    function gestionarLugarSeleccionado(prefix) {
+      const select = document.getElementById(`${prefix}LugarSelect`);
+      const customInput = document.getElementById(`${prefix}LugarCustom`);
+      const tipoSelect = document.getElementById(`${prefix}Tipo`);
+
+      if (select.value === '__NUEVO__') {
+        customInput.style.display = 'block';
+        customInput.focus();
+      } else {
+        customInput.style.display = 'none';
+        customInput.value = '';
+
+        if (select.value && mapaLugaresInfo[select.value]) {
+          tipoSelect.value = mapaLugaresInfo[select.value].tipo;
+        }
+      }
     }
 
     async function guardarNuevaEspecie(e) {
       e.preventDefault();
-      if (!usuarioActual) {
-        alert("Debes iniciar sesión para registrar una especie.");
-        abrirModalAuth();
-        return;
-      }
+      if (!usuarioActual) { alert("Debes iniciar sesión."); abrirModalAuth(); return; }
 
       try {
-        const inputUrlGmaps = document.getElementById('addGmaps').value;
-        const coords = obtenerCoordenadasDeUrl(inputUrlGmaps) || { lat: 36.7342, lng: -3.7378 };
+        const selectLugar = document.getElementById('addLugarSelect').value;
+        const customLugar = document.getElementById('addLugarCustom').value.trim();
+        let lugarFinal = selectLugar === '__NUEVO__' ? customLugar : selectLugar;
+        if (!lugarFinal) lugarFinal = "Ubicación desconocida";
+
+        let coords = null;
+        const inputGmaps = document.getElementById('addGmaps').value;
+        
+        if (inputGmaps) {
+          coords = obtenerCoordenadasDeUrl(inputGmaps);
+        }
+        
+        if (!coords && mapaLugaresInfo[lugarFinal]) {
+          coords = { lat: mapaLugaresInfo[lugarFinal].lat, lng: mapaLugaresInfo[lugarFinal].lng };
+        }
+
+        if (!coords) {
+          coords = { lat: 36.7342, lng: -3.7378 };
+        }
+
+        const selectNombre = document.getElementById('addNombreSelect').value;
+        const customNombre = document.getElementById('addNombreCustom').value.trim();
+        let nombreFinal = selectNombre === '__NUEVO__' ? customNombre : selectNombre;
+        if (!nombreFinal) { alert("Ingresa un nombre válido."); return; }
+
+        const selectEspecie = document.getElementById('addEspecieSelect').value;
+        const customEspecie = document.getElementById('addEspecieCustom').value.trim();
+        let especieFinal = selectEspecie === '__NUEVO__' ? customEspecie : selectEspecie;
+
+        const selectCamara = document.getElementById('addCamaraSelect').value;
+        const customCamara = document.getElementById('addCamaraCustom').value.trim();
+        let camaraFinal = selectCamara === '__NUEVO__' ? customCamara : selectCamara;
+
         const fileInput = document.getElementById('addFile');
         const urlInput = document.getElementById('addUrl').value;
         let imagenFinalUrl = 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1000';
@@ -1554,128 +1015,80 @@
         }
 
         const nuevoPez = {
-          nombre: document.getElementById('addNombre').value,
-          especie: document.getElementById('addEspecie').value || "Especie no especificada",
+          nombre: nombreFinal,
+          especie: especieFinal || "Especie no especificada",
           is_fav: false,
           user_id: usuarioActual.id,
           fotos: [{
             url: imagenFinalUrl,
-            lugar: document.getElementById('addLugar').value || "Ubicación desconocida",
+            lugar: lugarFinal,
             tipo: document.getElementById('addTipo').value,
             profundidad: document.getElementById('addProfundidad').value,
-            camara: document.getElementById('addCamara').value || "No especificada",
+            camara: camaraFinal || "No especificada",
             lat: coords.lat,
             lng: coords.lng
           }]
         };
 
         const { error } = await supabaseClient.from('peces').insert([nuevoPez]);
-        if (error) alert("Error al guardar en Supabase: " + error.message);
+        if (error) alert("Error: " + error.message);
         else {
           document.getElementById('formEspecie').reset();
+          document.getElementById('addNombreCustom').style.display = 'none';
+          document.getElementById('addEspecieCustom').style.display = 'none';
+          document.getElementById('addLugarCustom').style.display = 'none';
+          document.getElementById('addCamaraCustom').style.display = 'none';
           toggleFormulario();
           cargarPeces();
         }
-      } catch (err) {
-        alert("Ocurrió un error inesperado: " + err.message);
-      }
+      } catch (err) { alert("Error inesperado: " + err.message); }
     }
 
     function borrarPez(id) {
       const pezABorrar = listaPeces.find(p => p.id === id);
       if (!pezABorrar) return;
-
       idPezABorrarPendiente = id;
-      
-      const num1 = Math.floor(Math.random() * 40) + 10;
-      const num2 = Math.floor(Math.random() * 40) + 10;
-      sumaCorrectaEsperada = num1 + num2;
-
+      const n1 = Math.floor(Math.random() * 40) + 10, n2 = Math.floor(Math.random() * 40) + 10;
+      sumaCorrectaEsperada = n1 + n2;
       document.getElementById('nombreEspecieABorrar').innerText = pezABorrar.nombre;
-      document.getElementById('mathChallengeText').innerText = `${num1} + ${num2} = ?`;
+      document.getElementById('mathChallengeText').innerText = `${n1} + ${n2} = ?`;
       document.getElementById('mathAnswerInput').value = '';
-      
       document.getElementById('modalEmergenciaBorrar').style.display = 'flex';
     }
 
-    function cerrarModalEmergencia() {
-      document.getElementById('modalEmergenciaBorrar').style.display = 'none';
-      idPezABorrarPendiente = null;
-    }
+    function cerrarModalEmergencia() { document.getElementById('modalEmergenciaBorrar').style.display = 'none'; idPezABorrarPendiente = null; }
 
     async function confirmarBorradoConMinijuego() {
-      const respuestaUsuario = parseInt(document.getElementById('mathAnswerInput').value);
-
-      if (isNaN(respuestaUsuario) || respuestaUsuario !== sumaCorrectaEsperada) {
-        alert("❌ Respuesta incorrecta. Por tu seguridad, la especie no ha sido eliminada.");
-        return;
-      }
-
-      if (idPezABorrarPendiente) {
-        const { error } = await supabaseClient.from('peces').delete().eq('id', idPezABorrarPendiente);
-        if (error) {
-          alert("Error al eliminar: " + error.message);
-        } else {
-          alert("Especie eliminada correctamente.");
-          cerrarModalEmergencia();
-          cerrarModalDirecto();
-          cargarPeces();
-        }
-      }
+      const ans = parseInt(document.getElementById('mathAnswerInput').value);
+      if (ans !== sumaCorrectaEsperada) { alert("❌ Resultado incorrecto."); return; }
+      const { error } = await supabaseClient.from('peces').delete().eq('id', idPezABorrarPendiente);
+      if (!error) { alert("Especie eliminada."); cerrarModalEmergencia(); cerrarModalDirecto(); cargarPeces(); }
     }
 
     function borrarFotoUnica() {
       if (!idPezActualModal) return;
-      
       const pez = listaPeces.find(p => p.id === idPezActualModal);
-      if (!pez || !pez.fotos || pez.fotos.length === 0) return;
-
-      const textoElem = document.getElementById('textoModalConfirmarFoto');
-
-      if (pez.fotos.length === 1) {
-        textoElem.innerHTML = `
-          ¿Estás seguro de que deseas eliminar la imagen actual?
-          <span class="warning-text-danger">⚠️ Atención: Al eliminar la única foto, la ficha entera de esta especie se perderá por completo.</span>
-        `;
-      } else {
-        textoElem.innerHTML = `¿Estás seguro de que deseas eliminar solo la imagen actual de esta especie?`;
-      }
-
+      if (!pez || !pez.fotos) return;
+      const txt = document.getElementById('textoModalConfirmarFoto');
+      txt.innerHTML = pez.fotos.length === 1 ? '¿Eliminar la imagen? <span class="warning-text-danger">⚠️ Perderás toda la ficha.</span>' : '¿Eliminar solo esta imagen?';
       document.getElementById('modalConfirmarBorrarFoto').style.display = 'flex';
     }
 
-    function cerrarModalConfirmarFoto() {
-      document.getElementById('modalConfirmarBorrarFoto').style.display = 'none';
-    }
+    function cerrarModalConfirmarFoto() { document.getElementById('modalConfirmarBorrarFoto').style.display = 'none'; }
 
     async function ejecutarBorradoFoto() {
       cerrarModalConfirmarFoto();
-      
       const pez = listaPeces.find(p => p.id === idPezActualModal);
-      if (!pez) return;
-
-      const nuevasFotos = [...pez.fotos];
-      nuevasFotos.splice(indiceFotoActual, 1);
-
-      if (nuevasFotos.length === 0) {
-        const { error } = await supabaseClient.from('peces').delete().eq('id', idPezActualModal);
-        if (error) {
-          alert("Error al eliminar la especie: " + error.message);
-        } else {
-          cerrarModalDirecto();
-          cargarPeces();
-        }
+      const nuevas = [...pez.fotos];
+      nuevas.splice(indiceFotoActual, 1);
+      if (nuevas.length === 0) {
+        await supabaseClient.from('peces').delete().eq('id', idPezActualModal);
+        cerrarModalDirecto(); cargarPeces();
       } else {
-        const { error } = await supabaseClient.from('peces').update({ fotos: nuevasFotos }).eq('id', idPezActualModal);
-        if (error) {
-          alert("Error al borrar la foto: " + error.message);
-        } else {
-          await cargarPeces();
-          if (indiceFotoActual >= nuevasFotos.length) {
-            indiceFotoActual = nuevasFotos.length - 1;
-          }
-          abrirModal(idPezActualModal);
-        }
+        await supabaseClient.from('peces').update({ fotos: nuevas }).eq('id', idPezActualModal);
+        await cargarPeces();
+        if (indiceFotoActual >= nuevas.length) indiceFotoActual = nuevas.length - 1;
+        abrirModal(idPezActualModal);
       }
     }
 
@@ -1687,19 +1100,16 @@
 
       document.getElementById('modalTitle').innerText = pez.nombre;
       document.getElementById('modalEspecie').innerText = pez.especie;
-      
       const esDueno = usuarioActual && pez.user_id === usuarioActual.id;
       const esAdmin = perfilUsuario && perfilUsuario.role === 'admin';
-      const actionsGroup = document.getElementById('modalActionsGroup');
+      const grp = document.getElementById('modalActionsGroup');
 
       if (esDueno || esAdmin) {
-        actionsGroup.style.display = 'flex';
+        grp.style.display = 'flex';
         document.getElementById('btnEditarModal').onclick = () => abrirModalEditar(pez.id);
         document.getElementById('btnBorrarFotoModal').onclick = () => borrarFotoUnica();
         document.getElementById('btnBorrarModal').onclick = () => borrarPez(pez.id);
-      } else {
-        actionsGroup.style.display = 'none';
-      }
+      } else grp.style.display = 'none';
 
       document.getElementById('thumbContainer').innerHTML = pez.fotos.map((f, i) => `<img src="${f.url}" class="thumb ${i===indiceFotoActual?'active':''}" onclick="seleccionarFoto(${i})">`).join('');
       document.getElementById('miModal').style.display = 'flex';
@@ -1709,126 +1119,84 @@
     function abrirModalEditar(id) {
       const pez = listaPeces.find(p => p.id === id);
       if (!pez) return;
-
       document.getElementById('editPezId').value = pez.id;
       document.getElementById('editNombre').value = pez.nombre;
       document.getElementById('editEspecie').value = pez.especie;
-      
       fotosTemporalesEdicion = JSON.parse(JSON.stringify(pez.fotos || []));
-      
-      document.getElementById('editLugar').value = '';
-      document.getElementById('editTipo').value = 'Playa';
-      document.getElementById('editProfundidad').value = '0-2m';
-      document.getElementById('editCamara').value = '';
-      document.getElementById('editGmaps').value = '';
-      document.getElementById('editFile').value = '';
-      document.getElementById('editUrl').value = '';
-
       renderFotosEdicion();
       document.getElementById('modalEditar').style.display = 'flex';
     }
 
-    function hacerFotoPrincipal(index) {
-      if (index === 0) return;
-      const fotoSeleccionada = fotosTemporalesEdicion.splice(index, 1)[0];
-      fotosTemporalesEdicion.unshift(fotoSeleccionada);
+    function hacerFotoPrincipal(i) {
+      if (i === 0) return;
+      fotosTemporalesEdicion.unshift(fotosTemporalesEdicion.splice(i, 1)[0]);
       renderFotosEdicion();
     }
 
     function renderFotosEdicion() {
       const cont = document.getElementById('listaFotosEditar');
-      if (fotosTemporalesEdicion.length === 0) {
-        cont.innerHTML = '<p style="font-size:0.85rem; color: var(--danger);">Sin fotos. Debes añadir una foto nueva para guardar.</p>';
-        return;
-      }
-
+      if (fotosTemporalesEdicion.length === 0) { cont.innerHTML = '<p style="color:var(--danger)">Sin fotos.</p>'; return; }
       cont.innerHTML = fotosTemporalesEdicion.map((f, index) => `
         <div class="thumb-edit-card ${index === 0 ? 'is-main' : ''}">
           <img src="${f.url}" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px;">
-          <div style="flex: 1; display: flex; flex-direction: column; gap: 4px; padding-right: 25px;">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
             <input type="text" class="search-bar" value="${f.lugar || ''}" placeholder="Lugar" onchange="actualizarFotoEdicion(${index}, 'lugar', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
             <input type="text" class="search-bar" value="${f.camara || ''}" placeholder="Cámara" onchange="actualizarFotoEdicion(${index}, 'camara', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
-            <div>
-              ${index === 0 ? '<span class="badge-main-photo">⭐ Foto Principal (Portada)</span>' : `<button type="button" class="btn-set-main-photo" onclick="hacerFotoPrincipal(${index})">⭐ Marcar como Principal</button>`}
-            </div>
+            <div>${index === 0 ? '<span class="badge-main-photo">⭐ Foto Principal</span>' : `<button type="button" class="btn-set-main-photo" onclick="hacerFotoPrincipal(${index})">⭐ Marcar Principal</button>`}</div>
           </div>
-          <button type="button" class="btn-remove-thumb" title="Eliminar solo esta foto" onclick="eliminarFotoEdicion(event, ${index})">&times;</button>
+          <button type="button" class="btn-remove-thumb" onclick="eliminarFotoEdicion(event, ${index})">&times;</button>
         </div>
       `).join('');
     }
 
-    function actualizarFotoEdicion(index, campo, valor) {
-      if (fotosTemporalesEdicion[index]) {
-        fotosTemporalesEdicion[index][campo] = valor;
-      }
-    }
-
-    function eliminarFotoEdicion(e, index) {
-      e.preventDefault();
-      e.stopPropagation();
-      fotosTemporalesEdicion.splice(index, 1);
-      renderFotosEdicion();
-    }
+    function actualizarFotoEdicion(i, campo, val) { if (fotosTemporalesEdicion[i]) fotosTemporalesEdicion[i][campo] = val; }
+    function eliminarFotoEdicion(e, i) { e.preventDefault(); e.stopPropagation(); fotosTemporalesEdicion.splice(i, 1); renderFotosEdicion(); }
 
     async function guardarCambiosEspecie(e) {
       e.preventDefault();
       const id = parseInt(document.getElementById('editPezId').value);
-      const inputUrlGmaps = document.getElementById('editGmaps').value;
-      const coords = obtenerCoordenadasDeUrl(inputUrlGmaps) || { lat: 36.7342, lng: -3.7378 };
-
       const fileInput = document.getElementById('editFile');
       const urlInput = document.getElementById('editUrl').value;
-      
       let nuevaImagenUrl = null;
-      if (fileInput.files && fileInput.files[0]) {
-        nuevaImagenUrl = await leerImagenComoBase64(fileInput.files[0]);
-      } else if (urlInput.trim() !== '') {
-        nuevaImagenUrl = urlInput.trim();
-      }
+
+      if (fileInput.files && fileInput.files[0]) nuevaImagenUrl = await leerImagenComoBase64(fileInput.files[0]);
+      else if (urlInput.trim() !== '') nuevaImagenUrl = urlInput.trim();
 
       if (nuevaImagenUrl) {
+        const selectLugar = document.getElementById('editLugarSelect').value;
+        const customLugar = document.getElementById('editLugarCustom').value.trim();
+        let lugarFinal = selectLugar === '__NUEVO__' ? customLugar : selectLugar;
+        if (!lugarFinal) lugarFinal = "Ubicación desconocida";
+
+        let coords = obtenerCoordenadasDeUrl(document.getElementById('editGmaps').value);
+        if (!coords && mapaLugaresInfo[lugarFinal]) coords = { lat: mapaLugaresInfo[lugarFinal].lat, lng: mapaLugaresInfo[lugarFinal].lng };
+        if (!coords) coords = { lat: 36.7342, lng: -3.7378 };
+
+        const selectCamara = document.getElementById('editCamaraSelect').value;
+        const customCamara = document.getElementById('editCamaraCustom').value.trim();
+        let camaraFinal = selectCamara === '__NUEVO__' ? customCamara : selectCamara;
+
         fotosTemporalesEdicion.push({
-          url: nuevaImagenUrl,
-          lugar: document.getElementById('editLugar').value || "Ubicación desconocida",
-          tipo: document.getElementById('editTipo').value,
-          profundidad: document.getElementById('editProfundidad').value,
-          camara: document.getElementById('editCamara').value || "No especificada",
-          lat: coords.lat,
-          lng: coords.lng
+          url: nuevaImagenUrl, lugar: lugarFinal, tipo: document.getElementById('editTipo').value,
+          profundidad: document.getElementById('editProfundidad').value, camara: camaraFinal || "No especificada",
+          lat: coords.lat, lng: coords.lng
         });
       }
 
-      if (fotosTemporalesEdicion.length === 0) {
-        alert("La especie debe conservar al menos una imagen. Para eliminar la especie completa, utiliza el botón 'Eliminar toda la especie'.");
-        return;
-      }
-
-      const datosActualizados = {
-        nombre: document.getElementById('editNombre').value,
-        especie: document.getElementById('editEspecie').value || "Especie no especificada",
+      const { error } = await supabaseClient.from('peces').update({
+        nombre: document.getElementById('editNombre').value, especie: document.getElementById('editEspecie').value || "Especie no especificada",
         fotos: fotosTemporalesEdicion
-      };
+      }).eq('id', id);
 
-      const { error } = await supabaseClient.from('peces').update(datosActualizados).eq('id', id);
-
-      if (error) alert("Error al actualizar: " + error.message);
-      else {
-        cerrarModalEditarDirecto();
-        cerrarModalDirecto();
-        cargarPeces();
-      }
+      if (!error) { cerrarModalEditarDirecto(); cerrarModalDirecto(); cargarPeces(); }
     }
 
     async function toggleFav(e, id) {
       e.stopPropagation();
-      if (!usuarioActual) {
-        alert("Inicia sesión para usar favoritos.");
-        abrirModalAuth();
-        return;
-      }
+      if (!usuarioActual) { alert("Inicia sesión."); abrirModalAuth(); return; }
       const pez = listaPeces.find(p => p.id === id);
-      const { error } = await supabaseClient.from('peces').update({ is_fav: !pez.is_fav }).eq('id', id);
-      if (!error) cargarPeces();
+      await supabaseClient.from('peces').update({ is_fav: !pez.is_fav }).eq('id', id);
+      cargarPeces();
     }
 
     function renderPeces() {
@@ -1842,55 +1210,35 @@
       listaPeces.forEach(pez => {
         const esFav = pez.is_fav;
         const fotosValidas = (pez.fotos || []).filter(f => {
-          const cEntorno = filtroEntorno === 'todos' || f.tipo === filtroEntorno;
+          const cEnt = filtroEntorno === 'todos' || f.tipo === filtroEntorno;
           const cUbi = filtroUbicacion === 'todas' || f.lugar === filtroUbicacion;
           const cProf = filtroProf === 'todas' || f.profundidad === filtroProf;
-          return cEntorno && cUbi && cProf;
+          return cEnt && cUbi && cProf;
         });
 
         const cBusqueda = pez.nombre.toLowerCase().includes(busqueda) || pez.especie.toLowerCase().includes(busqueda);
-        const cFav = !soloFavoritos || esFav;
-
-        if (fotosValidas.length > 0 && cBusqueda && cFav) {
+        if (fotosValidas.length > 0 && cBusqueda && (!soloFavoritos || esFav)) {
           const f0 = fotosValidas[0];
           const card = document.createElement('article');
           card.className = 'card-pez';
           card.innerHTML = `
-            <button class="fav-btn ${esFav ? 'active' : ''}" onclick="toggleFav(event, ${pez.id})">
-              ${esFav ? '❤️' : '🤍'}
-            </button>
-            <div class="img-container" onclick="abrirModal(${pez.id})">
-              <span class="badge">${f0.tipo}</span>
-              <img src="${f0.url}" alt="${pez.nombre}">
-            </div>
-            <div class="info" onclick="abrirModal(${pez.id})">
-              <h2>${pez.nombre}</h2>
-              <div class="especie">${pez.especie}</div>
-              <div class="meta-tag">📍 ${f0.lugar} (${f0.profundidad})</div>
-            </div>
+            <button class="fav-btn ${esFav ? 'active' : ''}" onclick="toggleFav(event, ${pez.id})">${esFav ? '❤️' : '🤍'}</button>
+            <div class="img-container" onclick="abrirModal(${pez.id})"><span class="badge">${f0.tipo}</span><img src="${f0.url}" alt="${pez.nombre}"></div>
+            <div class="info" onclick="abrirModal(${pez.id})"><h2>${pez.nombre}</h2><div class="especie">${pez.especie}</div><div class="meta-tag">📍 ${f0.lugar} (${f0.profundidad})</div></div>
           `;
-          card.addEventListener('mousemove', handleHoloEffect);
-          card.addEventListener('mouseleave', resetHoloEffect);
           grid.appendChild(card);
         }
       });
     }
 
     function toggleFormulario() {
-      if (!usuarioActual) {
-        alert("Inicia sesión para subir especies.");
-        abrirModalAuth();
-        return;
-      }
-      const p = document.getElementById('panelFormulario');
-      p.style.display = p.style.display === 'block' ? 'none' : 'block';
+      if (!usuarioActual) { alert("Inicia sesión."); abrirModalAuth(); return; }
+      const p = document.getElementById('panelFormulario'); p.style.display = p.style.display === 'block' ? 'none' : 'block';
     }
 
     function toggleFiltroFav() { soloFavoritos = !soloFavoritos; const b = document.getElementById('btnFavoritos'); b.classList.toggle('active', soloFavoritos); b.innerText = soloFavoritos ? '❤️ Ver Favoritos' : '🤍 Mis Favoritos'; renderPeces(); }
     function obtenerCoordenadasDeUrl(t) { if (!t) return null; const m = t.match(/@(-?\d+\.\d+),(-?\d+\.\d+)|q=(-?\d+\.\d+),(-?\d+\.\d+)|(-?\d+\.\d+),\s*(-?\d+\.\d+)/); return m ? { lat: parseFloat(m[1]||m[3]||m[5]), lng: parseFloat(m[2]||m[4]||m[6]) } : null; }
     function leerImagenComoBase64(f) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = e => rej(e); r.readAsDataURL(f); }); }
-    function handleHoloEffect(e) { const c = e.currentTarget, r = c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; c.style.transform = `perspective(1000px) rotateX(${((y - r.height/2)/(r.height/2))*-4}deg) rotateY(${((x - r.width/2)/(r.width/2))*4}deg) translateY(-4px)`; }
-    function resetHoloEffect(e) { e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)'; }
 
     function actualizarVisor() { 
       if (!fotosModalActuales || fotosModalActuales.length === 0) return;
@@ -1906,32 +1254,14 @@
     function actualizarMapa(lat, lng, t) { setTimeout(() => { if (!mapInstance) { mapInstance = L.map('mapaAvistamiento').setView([lat, lng], 13); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance); markerInstance = L.marker([lat, lng]).addTo(mapInstance); } else { mapInstance.setView([lat, lng], 13); markerInstance.setLatLng([lat, lng]); } markerInstance.bindPopup(t).openPopup(); mapInstance.invalidateSize(); }, 200); }
     function cambiarFoto(e, d) { if(e) e.stopPropagation(); indiceFotoActual = (indiceFotoActual + d + fotosModalActuales.length) % fotosModalActuales.length; actualizarVisor(); }
     function seleccionarFoto(i) { indiceFotoActual = i; actualizarVisor(); }
-    
     function cerrarModalDirecto() { document.getElementById('miModal').style.display = 'none'; idPezActualModal = null; }
     function cerrarModalEditarDirecto() { document.getElementById('modalEditar').style.display = 'none'; }
-    
     function abrirVentanaZoom() { document.getElementById('zoomImage').src = document.getElementById('modalMainImg').src; resetTransformations(); document.getElementById('zoomModal').style.display = 'flex'; }
     function cerrarVentanaZoomDirecto() { document.getElementById('zoomModal').style.display = 'none'; }
     function aplicarTransformacion() { document.getElementById('zoomImage').style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomScale})`; }
     function ajustarZoomManual(d) { zoomScale = Math.min(Math.max(1, zoomScale + d), 5); if (zoomScale === 1) { translateX = 0; translateY = 0; } aplicarTransformacion(); }
     function resetTransformations() { zoomScale = 1; translateX = 0; translateY = 0; aplicarTransformacion(); }
 
-    document.getElementById('zoomViewport').addEventListener('wheel', (e) => { e.preventDefault(); ajustarZoomManual(e.deltaY < 0 ? 0.2 : -0.2); });
-    document.getElementById('zoomViewport').addEventListener('mousedown', (e) => { if (zoomScale > 1) { isDragging = true; startX = e.clientX - translateX; startY = e.clientY - translateY; } });
-    window.addEventListener('mousemove', (e) => { if (isDragging) { translateX = e.clientX - startX; translateY = e.clientY - startY; aplicarTransformacion(); } });
-    window.addEventListener('mouseup', () => { isDragging = false; });
-
-    // Navegación rápida por Teclado
-    window.addEventListener('keydown', (e) => {
-      const modalVisor = document.getElementById('miModal');
-      if (modalVisor.style.display === 'flex') {
-        if (e.key === 'ArrowLeft') cambiarFoto(null, -1);
-        else if (e.key === 'ArrowRight') cambiarFoto(null, 1);
-        else if (e.key === 'Escape') cerrarModalDirecto();
-      }
-    });
-
-    // Inicialización
     chequearSesion();
   </script>
 </body>
