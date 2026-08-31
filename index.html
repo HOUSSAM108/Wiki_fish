@@ -170,6 +170,11 @@
 
     .thumb-edit-card { border: 1px solid var(--border); background: rgba(255, 255, 255, 0.03); border-radius: 10px; padding: 12px; display: flex; gap: 12px; align-items: center; width: 100%; position: relative; }
     .thumb-edit-card.is-main { border: 1px solid var(--accent); background: rgba(0, 180, 216, 0.08); }
+    
+    .thumb-preview-box { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .btn-replace-img { background: rgba(0, 180, 216, 0.2); border: 1px solid var(--accent); color: var(--text); padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+    .btn-replace-img:hover { background: var(--accent); color: #000; }
+
     .badge-main-photo { font-size: 0.7rem; background: var(--accent); color: #030712; font-weight: bold; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-top: 4px; }
     .btn-set-main-photo { background: rgba(0, 180, 216, 0.15); border: 1px solid var(--accent); color: var(--accent); padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; margin-top: 4px; }
     .btn-set-main-photo:hover { background: var(--accent); color: #030712; }
@@ -476,7 +481,7 @@
         <input type="text" id="editEspecie" class="search-bar" placeholder="Especie">
         
         <div class="full-width">
-          <label class="file-input-label">🖼️ Fotos asociadas (Elige la foto principal o elimina las que no quieras):</label>
+          <label class="file-input-label">🖼️ Fotos asociadas (Elige la foto principal, reemplaza la imagen o elimina las sobrantes):</label>
           <div id="listaFotosEditar" style="display: flex; flex-direction: column; gap: 10px; margin: 10px 0;"></div>
         </div>
 
@@ -1125,13 +1130,30 @@
       renderFotosEdicion();
     }
 
-    /* RENDER FOTOS EN EDICIÓN CON DESPLEGABLES DE ENTORNO Y PROFUNDIDAD INCLUIDOS */
+    /* REEMPLAZAR IMAGEN ESPECÍFICA DE LA TARJETA */
+    function seleccionarNuevaFotoEspecifica(index) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = async (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const nuevaUrl = await leerImagenComoBase64(e.target.files[0]);
+          fotosTemporalesEdicion[index].url = nuevaUrl;
+          renderFotosEdicion();
+        }
+      };
+      input.click();
+    }
+
     function renderFotosEdicion() {
       const cont = document.getElementById('listaFotosEditar');
       if (fotosTemporalesEdicion.length === 0) { cont.innerHTML = '<p style="color:var(--danger)">Sin fotos.</p>'; return; }
       cont.innerHTML = fotosTemporalesEdicion.map((f, index) => `
         <div class="thumb-edit-card ${index === 0 ? 'is-main' : ''}">
-          <img src="${f.url}" style="width: 75px; height: 60px; object-fit: cover; border-radius: 8px;">
+          <div class="thumb-preview-box">
+            <img src="${f.url}" style="width: 75px; height: 60px; object-fit: cover; border-radius: 8px;">
+            <button type="button" class="btn-replace-img" onclick="seleccionarNuevaFotoEspecifica(${index})">🔄 Cambiar</button>
+          </div>
           <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
             <input type="text" class="search-bar" value="${f.lugar || ''}" placeholder="Lugar" onchange="actualizarFotoEdicion(${index}, 'lugar', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
             
@@ -1195,7 +1217,12 @@
         fotos: fotosTemporalesEdicion
       }).eq('id', id);
 
-      if (!error) { cerrarModalEditarDirecto(); cerrarModalDirecto(); cargarPeces(); }
+      if (!error) { 
+        document.getElementById('formEditarEspecie').reset();
+        cerrarModalEditarDirecto(); 
+        cerrarModalDirecto(); 
+        cargarPeces(); 
+      }
     }
 
     async function toggleFav(e, id) {
