@@ -168,7 +168,7 @@
     .btn-delete-modal { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); padding: 10px 18px; border-radius: 10px; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px; }
     .btn-delete-modal:hover { background: var(--danger); color: #fff; }
 
-    .thumb-edit-card { border: 1px solid var(--border); background: rgba(255, 255, 255, 0.03); border-radius: 10px; padding: 10px; display: flex; gap: 12px; align-items: center; width: 100%; position: relative; }
+    .thumb-edit-card { border: 1px solid var(--border); background: rgba(255, 255, 255, 0.03); border-radius: 10px; padding: 12px; display: flex; gap: 12px; align-items: center; width: 100%; position: relative; }
     .thumb-edit-card.is-main { border: 1px solid var(--accent); background: rgba(0, 180, 216, 0.08); }
     .badge-main-photo { font-size: 0.7rem; background: var(--accent); color: #030712; font-weight: bold; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-top: 4px; }
     .btn-set-main-photo { background: rgba(0, 180, 216, 0.15); border: 1px solid var(--accent); color: var(--accent); padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; margin-top: 4px; }
@@ -555,7 +555,6 @@
     </div>
   </div>
 
-  <!-- VENTANA ZOOM MEJORADA PARA MÓVIL Y ESCRITORIO -->
   <div id="zoomModal" class="zoom-modal">
     <div class="zoom-viewport" id="zoomViewport">
       <img id="zoomImage" src="" alt="Vista ampliada">
@@ -591,7 +590,6 @@
     let mapInstance = null, markerInstance = null;
     let zoomScale = 1, translateX = 0, translateY = 0, isDragging = false, startX = 0, startY = 0;
 
-    // Variables para el control multitáctil en dispositivos móviles
     let distInicialPinch = 0;
     let zoomInicialPinch = 1;
     let ultimoToqueTiempo = 0;
@@ -1127,14 +1125,29 @@
       renderFotosEdicion();
     }
 
+    /* RENDER FOTOS EN EDICIÓN CON DESPLEGABLES DE ENTORNO Y PROFUNDIDAD INCLUIDOS */
     function renderFotosEdicion() {
       const cont = document.getElementById('listaFotosEditar');
       if (fotosTemporalesEdicion.length === 0) { cont.innerHTML = '<p style="color:var(--danger)">Sin fotos.</p>'; return; }
       cont.innerHTML = fotosTemporalesEdicion.map((f, index) => `
         <div class="thumb-edit-card ${index === 0 ? 'is-main' : ''}">
-          <img src="${f.url}" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px;">
-          <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+          <img src="${f.url}" style="width: 75px; height: 60px; object-fit: cover; border-radius: 8px;">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
             <input type="text" class="search-bar" value="${f.lugar || ''}" placeholder="Lugar" onchange="actualizarFotoEdicion(${index}, 'lugar', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
+            
+            <div style="display: flex; gap: 6px;">
+              <select class="custom-select" onchange="actualizarFotoEdicion(${index}, 'tipo', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
+                <option value="Playa" ${f.tipo === 'Playa' ? 'selected' : ''}>🏖️ Playa</option>
+                <option value="Cala" ${f.tipo === 'Cala' ? 'selected' : ''}>🪨 Cala</option>
+              </select>
+
+              <select class="custom-select" onchange="actualizarFotoEdicion(${index}, 'profundidad', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
+                <option value="0-2m" ${f.profundidad === '0-2m' ? 'selected' : ''}>Superficie (0-2m)</option>
+                <option value="2-5m" ${f.profundidad === '2-5m' ? 'selected' : ''}>Poco profundo (2-5m)</option>
+                <option value="5m+" ${f.profundidad === '5m+' ? 'selected' : ''}>Buceo profundo (5m+)</option>
+              </select>
+            </div>
+
             <input type="text" class="search-bar" value="${f.camara || ''}" placeholder="Cámara" onchange="actualizarFotoEdicion(${index}, 'camara', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
             <div>${index === 0 ? '<span class="badge-main-photo">⭐ Foto Principal</span>' : `<button type="button" class="btn-set-main-photo" onclick="hacerFotoPrincipal(${index})">⭐ Marcar Principal</button>`}</div>
           </div>
@@ -1256,10 +1269,8 @@
     function ajustarZoomManual(d) { zoomScale = Math.min(Math.max(1, zoomScale + d), 5); if (zoomScale === 1) { translateX = 0; translateY = 0; } aplicarTransformacion(); }
     function resetTransformations() { zoomScale = 1; translateX = 0; translateY = 0; aplicarTransformacion(); }
 
-    // === LÓGICA DE ZOOM Y ARRASTRE TÁCTIL NATIVO PARA MÓVILES ===
     const viewportElem = document.getElementById('zoomViewport');
 
-    // Función auxiliar para medir la distancia entre 2 dedos
     function getDistance(t1, t2) {
       const dx = t1.clientX - t2.clientX;
       const dy = t1.clientY - t2.clientY;
@@ -1267,7 +1278,6 @@
     }
 
     viewportElem.addEventListener('touchstart', (e) => {
-      // Detección de Doble Tap para restablecer zoom rápidamente
       const ahora = Date.now();
       if (e.touches.length === 1 && ahora - ultimoToqueTiempo < 300) {
         if (zoomScale > 1) resetTransformations();
@@ -1278,11 +1288,9 @@
       ultimoToqueTiempo = ahora;
 
       if (e.touches.length === 2) {
-        // Pinch-to-zoom con dos dedos
         distInicialPinch = getDistance(e.touches[0], e.touches[1]);
         zoomInicialPinch = zoomScale;
       } else if (e.touches.length === 1 && zoomScale > 1) {
-        // Arrastrar la imagen cuando hay zoom activo
         isDragging = true;
         startX = e.touches[0].clientX - translateX;
         startY = e.touches[0].clientY - translateY;
@@ -1309,7 +1317,6 @@
     viewportElem.addEventListener('touchend', (e) => {
       if (e.touches.length < 2) distInicialPinch = 0;
       if (e.touches.length === 0) isDragging = false;
-      // Al retirar las manos, no se resetea zoomScale, se mantiene guardado exactamente como se dejó.
     });
 
     chequearSesion();
