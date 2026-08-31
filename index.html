@@ -202,7 +202,7 @@
     .close-btn { position: absolute; top: 15px; right: 15px; color: #fff; font-size: 24px; cursor: pointer; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
     .zoom-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); z-index: 2000; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
-    .zoom-viewport { width: 90vw; height: 80vh; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; cursor: grab; }
+    .zoom-viewport { width: 90vw; height: 80vh; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; cursor: grab; touch-action: none; }
     .zoom-viewport:active { cursor: grabbing; }
     .zoom-viewport img { max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: center center; transition: transform 0.05s ease-out; user-select: none; }
 
@@ -248,7 +248,7 @@
     .math-expression { font-size: 1.8rem; font-weight: 900; color: #fff; letter-spacing: 2px; margin: 10px 0; }
     .warning-text-danger { color: var(--danger) !important; font-weight: 700; display: block; margin-top: 8px; }
 
-    img { user-select: none !important; -webkit-user-drag: none !important; -webkit-user-select: none !important; touch-action: pan-x pan-y; }
+    img { user-select: none !important; -webkit-user-drag: none !important; -webkit-user-select: none !important; }
   </style>
 </head>
 <body>
@@ -301,12 +301,10 @@
       </button>
     </div>
 
-    <!-- FORMULARIO CON OPCIONES DESACTIVADAS POR DEFECTO -->
     <div id="panelFormulario" class="form-panel">
       <h3>➕ Registrar nueva especie</h3>
       <form id="formEspecie" class="form-grid" onsubmit="guardarNuevaEspecie(event)">
         
-        <!-- DESPLEGABLE NOMBRE COMÚN -->
         <div class="select-wrapper">
           <select id="addNombreSelect" class="custom-select" onchange="gestionarSeleccionNombre('add')">
             <option value="" disabled selected>🐟 Seleccionar pez registrado...</option>
@@ -315,7 +313,6 @@
         </div>
         <input type="text" id="addNombreCustom" class="search-bar" placeholder="Nombre común (ej: Sargo) *" style="display: none;" onkeyup="autocompletarEspeciePorTexto('add')">
 
-        <!-- DESPLEGABLE ESPECIE -->
         <div class="select-wrapper">
           <select id="addEspecieSelect" class="custom-select" onchange="gestionarCampoSeleccionado('add', 'Especie')">
             <option value="" disabled selected>🧬 Seleccionar especie registrada...</option>
@@ -331,7 +328,6 @@
 
         <input type="url" id="addUrl" class="search-bar full-width" placeholder="O pega la URL de una Imagen web (opcional)">
 
-        <!-- DESPLEGABLE LUGAR / UBICACIÓN INTELIGENTE -->
         <div class="select-wrapper">
           <select id="addLugarSelect" class="custom-select" onchange="gestionarLugarSeleccionado('add')">
             <option value="" disabled selected>📍 Seleccionar lugar habitual...</option>
@@ -351,7 +347,6 @@
           <option value="5m+">Buceo profundo (5m+)</option>
         </select>
 
-        <!-- DESPLEGABLE CÁMARA INTELIGENTE -->
         <div class="select-wrapper">
           <select id="addCamaraSelect" class="custom-select" onchange="gestionarCampoSeleccionado('add', 'Camara')">
             <option value="" disabled selected>📷 Seleccionar cámara habitual...</option>
@@ -373,7 +368,6 @@
     🐟
   </button>
 
-  <!-- MODAL DE CHAT -->
   <div id="modalChat" class="modal">
     <div class="modal-wrapper" style="max-width: 800px; padding: 20px;">
       <span class="close-btn" onclick="cerrarModalChat()">&times;</span>
@@ -399,7 +393,6 @@
     </div>
   </div>
 
-  <!-- MODAL EDITAR PERFIL -->
   <div id="modalPerfil" class="modal">
     <div class="modal-wrapper" style="padding: 25px; max-width: 420px;">
       <span class="close-btn" onclick="cerrarModalPerfilDirecto()">&times;</span>
@@ -416,7 +409,6 @@
     </div>
   </div>
 
-  <!-- MODAL AUTENTICACIÓN -->
   <div id="modalAuth" class="modal">
     <div class="modal-wrapper" style="padding: 25px; max-width: 420px;">
       <span class="close-btn" onclick="cerrarModalAuthDirecto()">&times;</span>
@@ -442,7 +434,6 @@
     </div>
   </div>
 
-  <!-- MODAL PRINCIPAL DE ESPECIE -->
   <div id="miModal" class="modal">
     <div class="modal-wrapper">
       <span class="btn-cerrar-principal" onclick="cerrarModalDirecto()">&times;</span>
@@ -473,7 +464,6 @@
     </div>
   </div>
 
-  <!-- MODAL DE EDICIÓN DE ESPECIE -->
   <div id="modalEditar" class="modal">
     <div class="modal-wrapper" style="padding: 25px;">
       <span class="close-btn" onclick="cerrarModalEditarDirecto()">&times;</span>
@@ -534,7 +524,6 @@
     </div>
   </div>
 
-  <!-- MODALES DE CONFIRMACIÓN Y ZOOM -->
   <div id="modalConfirmarBorrarFoto" class="modal">
     <div class="modal-wrapper warning-box" style="padding: 25px; max-width: 420px; text-align: center;">
       <span class="close-btn" onclick="cerrarModalConfirmarFoto()">&times;</span>
@@ -566,6 +555,7 @@
     </div>
   </div>
 
+  <!-- VENTANA ZOOM MEJORADA PARA MÓVIL Y ESCRITORIO -->
   <div id="zoomModal" class="zoom-modal">
     <div class="zoom-viewport" id="zoomViewport">
       <img id="zoomImage" src="" alt="Vista ampliada">
@@ -573,12 +563,11 @@
     <div class="zoom-controls">
       <button class="zoom-btn" onclick="ajustarZoomManual(0.25)">+</button>
       <button class="zoom-btn" onclick="ajustarZoomManual(-0.25)">-</button>
-      <button class="zoom-btn" onclick="resetTransformations()">🔄</button>
+      <button class="zoom-btn" onclick="resetTransformations()" title="Restablecer zoom">🔄</button>
       <button class="btn-volver-atras" onclick="cerrarVentanaZoomDirecto()">⬅ Volver Atrás</button>
     </div>
   </div>
 
-  <!-- SCRIPT PRINCIPAL -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   
@@ -601,6 +590,11 @@
     let indiceFotoActual = 0;
     let mapInstance = null, markerInstance = null;
     let zoomScale = 1, translateX = 0, translateY = 0, isDragging = false, startX = 0, startY = 0;
+
+    // Variables para el control multitáctil en dispositivos móviles
+    let distInicialPinch = 0;
+    let zoomInicialPinch = 1;
+    let ultimoToqueTiempo = 0;
 
     let sumaCorrectaEsperada = 0;
     let idPezABorrarPendiente = null;
@@ -1261,6 +1255,62 @@
     function aplicarTransformacion() { document.getElementById('zoomImage').style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomScale})`; }
     function ajustarZoomManual(d) { zoomScale = Math.min(Math.max(1, zoomScale + d), 5); if (zoomScale === 1) { translateX = 0; translateY = 0; } aplicarTransformacion(); }
     function resetTransformations() { zoomScale = 1; translateX = 0; translateY = 0; aplicarTransformacion(); }
+
+    // === LÓGICA DE ZOOM Y ARRASTRE TÁCTIL NATIVO PARA MÓVILES ===
+    const viewportElem = document.getElementById('zoomViewport');
+
+    // Función auxiliar para medir la distancia entre 2 dedos
+    function getDistance(t1, t2) {
+      const dx = t1.clientX - t2.clientX;
+      const dy = t1.clientY - t2.clientY;
+      return Math.hypot(dx, dy);
+    }
+
+    viewportElem.addEventListener('touchstart', (e) => {
+      // Detección de Doble Tap para restablecer zoom rápidamente
+      const ahora = Date.now();
+      if (e.touches.length === 1 && ahora - ultimoToqueTiempo < 300) {
+        if (zoomScale > 1) resetTransformations();
+        else ajustarZoomManual(1.5);
+        ultimoToqueTiempo = 0;
+        return;
+      }
+      ultimoToqueTiempo = ahora;
+
+      if (e.touches.length === 2) {
+        // Pinch-to-zoom con dos dedos
+        distInicialPinch = getDistance(e.touches[0], e.touches[1]);
+        zoomInicialPinch = zoomScale;
+      } else if (e.touches.length === 1 && zoomScale > 1) {
+        // Arrastrar la imagen cuando hay zoom activo
+        isDragging = true;
+        startX = e.touches[0].clientX - translateX;
+        startY = e.touches[0].clientY - translateY;
+      }
+    }, { passive: false });
+
+    viewportElem.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const distActual = getDistance(e.touches[0], e.touches[1]);
+        if (distInicialPinch > 0) {
+          const factor = distActual / distInicialPinch;
+          zoomScale = Math.min(Math.max(1, zoomInicialPinch * factor), 5);
+          aplicarTransformacion();
+        }
+      } else if (e.touches.length === 1 && isDragging) {
+        e.preventDefault();
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        aplicarTransformacion();
+      }
+    }, { passive: false });
+
+    viewportElem.addEventListener('touchend', (e) => {
+      if (e.touches.length < 2) distInicialPinch = 0;
+      if (e.touches.length === 0) isDragging = false;
+      // Al retirar las manos, no se resetea zoomScale, se mantiene guardado exactamente como se dejó.
+    });
 
     chequearSesion();
   </script>
