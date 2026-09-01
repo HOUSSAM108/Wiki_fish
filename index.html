@@ -119,6 +119,13 @@
     }
     .btn-submit:hover { background: var(--accent); box-shadow: 0 0 15px rgba(0, 180, 216, 0.4); }
 
+    .btn-delete-account {
+      background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid var(--danger); border-radius: 12px;
+      padding: 10px; font-weight: 700; cursor: pointer; transition: all 0.25s ease; width: 100%;
+      text-transform: uppercase; letter-spacing: 1px; margin-top: 10px;
+    }
+    .btn-delete-account:hover { background: var(--danger); color: #fff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+
     .search-bar {
       width: 100%; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--border);
       background: var(--select-bg); color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; transition: all 0.25s ease;
@@ -204,7 +211,29 @@
     .modal-info { padding: 20px; }
     #mapaAvistamiento { width: 100%; height: 200px; border-radius: 12px; margin-top: 15px; border: 1px solid var(--border); }
 
-    .close-btn { position: absolute; top: 15px; right: 15px; color: #fff; font-size: 24px; cursor: pointer; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; }
+    /* FIX: Cruz ajustada para evitar la pestaña de registrarse */
+    .close-btn { 
+      position: absolute; 
+      top: 12px; 
+      right: 12px; 
+      color: #fff; 
+      font-size: 18px; 
+      cursor: pointer; 
+      background: rgba(15, 23, 42, 0.9); 
+      width: 30px; 
+      height: 30px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 20; 
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+    .close-btn:hover {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
 
     .zoom-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); z-index: 2000; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
     .zoom-viewport { width: 90vw; height: 80vh; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; cursor: grab; touch-action: none; }
@@ -218,7 +247,8 @@
     .btn-volver-atras { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); color: #fff; padding: 8px 16px; border-radius: 20px; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; }
     .btn-volver-atras:hover { background: rgba(239, 68, 68, 0.9); }
 
-    .auth-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+    /* FIX: Margen superior en los tabs para dejar espacio libre a la cruz */
+    .auth-tabs { display: flex; gap: 10px; margin-bottom: 15px; margin-top: 15px; }
     .auth-tab { flex: 1; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; border-radius: 8px; text-align: center; font-weight: bold; }
     .auth-tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
 
@@ -249,6 +279,9 @@
 
     .danger-box { border: 2px solid var(--danger) !important; box-shadow: 0 0 35px rgba(239, 68, 68, 0.35) !important; }
     .warning-box { border: 2px solid var(--warning) !important; box-shadow: 0 0 35px rgba(245, 158, 11, 0.35) !important; }
+    .success-box { border: 2px solid var(--success) !important; box-shadow: 0 0 35px rgba(16, 185, 129, 0.35) !important; }
+    .info-box { border: 2px solid var(--accent) !important; box-shadow: 0 0 35px rgba(0, 180, 216, 0.35) !important; }
+
     .math-challenge-box { background: rgba(239, 68, 68, 0.1); border: 1px dashed var(--danger); border-radius: 12px; padding: 15px; margin: 15px 0; text-align: center; }
     .math-expression { font-size: 1.8rem; font-weight: 900; color: #fff; letter-spacing: 2px; margin: 10px 0; }
     .warning-text-danger { color: var(--danger) !important; font-weight: 700; display: block; margin-top: 8px; }
@@ -401,15 +434,19 @@
   <div id="modalPerfil" class="modal">
     <div class="modal-wrapper" style="padding: 25px; max-width: 420px;">
       <span class="close-btn" onclick="cerrarModalPerfilDirecto()">&times;</span>
-      <h3 style="color: var(--accent); text-transform: uppercase; margin-bottom: 15px; text-align: center;">⚙️ Mi Perfil</h3>
+      <h3 style="color: var(--accent); text-transform: uppercase; margin-bottom: 15px; text-align: center;">⚙️ Modificar Perfil</h3>
       
       <form id="formPerfil" onsubmit="guardarPerfilUsuario(event)" style="display: flex; flex-direction: column; gap: 12px;">
+        <label class="file-input-label">Información Personal:</label>
         <input type="text" id="editPerfilNombre" class="search-bar" placeholder="Nombre *" required>
         <input type="text" id="editPerfilApellido" class="search-bar" placeholder="Apellido *" required>
         <input type="text" id="editPerfilNickname" class="search-bar" placeholder="Nickname / Apodo *" required>
-        <input type="email" id="editPerfilEmail" class="search-bar" placeholder="Correo electrónico" disabled style="opacity: 0.6; cursor: not-allowed;">
+        
+        <label class="file-input-label" style="margin-top: 8px;">Cambiar Contraseña (Opcional):</label>
+        <input type="password" id="editPerfilPassword" class="search-bar" placeholder="Nueva contraseña (mínimo 6 caracteres)" minlength="6">
 
-        <button type="submit" class="btn-submit">Actualizar Perfil</button>
+        <button type="submit" class="btn-submit" style="margin-top: 10px;">Guardar Cambios</button>
+        <button type="button" class="btn-delete-account" onclick="solicitarBorradoCuenta()">🗑️ Borrar Mi Cuenta</button>
       </form>
     </div>
   </div>
@@ -428,14 +465,51 @@
           <input type="text" id="authNombre" class="search-bar" placeholder="Nombre *">
           <input type="text" id="authApellido" class="search-bar" placeholder="Apellido *">
           <input type="text" id="authNickname" class="search-bar" placeholder="Nickname / Apodo *">
-          <input type="email" id="authEmail" class="search-bar" placeholder="Correo electrónico *">
         </div>
 
-        <input type="text" id="authIdentifier" class="search-bar" placeholder="Nickname o Correo electrónico *" required>
+        <div id="campoLogin">
+          <input type="text" id="authIdentifier" class="search-bar" placeholder="Nickname *" required>
+        </div>
+
         <input type="password" id="authPassword" class="search-bar" placeholder="Contraseña *" required minlength="6">
         
         <button type="submit" id="btnSubmitAuth" class="btn-submit">Ingresar</button>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL PRO DE NOTIFICACIÓN / MENSAJES -->
+  <div id="modalNotificacion" class="modal">
+    <div id="wrapperNotificacion" class="modal-wrapper info-box" style="padding: 25px; max-width: 420px; text-align: center;">
+      <div id="iconoNotificacion" style="font-size: 3rem; margin-bottom: 10px;">ℹ️</div>
+      <h3 id="tituloNotificacion" style="color: var(--accent); text-transform: uppercase; margin-bottom: 10px; font-size: 1.2rem;">Aviso</h3>
+      <p id="mensajeNotificacion" style="font-size: 0.92rem; color: #f8fafc; line-height: 1.5; margin-bottom: 20px;"></p>
+      <button type="button" class="btn-submit" id="btnAceptarNotificacion" onclick="cerrarNotificacion()">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONFIRMACIÓN CUSTOM PARA ACCIONES CRÍTICAS -->
+  <div id="modalConfirmacionGenerica" class="modal">
+    <div class="modal-wrapper danger-box" style="padding: 25px; max-width: 420px; text-align: center;">
+      <span class="close-btn" onclick="cerrarModalConfirmacionGenerica()">&times;</span>
+      <h3 id="tituloConfirmacion" style="color: var(--danger); text-transform: uppercase; margin-bottom: 12px; font-size: 1.1rem;">⚠️ ¿Confirmar acción?</h3>
+      <p id="textoConfirmacion" style="font-size: 0.9rem; color: #f8fafc; margin-bottom: 20px; line-height: 1.4;"></p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button type="button" class="btn-submit" style="background: rgba(255,255,255,0.1); border-color: var(--border); flex: 1;" onclick="cerrarModalConfirmacionGenerica()">❌ Cancelar</button>
+        <button type="button" id="btnEjecutarConfirmacion" class="btn-submit" style="background: var(--danger); border-color: var(--danger); flex: 1;">✅ Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PRO DE ÉXITO EN REGISTRO -->
+  <div id="modalExitoRegistro" class="modal">
+    <div class="modal-wrapper success-box" style="padding: 30px; max-width: 420px; text-align: center;">
+      <div style="font-size: 3.5rem; margin-bottom: 10px;">🐠</div>
+      <h3 style="color: var(--success); text-transform: uppercase; margin-bottom: 10px; font-size: 1.3rem;">¡Bienvenido a Wiki Fish!</h3>
+      <p style="font-size: 0.95rem; color: #f8fafc; line-height: 1.5; margin-bottom: 20px;">
+        Tu cuenta <strong id="nickBienvenida" style="color: var(--accent);"></strong> ha sido creada con éxito. Ya puedes comenzar a registrar capturas y explorar el catálogo marino.
+      </p>
+      <button type="button" class="btn-submit" style="background: var(--success); border-color: var(--success); color: #030712; font-size: 0.95rem;" onclick="cerrarModalExitoRegistro()">🚀 Comenzar</button>
     </div>
   </div>
 
@@ -607,6 +681,43 @@
     let canalChatRealtime = null;
     let listaUsuariosChat = [];
 
+    // === SISTEMA DE NOTIFICACIONES REEMPLAZO DE ALERT Y CONFIRM ===
+    function mostrarNotificacion({ titulo = "Aviso", mensaje = "", tipo = "info" }) {
+      const wrapper = document.getElementById('wrapperNotificacion');
+      const icono = document.getElementById('iconoNotificacion');
+      const btn = document.getElementById('btnAceptarNotificacion');
+      
+      wrapper.className = "modal-wrapper " + (tipo === 'success' ? 'success-box' : tipo === 'danger' ? 'danger-box' : tipo === 'warning' ? 'warning-box' : 'info-box');
+      icono.innerText = tipo === 'success' ? '✨' : tipo === 'danger' ? '⚠️' : tipo === 'warning' ? '⚡' : 'ℹ️';
+      
+      document.getElementById('tituloNotificacion').innerText = titulo;
+      document.getElementById('mensajeNotificacion').innerText = mensaje;
+      
+      if(tipo === 'success') {
+        btn.style.background = 'var(--success)';
+        btn.style.borderColor = 'var(--success)';
+        btn.style.color = '#030712';
+      } else if (tipo === 'danger') {
+        btn.style.background = 'var(--danger)';
+        btn.style.borderColor = 'var(--danger)';
+        btn.style.color = '#ffffff';
+      } else {
+        btn.style.background = 'var(--primary)';
+        btn.style.borderColor = 'var(--accent)';
+        btn.style.color = '#ffffff';
+      }
+
+      document.getElementById('modalNotificacion').style.display = 'flex';
+    }
+
+    function cerrarNotificacion() {
+      document.getElementById('modalNotificacion').style.display = 'none';
+    }
+
+    function cerrarModalConfirmacionGenerica() {
+      document.getElementById('modalConfirmacionGenerica').style.display = 'none';
+    }
+
     async function chequearSesion() {
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
@@ -622,7 +733,7 @@
 
     async function cargarPerfilUsuario() {
       if (!usuarioActual) return;
-      const { data } = await supabaseClient.from('profiles').select('*').eq('id', usuarioActual.id).single();
+      const { data } = await supabaseClient.from('profiles').select('*').eq('id', usuarioActual.id).maybeSingle();
       if (data) perfilUsuario = data;
     }
 
@@ -647,7 +758,11 @@
 
     // === CHAT ===
     async function abrirModalChat() {
-      if (!usuarioActual) { alert("Debes iniciar sesión para acceder al chat."); abrirModalAuth(); return; }
+      if (!usuarioActual) { 
+        mostrarNotificacion({ titulo: "Acceso Restringido", mensaje: "Debes iniciar sesión para acceder al chat.", tipo: "warning" }); 
+        abrirModalAuth(); 
+        return; 
+      }
       document.getElementById('modalChat').style.display = 'flex';
       await cargarListaUsuariosChat();
       seleccionarChatPublico();
@@ -754,55 +869,156 @@
       document.getElementById('editPerfilNombre').value = perfilUsuario.nombre || '';
       document.getElementById('editPerfilApellido').value = perfilUsuario.apellido || '';
       document.getElementById('editPerfilNickname').value = perfilUsuario.nickname || '';
-      document.getElementById('editPerfilEmail').value = usuarioActual.email;
+      document.getElementById('editPerfilPassword').value = '';
       document.getElementById('modalPerfil').style.display = 'flex';
     }
     function cerrarModalPerfilDirecto() { document.getElementById('modalPerfil').style.display = 'none'; }
 
     async function guardarPerfilUsuario(e) {
       e.preventDefault();
-      const { error } = await supabaseClient.from('profiles').update({
-        nombre: document.getElementById('editPerfilNombre').value.trim(),
-        apellido: document.getElementById('editPerfilApellido').value.trim(),
-        nickname: document.getElementById('editPerfilNickname').value.trim()
+      const nuevoNombre = document.getElementById('editPerfilNombre').value.trim();
+      const nuevoApellido = document.getElementById('editPerfilApellido').value.trim();
+      const nuevoNickname = document.getElementById('editPerfilNickname').value.trim();
+      const nuevaPassword = document.getElementById('editPerfilPassword').value.trim();
+
+      const { error: profileError } = await supabaseClient.from('profiles').update({
+        nombre: nuevoNombre,
+        apellido: nuevoApellido,
+        nickname: nuevoNickname
       }).eq('id', usuarioActual.id);
-      if (error) alert("Error: " + error.message);
-      else { alert("¡Perfil actualizado!"); cerrarModalPerfilDirecto(); await cargarPerfilUsuario(); actualizarInterfazAuth(); }
+
+      if (profileError) {
+        mostrarNotificacion({ titulo: "Error", mensaje: "Error al actualizar información: " + profileError.message, tipo: "danger" });
+        return;
+      }
+
+      if (nuevaPassword !== '') {
+        const { error: passError } = await supabaseClient.auth.updateUser({ password: nuevaPassword });
+        if (passError) {
+          mostrarNotificacion({ titulo: "Atención", mensaje: "Los datos se guardaron, pero hubo un error con la contraseña: " + passError.message, tipo: "warning" });
+          return;
+        }
+      }
+
+      mostrarNotificacion({ titulo: "Perfil Actualizado", mensaje: "¡Tu perfil ha sido modificado con éxito!", tipo: "success" });
+      cerrarModalPerfilDirecto();
+      await cargarPerfilUsuario();
+      actualizarInterfazAuth();
+    }
+
+    function solicitarBorradoCuenta() {
+      document.getElementById('tituloConfirmacion').innerText = "⚠️ Eliminar Cuenta";
+      document.getElementById('textoConfirmacion').innerHTML = "¿Estás seguro de que deseas eliminar tu cuenta permanentemente?<br><span class='warning-text-danger'>Esta acción borrará tu usuario y no se puede deshacer.</span>";
+      
+      const btn = document.getElementById('btnEjecutarConfirmacion');
+      btn.onclick = async () => {
+        cerrarModalConfirmacionGenerica();
+        const { error } = await supabaseClient.from('profiles').delete().eq('id', usuarioActual.id);
+        if (error) {
+          mostrarNotificacion({ titulo: "Error", mensaje: "Error al borrar el perfil: " + error.message, tipo: "danger" });
+        } else {
+          mostrarNotificacion({ titulo: "Cuenta Eliminada", mensaje: "Tu cuenta ha sido eliminada permanentemente.", tipo: "info" });
+          cerrarModalPerfilDirecto();
+          await cerrarSesion();
+        }
+      };
+
+      document.getElementById('modalConfirmacionGenerica').style.display = 'flex';
     }
 
     function abrirModalAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
     function cerrarModalAuthDirecto() { document.getElementById('modalAuth').style.display = 'none'; }
+
+    function abrirModalExitoRegistro(nickname) {
+      document.getElementById('nickBienvenida').innerText = `@${nickname}`;
+      document.getElementById('modalExitoRegistro').style.display = 'flex';
+    }
+    function cerrarModalExitoRegistro() {
+      document.getElementById('modalExitoRegistro').style.display = 'none';
+    }
 
     function cambiarModoAuth(modo) {
       modoAuth = modo;
       document.getElementById('tabLogin').classList.toggle('active', modo === 'login');
       document.getElementById('tabRegistro').classList.toggle('active', modo === 'registro');
       const esRegistro = modo === 'registro';
+      
       document.getElementById('camposRegistro').style.display = esRegistro ? 'flex' : 'none';
-      document.getElementById('authIdentifier').style.display = esRegistro ? 'none' : 'block';
+      document.getElementById('campoLogin').style.display = esRegistro ? 'none' : 'block';
+      
+      document.getElementById('authNombre').required = esRegistro;
+      document.getElementById('authApellido').required = esRegistro;
+      document.getElementById('authNickname').required = esRegistro;
+      document.getElementById('authIdentifier').required = !esRegistro;
+
       document.getElementById('btnSubmitAuth').innerText = esRegistro ? 'Registrarse' : 'Ingresar';
     }
 
     async function procesarAutenticacion(e) {
       e.preventDefault();
       const password = document.getElementById('authPassword').value;
+
       if (modoAuth === 'login') {
-        let email = document.getElementById('authIdentifier').value.trim();
-        if (!email.includes('@')) {
-          const { data } = await supabaseClient.from('profiles').select('email').ilike('nickname', email).maybeSingle();
-          if (data) email = data.email;
+        let identificador = document.getElementById('authIdentifier').value.trim();
+        let emailParaLogin = identificador;
+
+        if (!identificador.includes('@')) {
+          const { data } = await supabaseClient.from('profiles').select('email').ilike('nickname', identificador).maybeSingle();
+          if (data && data.email) {
+            emailParaLogin = data.email;
+          }
         }
-        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error) alert("Error al ingresar.");
-        else { cerrarModalAuthDirecto(); chequearSesion(); }
+
+        const { error } = await supabaseClient.auth.signInWithPassword({ email: emailParaLogin, password });
+        if (error) {
+          mostrarNotificacion({ titulo: "Error de ingreso", mensaje: error.message, tipo: "danger" });
+        } else {
+          cerrarModalAuthDirecto();
+          await chequearSesion();
+        }
       } else {
-        const { error } = await supabaseClient.auth.signUp({
-          email: document.getElementById('authEmail').value,
-          password,
-          options: { data: { nombre: document.getElementById('authNombre').value, apellido: document.getElementById('authApellido').value, nickname: document.getElementById('authNickname').value } }
+        const nombre = document.getElementById('authNombre').value.trim();
+        const apellido = document.getElementById('authApellido').value.trim();
+        const nickname = document.getElementById('authNickname').value.trim();
+
+        if (!nombre || !apellido || !nickname || !password) {
+          mostrarNotificacion({ titulo: "Campos incompletos", mensaje: "Por favor completa todos los campos requeridos.", tipo: "warning" });
+          return;
+        }
+
+        const emailFicticio = `${nickname.toLowerCase().replace(/\s+/g, '')}@wikifish.local`;
+
+        const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+          email: emailFicticio,
+          password: password,
+          options: {
+            data: { nombre, apellido, nickname }
+          }
         });
-        if (error) alert("Error: " + error.message);
-        else { alert("¡Registrado!"); cerrarModalAuthDirecto(); chequearSesion(); }
+
+        if (authError) {
+          mostrarNotificacion({ titulo: "Error en el registro", mensaje: authError.message, tipo: "danger" });
+          return;
+        }
+
+        if (authData && authData.user) {
+          const { error: profileError } = await supabaseClient.from('profiles').insert([{
+            id: authData.user.id,
+            email: emailFicticio,
+            nombre: nombre,
+            apellido: apellido,
+            nickname: nickname,
+            role: 'user'
+          }]);
+
+          if (profileError) {
+            console.error("Error guardando perfil:", profileError);
+          }
+        }
+
+        cerrarModalAuthDirecto();
+        await chequearSesion();
+        abrirModalExitoRegistro(nickname);
       }
     }
 
@@ -965,7 +1181,11 @@
 
     async function guardarNuevaEspecie(e) {
       e.preventDefault();
-      if (!usuarioActual) { alert("Debes iniciar sesión."); abrirModalAuth(); return; }
+      if (!usuarioActual) { 
+        mostrarNotificacion({ titulo: "Atención", mensaje: "Debes iniciar sesión para realizar esta acción.", tipo: "warning" }); 
+        abrirModalAuth(); 
+        return; 
+      }
 
       try {
         const selectLugar = document.getElementById('addLugarSelect').value;
@@ -991,7 +1211,10 @@
         const selectNombre = document.getElementById('addNombreSelect').value;
         const customNombre = document.getElementById('addNombreCustom').value.trim();
         let nombreFinal = selectNombre === '__NUEVO__' ? customNombre : selectNombre;
-        if (!nombreFinal) { alert("Ingresa un nombre válido."); return; }
+        if (!nombreFinal) { 
+          mostrarNotificacion({ titulo: "Nombre requerido", mensaje: "Ingresa un nombre válido para el pez.", tipo: "warning" }); 
+          return; 
+        }
 
         const selectEspecie = document.getElementById('addEspecieSelect').value;
         const customEspecie = document.getElementById('addEspecieCustom').value.trim();
@@ -1028,8 +1251,9 @@
         };
 
         const { error } = await supabaseClient.from('peces').insert([nuevoPez]);
-        if (error) alert("Error: " + error.message);
-        else {
+        if (error) {
+          mostrarNotificacion({ titulo: "Error", mensaje: error.message, tipo: "danger" });
+        } else {
           document.getElementById('formEspecie').reset();
           document.getElementById('addNombreCustom').style.display = 'none';
           document.getElementById('addEspecieCustom').style.display = 'none';
@@ -1037,8 +1261,11 @@
           document.getElementById('addCamaraCustom').style.display = 'none';
           toggleFormulario();
           cargarPeces();
+          mostrarNotificacion({ titulo: "Registrado", mensaje: "Especie añadida correctamente al catálogo.", tipo: "success" });
         }
-      } catch (err) { alert("Error inesperado: " + err.message); }
+      } catch (err) { 
+        mostrarNotificacion({ titulo: "Error inesperado", mensaje: err.message, tipo: "danger" }); 
+      }
     }
 
     function borrarPez(id) {
@@ -1057,9 +1284,17 @@
 
     async function confirmarBorradoConMinijuego() {
       const ans = parseInt(document.getElementById('mathAnswerInput').value);
-      if (ans !== sumaCorrectaEsperada) { alert("❌ Resultado incorrecto."); return; }
+      if (ans !== sumaCorrectaEsperada) { 
+        mostrarNotificacion({ titulo: "Respuesta Incorrecta", mensaje: "El resultado de la suma no es correcto.", tipo: "warning" }); 
+        return; 
+      }
       const { error } = await supabaseClient.from('peces').delete().eq('id', idPezABorrarPendiente);
-      if (!error) { alert("Especie eliminada."); cerrarModalEmergencia(); cerrarModalDirecto(); cargarPeces(); }
+      if (!error) { 
+        cerrarModalEmergencia(); 
+        cerrarModalDirecto(); 
+        cargarPeces(); 
+        mostrarNotificacion({ titulo: "Especie Eliminada", mensaje: "La especie ha sido removida por completo.", tipo: "info" });
+      }
     }
 
     function borrarFotoUnica() {
@@ -1130,7 +1365,6 @@
       renderFotosEdicion();
     }
 
-    /* REEMPLAZAR IMAGEN ESPECÍFICA DE LA TARJETA */
     function seleccionarNuevaFotoEspecifica(index) {
       const input = document.createElement('input');
       input.type = 'file';
@@ -1222,12 +1456,17 @@
         cerrarModalEditarDirecto(); 
         cerrarModalDirecto(); 
         cargarPeces(); 
+        mostrarNotificacion({ titulo: "Éxito", mensaje: "Especie actualizada correctamente.", tipo: "success" });
       }
     }
 
     async function toggleFav(e, id) {
       e.stopPropagation();
-      if (!usuarioActual) { alert("Inicia sesión."); abrirModalAuth(); return; }
+      if (!usuarioActual) { 
+        mostrarNotificacion({ titulo: "Atención", mensaje: "Inicia sesión para guardar favoritos.", tipo: "warning" }); 
+        abrirModalAuth(); 
+        return; 
+      }
       const pez = listaPeces.find(p => p.id === id);
       await supabaseClient.from('peces').update({ is_fav: !pez.is_fav }).eq('id', id);
       cargarPeces();
@@ -1266,7 +1505,11 @@
     }
 
     function toggleFormulario() {
-      if (!usuarioActual) { alert("Inicia sesión."); abrirModalAuth(); return; }
+      if (!usuarioActual) { 
+        mostrarNotificacion({ titulo: "Atención", mensaje: "Inicia sesión para poder registrar especies.", tipo: "warning" }); 
+        abrirModalAuth(); 
+        return; 
+      }
       const p = document.getElementById('panelFormulario'); p.style.display = p.style.display === 'block' ? 'none' : 'block';
     }
 
