@@ -870,17 +870,39 @@
     }
 
     async function cargarPeces() {
-      const { data: perfiles } = await supabaseClient.from('profiles').select('id, nickname, nombre');
+      // 1. Cargar perfiles para mapear nombres y calcular likes automáticamente
+      const { data: perfiles } = await supabaseClient
+        .from('profiles')
+        .select('id, nickname, nombre, favoritos');
+
       mapaUsuariosPorId = {};
+      const conteoLikesPorPez = {};
+
       if (perfiles) {
         perfiles.forEach(u => {
           mapaUsuariosPorId[u.id] = u.nickname ? `@${u.nickname}` : (u.nombre || 'Usuario');
+
+          // Sumar los favoritos globales de todos los usuarios
+          if (Array.isArray(u.favoritos)) {
+            u.favoritos.forEach(pezId => {
+              conteoLikesPorPez[pezId] = (conteoLikesPorPez[pezId] || 0) + 1;
+            });
+          }
         });
       }
 
-      const { data, error } = await supabaseClient.from('peces').select('*').order('id', { ascending: false });
+      // 2. Cargar peces
+      const { data, error } = await supabaseClient
+        .from('peces')
+        .select('*')
+        .order('id', { ascending: false });
+
       if (!error) {
-        listaPeces = data || [];
+        listaPeces = (data || []).map(pez => ({
+          ...pez,
+          total_favs: conteoLikesPorPez[pez.id] || 0
+        }));
+
         poblarOpcionesUbicacion();
         poblarDesplegablesFormulario();
         renderPeces();
@@ -1087,7 +1109,6 @@
           nombre: nombreFinal,
           especie: especieFinal || "Especie no especificada",
           user_id: usuarioActual.id,
-          total_favs: 0,
           fotos: [{
             url: imagenFinalUrl,
             lugar: lugarFinal,
@@ -1312,24 +1333,24 @@
     async function toggleFav(e, id) {
       e.stopPropagation();
       if (!usuarioActual) { 
-        mostrarNotificacion({ titulo: "Atención", mensaje: "Inicia sesión para guardar favoritos personales.", tipo: "warning" }); 
+        mostrarNotificacion({ 
+          titulo: "Atención", 
+          mensaje: "Inicia sesión para guardar favoritos personales.", 
+          tipo: "warning" 
+        }); 
         abrirModalAuth(); 
         return; 
       }
 
-      const pez = listaPeces.find(p => p.id === id);
-      let cambio = 0;
-
       if (misFavoritosIds.has(id)) {
         misFavoritosIds.delete(id);
-        cambio = -1;
       } else {
         misFavoritosIds.add(id);
-        cambio = 1;
       }
 
       const arrFavoritos = Array.from(misFavoritosIds);
       
+      // Guardar favoritos personales del usuario activo
       const { error } = await supabaseClient
         .from('profiles')
         .update({ favoritos: arrFavoritos })
@@ -1337,17 +1358,14 @@
 
       if (!error) {
         if (perfilUsuario) perfilUsuario.favoritos = arrFavoritos;
-        
-        // Actualizar el conteo global de likes del pez
-        if (pez) {
-          const nuevoTotal = Math.max(0, (pez.total_favs || 0) + cambio);
-          pez.total_favs = nuevoTotal;
-          await supabaseClient.from('peces').update({ total_favs: nuevoTotal }).eq('id', id);
-        }
-        
-        renderPeces();
+        // Recargar para recalcular los likes totales acumulados entre todos los usuarios
+        await cargarPeces();
       } else {
-        mostrarNotificacion({ titulo: "Error", mensaje: "No se pudo actualizar tu lista de favoritos: " + error.message, tipo: "danger" });
+        mostrarNotificacion({ 
+          titulo: "Error", 
+          mensaje: "No se pudo actualizar tu lista de favoritos: " + error.message, 
+          tipo: "danger" 
+        });
       }
     }
 
