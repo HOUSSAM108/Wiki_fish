@@ -93,14 +93,6 @@
     }
     .btn-add-species:hover { background: var(--accent); color: #030712; box-shadow: 0 0 15px rgba(0, 180, 216, 0.4); }
 
-    .burbuja-chat-flotante {
-      position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; border-radius: 50%;
-      background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%); border: 2px solid rgba(255, 255, 255, 0.3);
-      color: #fff; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; cursor: pointer;
-      z-index: 999; box-shadow: 0 8px 25px rgba(0, 180, 216, 0.5); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-    }
-    .burbuja-chat-flotante:hover { transform: scale(1.15) rotate(-8deg); box-shadow: 0 12px 30px rgba(0, 180, 216, 0.8); border-color: #fff; }
-
     .form-panel { display: none; max-width: 950px; margin: 20px auto 10px; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -192,6 +184,7 @@
     .info h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); }
     .info .especie { font-size: 0.85rem; color: var(--accent); font-style: italic; margin-top: 2px; }
     .info .meta-tag { font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; font-weight: 300; }
+    .info .autor-tag { font-size: 0.78rem; color: var(--accent); margin-top: 4px; font-weight: 500; }
 
     .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
     .modal-wrapper { background: #0f172a; border: 1px solid var(--border); border-radius: 20px; max-width: 750px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
@@ -211,7 +204,6 @@
     .modal-info { padding: 20px; }
     #mapaAvistamiento { width: 100%; height: 200px; border-radius: 12px; margin-top: 15px; border: 1px solid var(--border); }
 
-    /* FIX: Cruz ajustada para evitar la pestaña de registrarse */
     .close-btn { 
       position: absolute; 
       top: 12px; 
@@ -247,7 +239,6 @@
     .btn-volver-atras { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); color: #fff; padding: 8px 16px; border-radius: 20px; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; }
     .btn-volver-atras:hover { background: rgba(239, 68, 68, 0.9); }
 
-    /* FIX: Margen superior en los tabs para dejar espacio libre a la cruz */
     .auth-tabs { display: flex; gap: 10px; margin-bottom: 15px; margin-top: 15px; }
     .auth-tab { flex: 1; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; border-radius: 8px; text-align: center; font-weight: bold; }
     .auth-tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
@@ -259,23 +250,6 @@
       border: 1px solid rgba(255, 255, 255, 0.2) !important; border-radius: 50% !important; cursor: pointer !important;
     }
     .btn-cerrar-principal:hover { background: rgba(239, 68, 68, 0.95) !important; color: #ffffff !important; }
-
-    .chat-layout { display: flex; height: 480px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); background: rgba(15, 23, 42, 0.8); margin-top: 15px; }
-    .chat-sidebar { width: 220px; border-right: 1px solid var(--border); background: rgba(3, 7, 18, 0.5); display: flex; flex-direction: column; }
-    .chat-sidebar-header { padding: 12px 15px; font-size: 0.8rem; font-weight: 700; color: var(--accent); border-bottom: 1px solid var(--border); text-transform: uppercase; }
-    .chat-user-list { flex: 1; overflow-y: auto; }
-    .chat-user-item { padding: 12px 15px; font-size: 0.85rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); display: flex; align-items: center; gap: 8px; }
-    .chat-user-item.public-room { background: rgba(0, 180, 216, 0.1); font-weight: 700; color: var(--text); }
-    .chat-user-item:hover, .chat-user-item.active { background: rgba(0, 180, 216, 0.25); color: var(--accent); }
-    .chat-main { flex: 1; display: flex; flex-direction: column; }
-    .chat-header { padding: 12px 20px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 0.9rem; color: var(--accent); background: rgba(15, 23, 42, 0.4); }
-    .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-    .chat-msg { max-width: 75%; padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; line-height: 1.4; word-break: break-word; }
-    .chat-msg-sender { font-size: 0.72rem; font-weight: bold; color: var(--accent); margin-bottom: 3px; }
-    .chat-msg.sent { align-self: flex-end; background: var(--primary); color: #fff; border-bottom-right-radius: 2px; }
-    .chat-msg.received { align-self: flex-start; background: rgba(255, 255, 255, 0.1); color: var(--text); border-bottom-left-radius: 2px; }
-    .chat-msg-time { font-size: 0.65rem; opacity: 0.7; margin-top: 4px; text-align: right; }
-    .chat-input-area { padding: 12px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
 
     .danger-box { border: 2px solid var(--danger) !important; box-shadow: 0 0 35px rgba(239, 68, 68, 0.35) !important; }
     .warning-box { border: 2px solid var(--warning) !important; box-shadow: 0 0 35px rgba(245, 158, 11, 0.35) !important; }
@@ -401,36 +375,7 @@
   </header>
 
   <main class="grid-peces" id="gridPeces"></main>
-<!--
-  <button class="burbuja-chat-flotante" onclick="abrirModalChat()" title="Abrir Chat">
-    🐟
-  </button>
 
-  <div id="modalChat" class="modal">
-    <div class="modal-wrapper" style="max-width: 800px; padding: 20px;">
-      <span class="close-btn" onclick="cerrarModalChat()">&times;</span>
-      <h3 style="color: var(--accent); text-transform: uppercase; margin-bottom: 10px;">💬 Chat Wiki Fish</h3>
-      
-      <div class="chat-layout">
-        <div class="chat-sidebar">
-          <div class="chat-sidebar-header">Salas y Usuarios</div>
-          <div id="chatUserList" class="chat-user-list"></div>
-        </div>
-        
-        <div class="chat-main">
-          <div id="chatHeader" class="chat-header">🌐 Chat Público (General)</div>
-          <div id="chatMessages" class="chat-messages">
-            <p style="text-align: center; color: var(--text-muted); margin: auto; font-size: 0.85rem;">Cargando chat...</p>
-          </div>
-          <form id="chatForm" class="chat-input-area" onsubmit="enviarMensajeChat(event)">
-            <input type="text" id="chatInput" class="search-bar" placeholder="Escribe un mensaje..." autocomplete="off">
-            <button type="submit" id="chatSendBtn" class="btn-auth" style="padding: 0 20px;">Enviar</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
--->
   <div id="modalPerfil" class="modal">
     <div class="modal-wrapper" style="padding: 25px; max-width: 420px;">
       <span class="close-btn" onclick="cerrarModalPerfilDirecto()">&times;</span>
@@ -478,7 +423,6 @@
     </div>
   </div>
 
-  <!-- MODAL PRO DE NOTIFICACIÓN / MENSAJES -->
   <div id="modalNotificacion" class="modal">
     <div id="wrapperNotificacion" class="modal-wrapper info-box" style="padding: 25px; max-width: 420px; text-align: center;">
       <div id="iconoNotificacion" style="font-size: 3rem; margin-bottom: 10px;">ℹ️</div>
@@ -488,7 +432,6 @@
     </div>
   </div>
 
-  <!-- MODAL DE CONFIRMACIÓN CUSTOM PARA ACCIONES CRÍTICAS -->
   <div id="modalConfirmacionGenerica" class="modal">
     <div class="modal-wrapper danger-box" style="padding: 25px; max-width: 420px; text-align: center;">
       <span class="close-btn" onclick="cerrarModalConfirmacionGenerica()">&times;</span>
@@ -501,7 +444,6 @@
     </div>
   </div>
 
-  <!-- MODAL PRO DE ÉXITO EN REGISTRO -->
   <div id="modalExitoRegistro" class="modal">
     <div class="modal-wrapper success-box" style="padding: 30px; max-width: 420px; text-align: center;">
       <div style="font-size: 3.5rem; margin-bottom: 10px;">🐠</div>
@@ -656,11 +598,13 @@
 
     let usuarioActual = null;
     let perfilUsuario = null;
+    let misFavoritosIds = new Set();
     let modoAuth = 'login';
 
     let listaPeces = [];
     let mapaLugaresInfo = {};
     let mapaNombresYESpecies = {};
+    let mapaUsuariosPorId = {};
     let soloFavoritos = false;
     let fotosModalActuales = [];
     let fotosTemporalesEdicion = [];
@@ -676,12 +620,6 @@
     let sumaCorrectaEsperada = 0;
     let idPezABorrarPendiente = null;
 
-    let modoChat = 'publico';
-    let receptorChatActual = null;
-    let canalChatRealtime = null;
-    let listaUsuariosChat = [];
-
-    // === SISTEMA DE NOTIFICACIONES REEMPLAZO DE ALERT Y CONFIRM ===
     function mostrarNotificacion({ titulo = "Aviso", mensaje = "", tipo = "info" }) {
       const wrapper = document.getElementById('wrapperNotificacion');
       const icono = document.getElementById('iconoNotificacion');
@@ -726,6 +664,7 @@
       } else {
         usuarioActual = null;
         perfilUsuario = null;
+        misFavoritosIds = new Set();
       }
       actualizarInterfazAuth();
       cargarPeces();
@@ -734,7 +673,10 @@
     async function cargarPerfilUsuario() {
       if (!usuarioActual) return;
       const { data } = await supabaseClient.from('profiles').select('*').eq('id', usuarioActual.id).maybeSingle();
-      if (data) perfilUsuario = data;
+      if (data) {
+        perfilUsuario = data;
+        misFavoritosIds = new Set(data.favoritos || []);
+      }
     }
 
     function actualizarInterfazAuth() {
@@ -756,114 +698,6 @@
       }
     }
 
-    // === CHAT ===
-    async function abrirModalChat() {
-      if (!usuarioActual) { 
-        mostrarNotificacion({ titulo: "Acceso Restringido", mensaje: "Debes iniciar sesión para acceder al chat.", tipo: "warning" }); 
-        abrirModalAuth(); 
-        return; 
-      }
-      document.getElementById('modalChat').style.display = 'flex';
-      await cargarListaUsuariosChat();
-      seleccionarChatPublico();
-    }
-
-    function cerrarModalChat() {
-      document.getElementById('modalChat').style.display = 'none';
-      if (canalChatRealtime) { supabaseClient.removeChannel(canalChatRealtime); canalChatRealtime = null; }
-    }
-
-    async function cargarListaUsuariosChat() {
-      const { data: perfiles } = await supabaseClient.from('profiles').select('*');
-      const userListCont = document.getElementById('chatUserList');
-      userListCont.innerHTML = '';
-
-      const itemPublico = document.createElement('div');
-      itemPublico.className = `chat-user-item public-room ${modoChat === 'publico' ? 'active' : ''}`;
-      itemPublico.innerHTML = `🌐 Chat Público`;
-      itemPublico.onclick = () => seleccionarChatPublico();
-      userListCont.appendChild(itemPublico);
-
-      listaUsuariosChat = (perfiles || []).filter(u => u.id !== usuarioActual.id);
-
-      listaUsuariosChat.forEach(u => {
-        const item = document.createElement('div');
-        item.className = `chat-user-item ${modoChat === 'privado' && receptorChatActual && receptorChatActual.id === u.id ? 'active' : ''}`;
-        item.innerHTML = `👤 @${u.nickname || u.nombre || 'Usuario'}`;
-        item.onclick = () => seleccionarUsuarioChat(u);
-        userListCont.appendChild(item);
-      });
-    }
-
-    async function seleccionarChatPublico() {
-      modoChat = 'publico'; receptorChatActual = null;
-      document.getElementById('chatHeader').innerText = `🌐 Chat Público (General)`;
-      await cargarListaUsuariosChat(); await cargarHistorialMensajes();
-      if (canalChatRealtime) supabaseClient.removeChannel(canalChatRealtime);
-      canalChatRealtime = supabaseClient.channel('chat_publico').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mensajes_publicos' }, payload => renderizarMensaje(payload.new)).subscribe();
-    }
-
-    async function seleccionarUsuarioChat(usuarioDestino) {
-      modoChat = 'privado'; receptorChatActual = usuarioDestino;
-      document.getElementById('chatHeader').innerText = `🔒 Chat Privado con @${usuarioDestino.nickname || usuarioDestino.nombre}`;
-      await cargarListaUsuariosChat(); await cargarHistorialMensajes();
-      if (canalChatRealtime) supabaseClient.removeChannel(canalChatRealtime);
-      canalChatRealtime = supabaseClient.channel('chat_privado').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mensajes_privados' }, payload => {
-        const m = payload.new;
-        if ((m.emisor_id === usuarioActual.id && m.receptor_id === receptorChatActual.id) || (m.emisor_id === receptorChatActual.id && m.receptor_id === usuarioActual.id)) renderizarMensaje(m);
-      }).subscribe();
-    }
-
-    async function cargarHistorialMensajes() {
-      const cont = document.getElementById('chatMessages');
-      cont.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:var(--text-muted);">Cargando historial...</p>';
-      let mensajes = [];
-      if (modoChat === 'publico') {
-        const res = await supabaseClient.from('mensajes_publicos').select('*').order('created_at', { ascending: true });
-        mensajes = res.data;
-      } else {
-        const res = await supabaseClient.from('mensajes_privados').select('*').or(`and(emisor_id.eq.${usuarioActual.id},receptor_id.eq.${receptorChatActual.id}),and(emisor_id.eq.${receptorChatActual.id},receptor_id.eq.${usuarioActual.id})`).order('created_at', { ascending: true });
-        mensajes = res.data;
-      }
-      cont.innerHTML = '';
-      if (!mensajes || mensajes.length === 0) {
-        cont.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:var(--text-muted); margin-top: auto;">No hay mensajes aún.</p>';
-        return;
-      }
-      mensajes.forEach(m => renderizarMensaje(m));
-    }
-
-    function renderizarMensaje(m) {
-      const cont = document.getElementById('chatMessages');
-      const esMio = m.emisor_id === usuarioActual.id;
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `chat-msg ${esMio ? 'sent' : 'received'}`;
-      const hora = new Date(m.created_at || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      msgDiv.innerHTML = `
-        ${modoChat === 'publico' && !esMio ? `<div class="chat-msg-sender">@${m.emisor_nickname || 'Usuario'}</div>` : ''}
-        <div>${m.contenido}</div>
-        <div class="chat-msg-time">${hora}</div>
-      `;
-      cont.appendChild(msgDiv);
-      cont.scrollTop = cont.scrollHeight;
-    }
-
-    async function enviarMensajeChat(e) {
-      e.preventDefault();
-      const input = document.getElementById('chatInput');
-      const texto = input.value.trim();
-      if (!texto) return;
-      const miNickname = perfilUsuario ? perfilUsuario.nickname : 'Usuario';
-      input.value = '';
-
-      if (modoChat === 'publico') {
-        await supabaseClient.from('mensajes_publicos').insert([{ emisor_id: usuarioActual.id, emisor_nickname: miNickname, contenido: texto, created_at: new Date().toISOString() }]);
-      } else if (modoChat === 'privado' && receptorChatActual) {
-        await supabaseClient.from('mensajes_privados').insert([{ emisor_id: usuarioActual.id, receptor_id: receptorChatActual.id, contenido: texto, created_at: new Date().toISOString() }]);
-      }
-    }
-
-    // === PERFIL Y AUTH ===
     function abrirModalPerfil() {
       if (!perfilUsuario) return;
       document.getElementById('editPerfilNombre').value = perfilUsuario.nombre || '';
@@ -1008,7 +842,8 @@
             nombre: nombre,
             apellido: apellido,
             nickname: nickname,
-            role: 'user'
+            role: 'user',
+            favoritos: []
           }]);
 
           if (profileError) {
@@ -1024,11 +859,18 @@
 
     async function cerrarSesion() {
       await supabaseClient.auth.signOut();
-      usuarioActual = null; perfilUsuario = null; actualizarInterfazAuth(); cargarPeces();
+      usuarioActual = null; perfilUsuario = null; misFavoritosIds = new Set(); actualizarInterfazAuth(); cargarPeces();
     }
 
-    // === CARGA Y GESTIÓN DE PECES ===
     async function cargarPeces() {
+      const { data: perfiles } = await supabaseClient.from('profiles').select('id, nickname, nombre');
+      mapaUsuariosPorId = {};
+      if (perfiles) {
+        perfiles.forEach(u => {
+          mapaUsuariosPorId[u.id] = u.nickname ? `@${u.nickname}` : (u.nombre || 'Usuario');
+        });
+      }
+
       const { data, error } = await supabaseClient.from('peces').select('*').order('id', { ascending: false });
       if (!error) {
         listaPeces = data || [];
@@ -1237,7 +1079,6 @@
         const nuevoPez = {
           nombre: nombreFinal,
           especie: especieFinal || "Especie no especificada",
-          is_fav: false,
           user_id: usuarioActual.id,
           fotos: [{
             url: imagenFinalUrl,
@@ -1463,13 +1304,30 @@
     async function toggleFav(e, id) {
       e.stopPropagation();
       if (!usuarioActual) { 
-        mostrarNotificacion({ titulo: "Atención", mensaje: "Inicia sesión para guardar favoritos.", tipo: "warning" }); 
+        mostrarNotificacion({ titulo: "Atención", mensaje: "Inicia sesión para guardar favoritos personales.", tipo: "warning" }); 
         abrirModalAuth(); 
         return; 
       }
-      const pez = listaPeces.find(p => p.id === id);
-      await supabaseClient.from('peces').update({ is_fav: !pez.is_fav }).eq('id', id);
-      cargarPeces();
+
+      if (misFavoritosIds.has(id)) {
+        misFavoritosIds.delete(id);
+      } else {
+        misFavoritosIds.add(id);
+      }
+
+      const arrFavoritos = Array.from(misFavoritosIds);
+      
+      const { error } = await supabaseClient
+        .from('profiles')
+        .update({ favoritos: arrFavoritos })
+        .eq('id', usuarioActual.id);
+
+      if (!error) {
+        if (perfilUsuario) perfilUsuario.favoritos = arrFavoritos;
+        renderPeces();
+      } else {
+        mostrarNotificacion({ titulo: "Error", mensaje: "No se pudo actualizar tu lista de favoritos: " + error.message, tipo: "danger" });
+      }
     }
 
     function renderPeces() {
@@ -1481,7 +1339,7 @@
       grid.innerHTML = '';
 
       listaPeces.forEach(pez => {
-        const esFav = pez.is_fav;
+        const esFav = misFavoritosIds.has(pez.id);
         const fotosValidas = (pez.fotos || []).filter(f => {
           const cEnt = filtroEntorno === 'todos' || f.tipo === filtroEntorno;
           const cUbi = filtroUbicacion === 'todas' || f.lugar === filtroUbicacion;
@@ -1492,12 +1350,18 @@
         const cBusqueda = pez.nombre.toLowerCase().includes(busqueda) || pez.especie.toLowerCase().includes(busqueda);
         if (fotosValidas.length > 0 && cBusqueda && (!soloFavoritos || esFav)) {
           const f0 = fotosValidas[0];
+          const autorNombre = mapaUsuariosPorId[pez.user_id] || 'Desconocido';
           const card = document.createElement('article');
           card.className = 'card-pez';
           card.innerHTML = `
             <button class="fav-btn ${esFav ? 'active' : ''}" onclick="toggleFav(event, ${pez.id})">${esFav ? '❤️' : '🤍'}</button>
             <div class="img-container" onclick="abrirModal(${pez.id})"><span class="badge">${f0.tipo}</span><img src="${f0.url}" alt="${pez.nombre}"></div>
-            <div class="info" onclick="abrirModal(${pez.id})"><h2>${pez.nombre}</h2><div class="especie">${pez.especie}</div><div class="meta-tag">📍 ${f0.lugar} (${f0.profundidad})</div></div>
+            <div class="info" onclick="abrirModal(${pez.id})">
+              <h2>${pez.nombre}</h2>
+              <div class="especie">${pez.especie}</div>
+              <div class="meta-tag">📍 ${f0.lugar} (${f0.profundidad})</div>
+              <div class="autor-tag">👤 Autor: ${autorNombre}</div>
+            </div>
           `;
           grid.appendChild(card);
         }
@@ -1513,16 +1377,54 @@
       const p = document.getElementById('panelFormulario'); p.style.display = p.style.display === 'block' ? 'none' : 'block';
     }
 
-    function toggleFiltroFav() { soloFavoritos = !soloFavoritos; const b = document.getElementById('btnFavoritos'); b.classList.toggle('active', soloFavoritos); b.innerText = soloFavoritos ? '❤️ Ver Favoritos' : '🤍 Mis Favoritos'; renderPeces(); }
+    function toggleFiltroFav() { 
+      if (!usuarioActual) {
+        mostrarNotificacion({ titulo: "Atención", mensaje: "Inicia sesión para ver tus favoritos personales.", tipo: "warning" });
+        abrirModalAuth();
+        return;
+      }
+      soloFavoritos = !soloFavoritos; 
+      const b = document.getElementById('btnFavoritos'); 
+      b.classList.toggle('active', soloFavoritos); 
+      b.innerText = soloFavoritos ? '❤️ Ver Favoritos' : '🤍 Mis Favoritos'; 
+      renderPeces(); 
+    }
+    
     function obtenerCoordenadasDeUrl(t) { if (!t) return null; const m = t.match(/@(-?\d+\.\d+),(-?\d+\.\d+)|q=(-?\d+\.\d+),(-?\d+\.\d+)|(-?\d+\.\d+),\s*(-?\d+\.\d+)/); return m ? { lat: parseFloat(m[1]||m[3]||m[5]), lng: parseFloat(m[2]||m[4]||m[6]) } : null; }
     function leerImagenComoBase64(f) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = e => rej(e); r.readAsDataURL(f); }); }
 
-    function actualizarVisor() { 
+    async function actualizarVisor() { 
       if (!fotosModalActuales || fotosModalActuales.length === 0) return;
       const f = fotosModalActuales[indiceFotoActual]; 
       document.getElementById('modalMainImg').src = f.url; 
       document.getElementById('modalLocation').innerText = `📍 Avistado en: ${f.lugar}`; 
-      document.getElementById('modalMeta').innerHTML = `📷 <strong>Cámara:</strong> ${f.camara} | 🌊 <strong>Profundidad:</strong> ${f.profundidad}`; 
+      
+      const pez = listaPeces.find(p => p.id === idPezActualModal);
+      let autorTexto = "Desconocido";
+
+      if (pez && pez.user_id) {
+        if (mapaUsuariosPorId[pez.user_id]) {
+          autorTexto = mapaUsuariosPorId[pez.user_id];
+        } else {
+          const { data: perfil } = await supabaseClient
+            .from('profiles')
+            .select('nickname, nombre')
+            .eq('id', pez.user_id)
+            .maybeSingle();
+
+          if (perfil) {
+            autorTexto = perfil.nickname ? `@${perfil.nickname}` : (perfil.nombre || "Usuario");
+            mapaUsuariosPorId[pez.user_id] = autorTexto;
+          }
+        }
+      }
+
+      document.getElementById('modalMeta').innerHTML = `
+        📷 <strong>Cámara:</strong> ${f.camara} | 
+        🌊 <strong>Profundidad:</strong> ${f.profundidad} | 
+        👤 <strong>Autor:</strong> ${autorTexto}
+      `; 
+
       document.getElementById('modalPhotoCounter').innerText = `Foto ${indiceFotoActual + 1} de ${fotosModalActuales.length}`;
       document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === indiceFotoActual)); 
       actualizarMapa(f.lat, f.lng, f.lugar); 
