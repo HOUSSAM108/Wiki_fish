@@ -149,11 +149,17 @@
       background: var(--card-bg); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px; overflow: hidden; cursor: pointer; position: relative; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease; transform-style: preserve-3d;
     }
+    .card-pez.popular {
+      border: 1px solid #ffb703;
+      box-shadow: 0 0 20px rgba(255, 183, 3, 0.25);
+    }
 
     .img-container { position: relative; height: 180px; overflow: hidden; }
     .card-pez img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
     
     .badge { position: absolute; top: 10px; right: 10px; background: rgba(15, 23, 42, 0.85); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; border: 1px solid var(--border); z-index: 5; }
+    .badge-popular { position: absolute; top: 10px; left: 52px; background: rgba(255, 183, 3, 0.9); color: #000; font-weight: 900; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; z-index: 5; text-transform: uppercase; letter-spacing: 0.5px; }
+    
     .fav-btn { position: absolute; top: 10px; left: 10px; background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border); color: #fff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 6; font-size: 1rem; }
     .fav-btn.active { color: #ff4d6d; }
 
@@ -184,7 +190,8 @@
     .info h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); }
     .info .especie { font-size: 0.85rem; color: var(--accent); font-style: italic; margin-top: 2px; }
     .info .meta-tag { font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; font-weight: 300; }
-    .info .autor-tag { font-size: 0.78rem; color: var(--accent); margin-top: 4px; font-weight: 500; }
+    .info .autor-tag { font-size: 0.78rem; color: var(--accent); margin-top: 4px; font-weight: 500; display: flex; justify-content: space-between; align-items: center; }
+    .info .likes-count { color: #ff4d6d; font-weight: bold; font-size: 0.8rem; }
 
     .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
     .modal-wrapper { background: #0f172a; border: 1px solid var(--border); border-radius: 20px; max-width: 750px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
@@ -1080,6 +1087,7 @@
           nombre: nombreFinal,
           especie: especieFinal || "Especie no especificada",
           user_id: usuarioActual.id,
+          total_favs: 0,
           fotos: [{
             url: imagenFinalUrl,
             lugar: lugarFinal,
@@ -1309,10 +1317,15 @@
         return; 
       }
 
+      const pez = listaPeces.find(p => p.id === id);
+      let cambio = 0;
+
       if (misFavoritosIds.has(id)) {
         misFavoritosIds.delete(id);
+        cambio = -1;
       } else {
         misFavoritosIds.add(id);
+        cambio = 1;
       }
 
       const arrFavoritos = Array.from(misFavoritosIds);
@@ -1324,6 +1337,14 @@
 
       if (!error) {
         if (perfilUsuario) perfilUsuario.favoritos = arrFavoritos;
+        
+        // Actualizar el conteo global de likes del pez
+        if (pez) {
+          const nuevoTotal = Math.max(0, (pez.total_favs || 0) + cambio);
+          pez.total_favs = nuevoTotal;
+          await supabaseClient.from('peces').update({ total_favs: nuevoTotal }).eq('id', id);
+        }
+        
         renderPeces();
       } else {
         mostrarNotificacion({ titulo: "Error", mensaje: "No se pudo actualizar tu lista de favoritos: " + error.message, tipo: "danger" });
@@ -1340,6 +1361,9 @@
 
       listaPeces.forEach(pez => {
         const esFav = misFavoritosIds.has(pez.id);
+        const likes = pez.total_favs || 0;
+        const esPopular = likes >= 3;
+
         const fotosValidas = (pez.fotos || []).filter(f => {
           const cEnt = filtroEntorno === 'todos' || f.tipo === filtroEntorno;
           const cUbi = filtroUbicacion === 'todas' || f.lugar === filtroUbicacion;
@@ -1352,15 +1376,22 @@
           const f0 = fotosValidas[0];
           const autorNombre = mapaUsuariosPorId[pez.user_id] || 'Desconocido';
           const card = document.createElement('article');
-          card.className = 'card-pez';
+          card.className = `card-pez ${esPopular ? 'popular' : ''}`;
           card.innerHTML = `
             <button class="fav-btn ${esFav ? 'active' : ''}" onclick="toggleFav(event, ${pez.id})">${esFav ? '❤️' : '🤍'}</button>
-            <div class="img-container" onclick="abrirModal(${pez.id})"><span class="badge">${f0.tipo}</span><img src="${f0.url}" alt="${pez.nombre}"></div>
+            ${esPopular ? '<span class="badge-popular">🔥 Popular</span>' : ''}
+            <div class="img-container" onclick="abrirModal(${pez.id})">
+              <span class="badge">${f0.tipo}</span>
+              <img src="${f0.url}" alt="${pez.nombre}">
+            </div>
             <div class="info" onclick="abrirModal(${pez.id})">
               <h2>${pez.nombre}</h2>
               <div class="especie">${pez.especie}</div>
               <div class="meta-tag">📍 ${f0.lugar} (${f0.profundidad})</div>
-              <div class="autor-tag">👤 Autor: ${autorNombre}</div>
+              <div class="autor-tag">
+                <span>👤 Autor: ${autorNombre}</span>
+                <span class="likes-count">❤️ ${likes}</span>
+              </div>
             </div>
           `;
           grid.appendChild(card);
@@ -1422,7 +1453,8 @@
       document.getElementById('modalMeta').innerHTML = `
         📷 <strong>Cámara:</strong> ${f.camara} | 
         🌊 <strong>Profundidad:</strong> ${f.profundidad} | 
-        👤 <strong>Autor:</strong> ${autorTexto}
+        👤 <strong>Autor:</strong> ${autorTexto} | 
+        ❤️ <strong>Likes:</strong> ${pez ? (pez.total_favs || 0) : 0}
       `; 
 
       document.getElementById('modalPhotoCounter').innerText = `Foto ${indiceFotoActual + 1} de ${fotosModalActuales.length}`;
