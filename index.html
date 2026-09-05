@@ -93,12 +93,26 @@
     }
     .btn-add-species:hover { background: var(--accent); color: #030712; box-shadow: 0 0 15px rgba(0, 180, 216, 0.4); }
 
-    .form-panel { display: none; max-width: 950px; margin: 20px auto 10px; animation: fadeIn 0.3s ease; }
+    .form-panel { display: none; max-width: 1050px; margin: 20px auto 10px; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
     .form-panel h3 { color: var(--accent); font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
 
     .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    
+    .form-grid-3-2 {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      grid-column: 1 / -1;
+    }
+    .col-3 { grid-column: span 2; }
+    .col-2 { grid-column: span 3; }
+
+    @media (max-width: 900px) {
+      .col-3, .col-2 { grid-column: span 6; }
+    }
+
     .full-width { grid-column: 1 / -1; }
 
     .file-input-wrapper { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; }
@@ -119,20 +133,20 @@
     .btn-delete-account:hover { background: var(--danger); color: #fff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
 
     .search-bar {
-      width: 100%; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--border);
-      background: var(--select-bg); color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; transition: all 0.25s ease;
+      width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--select-bg); color: var(--text); font-family: inherit; font-size: 0.85rem; outline: none; transition: all 0.25s ease;
     }
     .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.15); }
 
-    .select-wrapper { position: relative; flex: 1 1 170px; display: flex; align-items: center; }
+    .select-wrapper { position: relative; width: 100%; display: flex; align-items: center; }
     .select-wrapper::after {
-      content: ""; position: absolute; right: 15px; pointer-events: none; width: 10px; height: 6px;
+      content: ""; position: absolute; right: 12px; pointer-events: none; width: 10px; height: 6px;
       background-color: var(--text-muted); clip-path: polygon(0 0, 100% 0, 50% 100%); transition: transform 0.25s ease;
     }
 
     .custom-select {
-      width: 100%; appearance: none; padding: 12px 38px 12px 16px; border-radius: 12px; border: 1px solid var(--border);
-      background: var(--select-bg); color: var(--text); font-family: inherit; font-size: 0.88rem; font-weight: 500; outline: none; cursor: pointer; transition: all 0.25s ease;
+      width: 100%; appearance: none; padding: 12px 30px 12px 12px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--select-bg); color: var(--text); font-family: inherit; font-size: 0.82rem; font-weight: 500; outline: none; cursor: pointer; transition: all 0.25s ease;
     }
     .custom-select option { background-color: #0f172a; color: var(--text); }
     .custom-select option:disabled { color: var(--text-muted); opacity: 0.6; }
@@ -187,6 +201,14 @@
     .btn-set-main-photo:hover { background: var(--accent); color: #030712; }
 
     .btn-remove-thumb { background: var(--danger); color: #fff; border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: absolute; top: 8px; right: 8px; }
+
+    .thumb-edit-card .search-bar {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      pointer-events: auto !important;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+    }
 
     .info { padding: 18px; position: relative; z-index: 3; }
     .info h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); }
@@ -333,23 +355,62 @@
       <h3>➕ Registrar nueva especie</h3>
       <form id="formEspecie" class="form-grid" onsubmit="guardarNuevaEspecie(event)">
         
-        <div class="select-wrapper">
-          <select id="addNombreSelect" class="custom-select" onchange="gestionarSeleccionNombre('add')">
-            <option value="" disabled selected>🐟 Seleccionar pez registrado...</option>
-            <option value="__NUEVO__">➕ Escribir nombre nuevo...</option>
-          </select>
-        </div>
-        <input type="text" id="addNombreCustom" class="search-bar" placeholder="Nombre común (ej: Sargo) *" style="display: none;" onkeyup="autocompletarEspeciePorTexto('add')">
+        <div class="form-grid-3-2">
+          <!-- 1. Nombre -->
+          <div class="col-3" style="display: flex; flex-direction: column; gap: 4px;">
+            <div class="select-wrapper">
+              <select id="addNombreSelect" class="custom-select" onchange="gestionarSeleccionNombre('add')">
+                <option value="" disabled selected>🐟 Selec. nombre...</option>
+                <option value="__NUEVO__">➕ Escribir nombre...</option>
+              </select>
+            </div>
+            <input type="text" id="addNombreCustom" class="search-bar" placeholder="Nombre común *" style="display: none;" onkeyup="autocompletarEspeciePorTexto('add')">
+          </div>
 
-        <div class="select-wrapper">
-          <select id="addEspecieSelect" class="custom-select" onchange="gestionarCampoSeleccionado('add', 'Especie')">
-            <option value="" disabled selected>🧬 Seleccionar especie registrada...</option>
-            <option value="__NUEVO__">➕ Escribir especie nueva...</option>
-          </select>
+          <!-- 2. Especie -->
+          <div class="col-3" style="display: flex; flex-direction: column; gap: 4px;">
+            <div class="select-wrapper">
+              <select id="addEspecieSelect" class="custom-select" onchange="gestionarCampoSeleccionado('add', 'Especie')">
+                <option value="" disabled selected>🧬 Selec. especie...</option>
+                <option value="__NUEVO__">➕ Escribir especie...</option>
+              </select>
+            </div>
+            <input type="text" id="addEspecieCustom" class="search-bar" placeholder="Científico / Especie" style="display: none;">
+          </div>
+
+          <!-- 3. Familia -->
+          <div class="col-3" style="display: flex; flex-direction: column; gap: 4px;">
+            <div class="select-wrapper">
+              <select id="addFamiliaSelect" class="custom-select" onchange="gestionarCampoSeleccionado('add', 'Familia')">
+                <option value="" disabled selected>🏷️ Selec. familia...</option>
+                <option value="__NUEVO__">➕ Escribir familia...</option>
+              </select>
+            </div>
+            <input type="text" id="addFamiliaCustom" class="search-bar" placeholder="Familia (ej: Sparidae)" style="display: none;">
+          </div>
+
+          <!-- 4. Sexo (fila de abajo, tamaño 2) -->
+          <div class="col-2 select-wrapper">
+            <select id="addSexo" class="custom-select">
+              <option value="No especificado">⚧️ Sexo no esp.</option>
+              <option value="Macho">♂️ Macho</option>
+              <option value="Hembra">♀️ Hembra</option>
+              <option value="Ambos">🚻 Ambos</option>
+            </select>
+          </div>
+
+          <!-- 5. Etapa (fila de abajo, tamaño 2) - Configurado con Selec. Etapa por defecto -->
+          <div class="col-2 select-wrapper">
+            <select id="addEtapa" class="custom-select" required>
+              <option value="" disabled selected>⏳Selec. Etapa...</option>
+              <option value="Adulto">🦈 Adulto</option>
+              <option value="Juvenil">🐟 Juvenil</option>
+              <option value="Larva">🥚 Larva</option>
+            </select>
+          </div>
         </div>
-        <input type="text" id="addEspecieCustom" class="search-bar" placeholder="Nombre científico / especie (ej: Diplodus sargus)" style="display: none;">
         
-        <div class="file-input-wrapper">
+        <div class="file-input-wrapper" style="margin-top: 10px;">
           <label class="file-input-label">📁 Subir imagen local (opcional):</label>
           <input type="file" id="addFile" class="search-bar" accept="image/*">
         </div>
@@ -493,6 +554,7 @@
       <div class="modal-info">
         <h2 id="modalTitle"></h2>
         <span id="modalEspecie" style="color: var(--accent); font-style: italic;"></span>
+        <p id="modalFamilia" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;"></p>
         <p id="modalMeta" style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted);"></p>
         <div id="mapaAvistamiento"></div>
         
@@ -513,16 +575,27 @@
       <form id="formEditarEspecie" class="form-grid" onsubmit="guardarCambiosEspecie(event)">
         <input type="hidden" id="editPezId">
         
-        <input type="text" id="editNombre" class="search-bar" placeholder="Nombre común *" required>
-        <input type="text" id="editEspecie" class="search-bar" placeholder="Especie">
-        
-        <div class="full-width">
-          <label class="file-input-label">🖼️ Fotos asociadas (Elige la foto principal, reemplaza la imagen o elimina las sobrantes):</label>
-          <div id="listaFotosEditar" style="display: flex; flex-direction: column; gap: 10px; margin: 10px 0;"></div>
+        <div class="form-grid-3-2">
+          <div class="col-3">
+            <input type="text" id="editNombre" class="search-bar" placeholder="Nombre común *" required>
+          </div>
+
+          <div class="col-3">
+            <input type="text" id="editEspecie" class="search-bar" placeholder="Científico / Especie">
+          </div>
+
+          <div class="col-3">
+            <input type="text" id="editFamilia" class="search-bar" placeholder="Familia (ej: Sparidae)">
+          </div>
+        </div>
+
+        <div class="full-width" style="margin-top: 10px;">
+          <label class="file-input-label">🖼️ Fotos asociadas (Elige la foto principal, edita su lugar, sexo, etapa, o elimina las sobrantes):</label>
+          <div id="listaFotosEditar" style="display: flex; flex-direction: column; gap: 12px; margin: 10px 0;"></div>
         </div>
 
         <div class="full-width" style="border-top: 1px solid var(--border); padding-top: 15px; margin-top: 5px;">
-          <label class="file-input-label">➕ Añadir nueva foto con su propia ubicación:</label>
+          <label class="file-input-label">➕ Añadir nueva foto con su propia ubicación, sexo y etapa:</label>
         </div>
 
         <div class="file-input-wrapper">
@@ -533,7 +606,7 @@
 
         <div class="select-wrapper">
           <select id="editLugarSelect" class="custom-select" onchange="gestionarLugarSeleccionado('edit')">
-            <option value="" disabled selected>📍 Seleccionar lugar habitual...</option>
+            <option value="" disabled selected>📍 Lugar...</option>
             <option value="__NUEVO__">➕ Escribir lugar nuevo...</option>
           </select>
         </div>
@@ -547,12 +620,12 @@
         <select id="editProfundidad" class="custom-select">
           <option value="0-2m">Superficie (0-2m)</option>
           <option value="2-5m">Poco profundo (2-5m)</option>
-          <option value="5m+">Buceo profundo (5m+)</option>
+          <option value="5m+" selected>Buceo profundo (5m+)</option>
         </select>
 
         <div class="select-wrapper">
           <select id="editCamaraSelect" class="custom-select" onchange="gestionarCampoSeleccionado('edit', 'Camara')">
-            <option value="" disabled selected>📷 Seleccionar cámara habitual...</option>
+            <option value="" disabled selected>📷 Cámara...</option>
             <option value="__NUEVO__">➕ Escribir cámara nueva...</option>
           </select>
         </div>
@@ -976,12 +1049,14 @@
     function poblarDesplegablesFormulario() {
       const nombres = new Set();
       const especies = new Set();
+      const familias = new Set();
       const lugares = new Set();
       const camaras = new Set();
 
       listaPeces.forEach(pez => {
         if (pez.nombre) nombres.add(pez.nombre.trim());
         if (pez.especie) especies.add(pez.especie.trim());
+        if (pez.familia) familias.add(pez.familia.trim());
         if (Array.isArray(pez.fotos)) {
           pez.fotos.forEach(f => {
             if (f.lugar && f.lugar.trim() !== '') lugares.add(f.lugar.trim());
@@ -990,17 +1065,19 @@
         }
       });
 
-      const rellenar = (elemId, set, placeholder, prefijo) => {
+      const rellenar = (elemId, set, placeholderText, prefijo) => {
         const elem = document.getElementById(elemId);
-        let html = `<option value="" disabled selected>${prefijo} Seleccionar habitual...</option><option value="__NUEVO__">➕ Escribir otro...</option>`;
+        if (!elem) return;
+        let html = `<option value="" disabled selected>${prefijo} ${placeholderText}</option><option value="__NUEVO__">➕ Escribir otro...</option>`;
         Array.from(set).sort().forEach(v => { html += `<option value="${v}">${v}</option>`; });
         elem.innerHTML = html;
       };
 
-      rellenar('addNombreSelect', nombres, 'Nombre', '🐟');
-      rellenar('addEspecieSelect', especies, 'Especie', '🧬');
-      rellenar('addLugarSelect', lugares, 'Lugar', '📍');
-      rellenar('addCamaraSelect', camaras, 'Cámara', '📷');
+      rellenar('addNombreSelect', nombres, 'Selec. nombre...', '🐟');
+      rellenar('addEspecieSelect', especies, 'Selec. especie...', '🧬');
+      rellenar('addFamiliaSelect', familias, 'Selec. familia...', '🏷️');
+      rellenar('addLugarSelect', lugares, 'Lugar...', '📍');
+      rellenar('addCamaraSelect', camaras, 'Cámara...', '📷');
 
       rellenar('editLugarSelect', lugares, 'Lugar', '📍');
       rellenar('editCamaraSelect', camaras, 'Cámara', '📷');
@@ -1009,6 +1086,7 @@
     function gestionarCampoSeleccionado(prefix, campo) {
       const select = document.getElementById(`${prefix}${campo}Select`);
       const customInput = document.getElementById(`${prefix}${campo}Custom`);
+      if (!select || !customInput) return;
 
       if (select.value === '__NUEVO__') {
         customInput.style.display = 'block';
@@ -1090,6 +1168,12 @@
       }
 
       try {
+        const etapaVal = document.getElementById('addEtapa').value;
+        if (!etapaVal) {
+          mostrarNotificacion({ titulo: "Etapa requerida", mensaje: "Por favor selecciona una etapa para la especie.", tipo: "warning" });
+          return;
+        }
+
         const selectLugar = document.getElementById('addLugarSelect').value;
         const customLugar = document.getElementById('addLugarCustom').value.trim();
         let lugarFinal = selectLugar === '__NUEVO__' ? customLugar : selectLugar;
@@ -1122,6 +1206,10 @@
         const customEspecie = document.getElementById('addEspecieCustom').value.trim();
         let especieFinal = selectEspecie === '__NUEVO__' ? customEspecie : selectEspecie;
 
+        const selectFamilia = document.getElementById('addFamiliaSelect').value;
+        const customFamilia = document.getElementById('addFamiliaCustom').value.trim();
+        let familiaFinal = selectFamilia === '__NUEVO__' ? customFamilia : selectFamilia;
+
         const selectCamara = document.getElementById('addCamaraSelect').value;
         const customCamara = document.getElementById('addCamaraCustom').value.trim();
         let camaraFinal = selectCamara === '__NUEVO__' ? customCamara : selectCamara;
@@ -1139,6 +1227,7 @@
         const nuevoPez = {
           nombre: nombreFinal,
           especie: especieFinal || "Especie no especificada",
+          familia: familiaFinal || "No especificada",
           user_id: usuarioActual.id,
           fotos: [{
             url: imagenFinalUrl,
@@ -1146,6 +1235,8 @@
             tipo: document.getElementById('addTipo').value,
             profundidad: document.getElementById('addProfundidad').value,
             camara: camaraFinal || "No especificada",
+            sexo: document.getElementById('addSexo').value,
+            etapa: etapaVal,
             lat: coords.lat,
             lng: coords.lng
           }]
@@ -1158,6 +1249,7 @@
           document.getElementById('formEspecie').reset();
           document.getElementById('addNombreCustom').style.display = 'none';
           document.getElementById('addEspecieCustom').style.display = 'none';
+          document.getElementById('addFamiliaCustom').style.display = 'none';
           document.getElementById('addLugarCustom').style.display = 'none';
           document.getElementById('addCamaraCustom').style.display = 'none';
           toggleFormulario();
@@ -1231,8 +1323,11 @@
       fotosModalActuales = pez.fotos || [];
       if (indiceFotoActual >= fotosModalActuales.length) indiceFotoActual = 0;
 
+      const fotoActual = fotosModalActuales[indiceFotoActual] || {};
       document.getElementById('modalTitle').innerText = pez.nombre;
-      document.getElementById('modalEspecie').innerText = pez.especie;
+      document.getElementById('modalEspecie').innerText = pez.especie || "Especie no especificada";
+      document.getElementById('modalFamilia').innerText = `🏷️ Familia: ${pez.familia || 'No especificada'} | ⚧️ Sexo: ${fotoActual.sexo || pez.sexo || 'No especificado'} | 🦈 Etapa: ${fotoActual.etapa || pez.etapa || 'No especificada'}`;
+      
       const esDueno = usuarioActual && pez.user_id === usuarioActual.id;
       const esAdmin = perfilUsuario && perfilUsuario.role === 'admin';
       const grp = document.getElementById('modalActionsGroup');
@@ -1253,9 +1348,18 @@
       const pez = listaPeces.find(p => p.id === id);
       if (!pez) return;
       document.getElementById('editPezId').value = pez.id;
-      document.getElementById('editNombre').value = pez.nombre;
-      document.getElementById('editEspecie').value = pez.especie;
+      document.getElementById('editNombre').value = pez.nombre || '';
+      document.getElementById('editEspecie').value = pez.especie || '';
+      document.getElementById('editFamilia').value = pez.familia || '';
+
       fotosTemporalesEdicion = JSON.parse(JSON.stringify(pez.fotos || []));
+      
+      fotosTemporalesEdicion.forEach(f => {
+        if (!f.sexo) f.sexo = pez.sexo || 'No especificado';
+        // Asegurar que si no hay etapa guardada o si viene vacía se mantenga limpia para mostrar "Selec. Etapa"
+        if (!f.etapa) f.etapa = '';
+      });
+
       renderFotosEdicion();
       document.getElementById('modalEditar').style.display = 'flex';
     }
@@ -1283,6 +1387,7 @@
     function renderFotosEdicion() {
       const cont = document.getElementById('listaFotosEditar');
       if (fotosTemporalesEdicion.length === 0) { cont.innerHTML = '<p style="color:var(--danger)">Sin fotos.</p>'; return; }
+      
       cont.innerHTML = fotosTemporalesEdicion.map((f, index) => `
         <div class="thumb-edit-card ${index === 0 ? 'is-main' : ''}">
           <div class="thumb-preview-box">
@@ -1290,7 +1395,7 @@
             <button type="button" class="btn-replace-img" onclick="seleccionarNuevaFotoEspecifica(${index})">🔄 Cambiar</button>
           </div>
           <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
-            <input type="text" class="search-bar" value="${f.lugar || ''}" placeholder="Lugar" onchange="actualizarFotoEdicion(${index}, 'lugar', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
+            <input type="text" class="search-bar" value="${f.lugar || ''}" placeholder="Lugar" oninput="actualizarFotoEdicion(${index}, 'lugar', this.value)" style="padding: 6px 10px; font-size: 0.8rem; pointer-events: auto;">
             
             <div style="display: flex; gap: 6px;">
               <select class="custom-select" onchange="actualizarFotoEdicion(${index}, 'tipo', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
@@ -1302,6 +1407,22 @@
                 <option value="0-2m" ${f.profundidad === '0-2m' ? 'selected' : ''}>Superficie (0-2m)</option>
                 <option value="2-5m" ${f.profundidad === '2-5m' ? 'selected' : ''}>Poco profundo (2-5m)</option>
                 <option value="5m+" ${f.profundidad === '5m+' ? 'selected' : ''}>Buceo profundo (5m+)</option>
+              </select>
+            </div>
+
+            <div style="display: flex; gap: 6px;">
+              <select class="custom-select" onchange="actualizarFotoEdicion(${index}, 'sexo', this.value)" style="padding: 6px 10px; font-size: 0.8rem;">
+                <option value="No especificado" ${f.sexo === 'No especificado' ? 'selected' : ''}>⚧️ Sexo no esp.</option>
+                <option value="Macho" ${f.sexo === 'Macho' ? 'selected' : ''}>♂️ Macho</option>
+                <option value="Hembra" ${f.sexo === 'Hembra' ? 'selected' : ''}>♀️ Hembra</option>
+                <option value="Ambos" ${f.sexo === 'Ambos' ? 'selected' : ''}>🚻 Ambos</option>
+              </select>
+
+              <select class="custom-select" onchange="actualizarFotoEdicion(${index}, 'etapa', this.value)" style="padding: 6px 10px; font-size: 0.8rem;" required>
+                <option value="" disabled ${!f.etapa ? 'selected' : ''}>⏳ Selec. Etapa...</option>
+                <option value="Adulto" ${f.etapa === 'Adulto' ? 'selected' : ''}>🦈 Adulto</option>
+                <option value="Juvenil" ${f.etapa === 'Juvenil' ? 'selected' : ''}>🐟 Juvenil</option>
+                <option value="Larva" ${f.etapa === 'Larva' ? 'selected' : ''}>🥚 Larva</option>
               </select>
             </div>
 
@@ -1318,6 +1439,14 @@
 
     async function guardarCambiosEspecie(e) {
       e.preventDefault();
+
+      for (let i = 0; i < fotosTemporalesEdicion.length; i++) {
+        if (!fotosTemporalesEdicion[i].etapa) {
+          mostrarNotificacion({ titulo: "Etapa requerida", mensaje: `La foto #${i + 1} no tiene una etapa seleccionada.`, tipo: "warning" });
+          return;
+        }
+      }
+
       const id = parseInt(document.getElementById('editPezId').value);
       const fileInput = document.getElementById('editFile');
       const urlInput = document.getElementById('editUrl').value;
@@ -1338,17 +1467,25 @@
 
         const selectCamara = document.getElementById('editCamaraSelect').value;
         const customCamara = document.getElementById('editCamaraCustom').value.trim();
-        let camaraFinal = selectCamara === '__NUEVO__' ? customCamara : selectCamara;
+        let camaraFinal = selectCamara === '__NUEVO__' ? customCamara : camaraFinal;
 
         fotosTemporalesEdicion.push({
-          url: nuevaImagenUrl, lugar: lugarFinal, tipo: document.getElementById('editTipo').value,
-          profundidad: document.getElementById('editProfundidad').value, camara: camaraFinal || "No especificada",
-          lat: coords.lat, lng: coords.lng
+          url: nuevaImagenUrl, 
+          lugar: lugarFinal, 
+          tipo: document.getElementById('editTipo').value,
+          profundidad: document.getElementById('editProfundidad').value, 
+          camara: camaraFinal || "No especificada",
+          sexo: document.getElementById('editSexo').value,
+          etapa: "", // Deja la opción vacía para forzar que el usuario elija "Selec. Etapa" en nuevas fotos si se desea, o puedes predefinirla
+          lat: coords.lat, 
+          lng: coords.lng
         });
       }
 
       const { error } = await supabaseClient.from('peces').update({
-        nombre: document.getElementById('editNombre').value, especie: document.getElementById('editEspecie').value || "Especie no especificada",
+        nombre: document.getElementById('editNombre').value, 
+        especie: document.getElementById('editEspecie').value || "Especie no especificada",
+        familia: document.getElementById('editFamilia').value || "No especificada",
         fotos: fotosTemporalesEdicion
       }).eq('id', id);
 
@@ -1418,7 +1555,7 @@
           return cEnt && cUbi && cProf;
         });
 
-        const cBusqueda = pez.nombre.toLowerCase().includes(busqueda) || pez.especie.toLowerCase().includes(busqueda);
+        const cBusqueda = pez.nombre.toLowerCase().includes(busqueda) || pez.especie.toLowerCase().includes(busqueda) || (pez.familia && pez.familia.toLowerCase().includes(busqueda));
         if (fotosValidas.length > 0 && cBusqueda && (!soloFavoritos || esFav)) {
           const f0 = fotosValidas[0];
           const autorNombre = mapaUsuariosPorId[pez.user_id] || 'Desconocido';
@@ -1550,6 +1687,11 @@
         }
       }
 
+      const sexoMostrado = f.sexo || pez.sexo || 'No especificado';
+      const etapaMostrada = f.etapa || pez.etapa || 'No especificada';
+
+      document.getElementById('modalFamilia').innerText = `🏷️ Familia: ${pez.familia || 'No especificada'} | ⚧️ Sexo: ${sexoMostrado} | 🦈 Etapa: ${etapaMostrada}`;
+
       document.getElementById('modalMeta').innerHTML = `
         📷 <strong>Cámara:</strong> ${f.camara} | 
         🌊 <strong>Profundidad:</strong> ${f.profundidad} | 
@@ -1562,7 +1704,32 @@
       actualizarMapa(f.lat, f.lng, f.lugar); 
     }
 
-    function actualizarMapa(lat, lng, t) { setTimeout(() => { if (!mapInstance) { mapInstance = L.map('mapaAvistamiento').setView([lat, lng], 13); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance); markerInstance = L.marker([lat, lng]).addTo(mapInstance); } else { mapInstance.setView([lat, lng], 13); markerInstance.setLatLng([lat, lng]); } markerInstance.bindPopup(t).openPopup(); mapInstance.invalidateSize(); }, 200); }
+    function actualizarMapa(lat, lng, t) { 
+      setTimeout(() => { 
+        const esOculto = !t || t.toLowerCase().includes('secreto') || t.toLowerCase().includes('privado') || t.trim() === '';
+        const centroLat = esOculto ? 20 : lat;
+        const centroLng = esOculto ? 0 : lng;
+        const zoomLevel = esOculto ? 2 : 13;
+
+        if (!mapInstance) { 
+          mapInstance = L.map('mapaAvistamiento').setView([centroLat, centroLng], zoomLevel); 
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance); 
+          markerInstance = L.marker([centroLat, centroLng]).addTo(mapInstance); 
+        } else { 
+          mapInstance.setView([centroLat, centroLng], zoomLevel); 
+          markerInstance.setLatLng([centroLat, centroLng]); 
+        } 
+
+        if (esOculto) {
+          markerInstance.setOpacity(0);
+        } else {
+          markerInstance.setOpacity(1);
+          markerInstance.bindPopup(t).openPopup(); 
+        }
+        mapInstance.invalidateSize(); 
+      }, 200); 
+    }
+
     function cambiarFoto(e, d) { if(e) e.stopPropagation(); indiceFotoActual = (indiceFotoActual + d + fotosModalActuales.length) % fotosModalActuales.length; actualizarVisor(); }
     function seleccionarFoto(i) { indiceFotoActual = i; actualizarVisor(); }
     function cerrarModalDirecto() { document.getElementById('miModal').style.display = 'none'; idPezActualModal = null; }
@@ -1618,7 +1785,7 @@
       }
     }, { passive: false });
 
-    viewportElem.addEventListener('touchend', (e) => {
+    viewportElem.addEventListener('touched', (e) => {
       if (e.touches.length < 2) distInicialPinch = 0;
       if (e.touches.length === 0) isDragging = false;
     });
@@ -1626,4 +1793,4 @@
     chequearSesion();
   </script>
 </body>
-</html>
+</html> 
