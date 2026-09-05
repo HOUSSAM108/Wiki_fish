@@ -269,6 +269,13 @@
     .math-expression { font-size: 1.8rem; font-weight: 900; color: #fff; letter-spacing: 2px; margin: 10px 0; }
     .warning-text-danger { color: var(--danger) !important; font-weight: 700; display: block; margin-top: 8px; }
 
+    .load-more-container { text-align: center; margin: 30px 0; }
+    .btn-load-more {
+      background: rgba(0, 180, 216, 0.15); border: 1px solid var(--accent); color: var(--text);
+      padding: 12px 24px; border-radius: 12px; font-family: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease;
+    }
+    .btn-load-more:hover { background: var(--accent); color: #030712; box-shadow: 0 0 15px rgba(0, 180, 216, 0.4); }
+
     img { user-select: none !important; -webkit-user-drag: none !important; -webkit-user-select: none !important; }
   </style>
 </head>
@@ -384,6 +391,10 @@
   </header>
 
   <main class="grid-peces" id="gridPeces"></main>
+
+  <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+    <button class="btn-load-more" onclick="cargarMasPeces()">🔽 Cargar más especies</button>
+  </div>
 
   <div id="modalPerfil" class="modal">
     <div class="modal-wrapper" style="padding: 25px; max-width: 420px;">
@@ -611,6 +622,8 @@
     let modoAuth = 'login';
 
     let listaPeces = [];
+    let limiteActual = 8;
+    let totalPecesBD = 0;
     let mapaLugaresInfo = {};
     let mapaNombresYESpecies = {};
     let mapaUsuariosPorId = {};
@@ -880,6 +893,9 @@
     }
 
     async function cargarPeces() {
+      const { count } = await supabaseClient.from('peces').select('*', { count: 'exact', head: true });
+      totalPecesBD = count || 0;
+
       const { data: perfiles } = await supabaseClient
         .from('profiles')
         .select('id, nickname, nombre');
@@ -896,7 +912,7 @@
         .from('peces')
         .select('*')
         .order('id', { ascending: false })
-        .range(0, 7);
+        .range(0, limiteActual - 1);
 
       if (!error) {
         listaPeces = (data || []).map(pez => ({
@@ -907,9 +923,21 @@
         poblarOpcionesUbicacion();
         poblarDesplegablesFormulario();
         renderPeces();
+        
+        const contBtn = document.getElementById('loadMoreContainer');
+        if (listaPeces.length < totalPecesBD) {
+          contBtn.style.display = 'block';
+        } else {
+          contBtn.style.display = 'none';
+        }
       } else {
         console.error("Error al cargar peces:", error.message);
       }
+    }
+
+    function cargarMasPeces() {
+      limiteActual += 8;
+      cargarPeces();
     }
 
     function poblarOpcionesUbicacion() {
