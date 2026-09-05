@@ -870,42 +870,35 @@
     }
 
     async function cargarPeces() {
-      // 1. Cargar perfiles para mapear nombres y calcular likes automáticamente
       const { data: perfiles } = await supabaseClient
         .from('profiles')
-        .select('id, nickname, nombre, favoritos');
+        .select('id, nickname, nombre');
 
       mapaUsuariosPorId = {};
-      const conteoLikesPorPez = {};
 
       if (perfiles) {
         perfiles.forEach(u => {
           mapaUsuariosPorId[u.id] = u.nickname ? `@${u.nickname}` : (u.nombre || 'Usuario');
-
-          // Sumar los favoritos globales de todos los usuarios
-          if (Array.isArray(u.favoritos)) {
-            u.favoritos.forEach(pezId => {
-              conteoLikesPorPez[pezId] = (conteoLikesPorPez[pezId] || 0) + 1;
-            });
-          }
         });
       }
 
-      // 2. Cargar peces
       const { data, error } = await supabaseClient
         .from('peces')
         .select('*')
-        .order('id', { ascending: false });
+        .order('id', { ascending: false })
+        .range(0, 19);
 
       if (!error) {
         listaPeces = (data || []).map(pez => ({
           ...pez,
-          total_favs: conteoLikesPorPez[pez.id] || 0
+          total_favs: 0 
         }));
 
         poblarOpcionesUbicacion();
         poblarDesplegablesFormulario();
         renderPeces();
+      } else {
+        console.error("Error al cargar peces:", error.message);
       }
     }
 
@@ -1350,7 +1343,6 @@
 
       const arrFavoritos = Array.from(misFavoritosIds);
       
-      // Guardar favoritos personales del usuario activo
       const { error } = await supabaseClient
         .from('profiles')
         .update({ favoritos: arrFavoritos })
@@ -1358,7 +1350,6 @@
 
       if (!error) {
         if (perfilUsuario) perfilUsuario.favoritos = arrFavoritos;
-        // Recargar para recalcular los likes totales acumulados entre todos los usuarios
         await cargarPeces();
       } else {
         mostrarNotificacion({ 
