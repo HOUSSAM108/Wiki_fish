@@ -233,7 +233,21 @@
     .thumb { width: 65px; height: 45px; object-fit: cover; border-radius: 6px; cursor: pointer; opacity: 0.5; border: 2px solid transparent; }
     .thumb.active { opacity: 1; border-color: var(--accent); }
     .modal-info { padding: 20px; }
-    #mapaAvistamiento { width: 100%; height: 200px; border-radius: 12px; margin-top: 15px; border: 1px solid var(--border); }
+    #mapaAvistamiento { 
+      width: 100%; 
+      height: 200px; 
+      border-radius: 12px; 
+      margin-top: 15px; 
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+    #mapaAvistamiento iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: auto;
+    }
 
     .close-btn { 
       position: absolute; 
@@ -346,8 +360,8 @@
         🤍 Mis Favoritos
       </button>
 
-      <button class="btn-add-species" onclick="toggleFormulario()">
-        ➕ Registrar especie
+      <button class="btn-add-species" style="background: rgba(0, 180, 216, 0.35);" onclick="abrirModalSeleccionTipo()">
+        ➕ Registrar especie...
       </button>
     </div>
 
@@ -360,7 +374,7 @@
           <div class="col-3" style="display: flex; flex-direction: column; gap: 4px;">
             <div class="select-wrapper">
               <select id="addNombreSelect" class="custom-select" onchange="gestionarSeleccionNombre('add')">
-                <option value="" disabled selected>🐟 Selec. nombre...</option>
+                <option value="" disabled selected>Nombre común...</option>
                 <option value="__NUEVO__">➕ Escribir nombre...</option>
               </select>
             </div>
@@ -371,7 +385,7 @@
           <div class="col-3" style="display: flex; flex-direction: column; gap: 4px;">
             <div class="select-wrapper">
               <select id="addEspecieSelect" class="custom-select" onchange="gestionarCampoSeleccionado('add', 'Especie')">
-                <option value="" disabled selected>🧬 Selec. especie...</option>
+                <option value="" disabled selected>Especie / Científico...</option>
                 <option value="__NUEVO__">➕ Escribir especie...</option>
               </select>
             </div>
@@ -382,7 +396,7 @@
           <div class="col-3" style="display: flex; flex-direction: column; gap: 4px;">
             <div class="select-wrapper">
               <select id="addFamiliaSelect" class="custom-select" onchange="gestionarCampoSeleccionado('add', 'Familia')">
-                <option value="" disabled selected>🏷️ Selec. familia...</option>
+                <option value="" disabled selected>Familia...</option>
                 <option value="__NUEVO__">➕ Escribir familia...</option>
               </select>
             </div>
@@ -392,22 +406,28 @@
           <!-- 4. Sexo (fila de abajo, tamaño 2) -->
           <div class="col-2 select-wrapper">
             <select id="addSexo" class="custom-select">
-              <option value="No especificado">⚧️ Sexo no esp.</option>
-              <option value="Macho">♂️ Macho</option>
-              <option value="Hembra">♀️ Hembra</option>
-              <option value="Ambos">🚻 Ambos</option>
+              <option value="No especificado">Sexo no especificado</option>
+              <option value="Macho">Macho</option>
+              <option value="Hembra">Hembra</option>
+              <option value="Ambos">Ambos</option>
             </select>
           </div>
 
           <!-- 5. Etapa (fila de abajo, tamaño 2) - Configurado con Selec. Etapa por defecto -->
           <div class="col-2 select-wrapper">
             <select id="addEtapa" class="custom-select" required>
-              <option value="" disabled selected>⏳Selec. Etapa...</option>
-              <option value="Adulto">🦈 Adulto</option>
-              <option value="Juvenil">🐟 Juvenil</option>
-              <option value="Larva">🥚 Larva</option>
+              <option value="" disabled selected>Selecciona Etapa...</option>
+              <option value="Adulto">Adulto</option>
+              <option value="Juvenil">Juvenil</option>
+              <option value="Larva">Larva</option>
             </select>
           </div>
+        </div>
+
+        <div class="select-wrapper" style="margin-top: 10px;">
+          <select id="addCategoria" class="custom-select" required>
+            <option value="" disabled selected>🏷️ Selecciona la subcategoría exacta...</option>
+          </select>
         </div>
         
         <div class="file-input-wrapper" style="margin-top: 10px;">
@@ -474,6 +494,27 @@
         <button type="submit" class="btn-submit" style="margin-top: 10px;">Guardar Cambios</button>
         <button type="button" class="btn-delete-account" onclick="solicitarBorradoCuenta()">🗑️ Borrar Mi Cuenta</button>
       </form>
+    </div>
+  </div>
+
+  
+  <div id="modalSeleccionTipo" class="modal">
+    <div class="modal-wrapper info-box" style="padding: 25px; max-width: 450px; text-align: center;">
+      <span class="close-btn" onclick="cerrarModalSeleccionTipo()">&times;</span>
+      <h3 style="color: var(--accent); text-transform: uppercase; margin-bottom: 15px; font-size: 1.2rem;">🏷️ Selecciona el tipo de registro</h3>
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px;">¿Qué tipo de avistamiento deseas registrar?</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <button type="button" class="btn-submit" style="background: rgba(0, 119, 182, 0.4); border-color: var(--accent); text-align: left; padding: 14px 18px; display: flex; align-items: center; gap: 10px; font-size: 0.95rem;" onclick="seleccionarTipoPrincipalModal('Marina')">
+          <span style="font-size: 1.5rem;">🌊</span> <div><strong>Vida Marina y Acuática</strong><div style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Peces, Invertebrados, Algas</div></div>
+        </button>
+        <button type="button" class="btn-submit" style="background: rgba(40, 167, 69, 0.4); border-color: #10b981; text-align: left; padding: 14px 18px; display: flex; align-items: center; gap: 10px; font-size: 0.95rem;" onclick="seleccionarTipoPrincipalModal('Flora')">
+          <span style="font-size: 1.5rem;">🌿</span> <div><strong>Flora Terrestre y Costera</strong><div style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Árboles, Plantas, Arbustos</div></div>
+        </button>
+        <button type="button" class="btn-submit" style="background: rgba(217, 119, 6, 0.4); border-color: #f59e0b; text-align: left; padding: 14px 18px; display: flex; align-items: center; gap: 10px; font-size: 0.95rem;" onclick="seleccionarTipoPrincipalModal('Terrestre')">
+          <span style="font-size: 1.5rem;">🐾</span> <div><strong>Fauna Terrestre y Aérea</strong><div style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Aves, Reptiles, Mamíferos, Insectos</div></div>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -587,6 +628,27 @@
           <div class="col-3">
             <input type="text" id="editFamilia" class="search-bar" placeholder="Familia (ej: Sparidae)">
           </div>
+        </div>
+
+        <div class="select-wrapper" style="margin-top: 10px;">
+          <select id="editCategoria" class="custom-select" required>
+            <option value="" disabled selected>🏷️ Seleccionar categoría...</option>
+            <optgroup label="🌊 Vida Marina y Acuática">
+              <option value="Pez">🐟 Pez</option>
+              <option value="Invertebrado y Molusco">🦀 Invertebrados y Moluscos</option>
+              <option value="Alga y Vegetación">🌿 Algas y Vegetación</option>
+            </optgroup>
+            <optgroup label="🌱 Flora Terrestre y Costera">
+              <option value="Árbol">🌳 Árbol</option>
+              <option value="Planta y Arbusto">🪴 Planta y Arbusto</option>
+            </optgroup>
+            <optgroup label="🐾 Fauna Terrestre y Aérea">
+              <option value="Ave">🦅 Ave</option>
+              <option value="Reptil y Anfibio">🦎 Reptil y Anfibio</option>
+              <option value="Mamífero Terrestre">🐇 Mamífero Terrestre</option>
+              <option value="Insecto">🦋 Insecto</option>
+            </optgroup>
+          </select>
         </div>
 
         <div class="full-width" style="margin-top: 10px;">
@@ -971,13 +1033,20 @@
 
       const { data: perfiles } = await supabaseClient
         .from('profiles')
-        .select('id, nickname, nombre');
+        .select('id, nickname, nombre, favoritos');
 
       mapaUsuariosPorId = {};
+      const conteoFavoritos = {};
 
       if (perfiles) {
         perfiles.forEach(u => {
           mapaUsuariosPorId[u.id] = u.nickname ? `@${u.nickname}` : (u.nombre || 'Usuario');
+          if (Array.isArray(u.favoritos)) {
+            u.favoritos.forEach(favId => {
+              const key = Number(favId);
+              conteoFavoritos[key] = (conteoFavoritos[key] || 0) + 1;
+            });
+          }
         });
       }
 
@@ -990,7 +1059,7 @@
       if (!error) {
         listaPeces = (data || []).map(pez => ({
           ...pez,
-          total_favs: 0 
+          total_favs: conteoFavoritos[Number(pez.id)] || 0
         }));
 
         poblarOpcionesUbicacion();
@@ -1046,14 +1115,20 @@
       selectUbicacion.value = valorSeleccionado;
     }
 
-    function poblarDesplegablesFormulario() {
+    let currentFormGroup = null;
+
+    function poblarDesplegablesFormulario(grupoTipo = null) {
+      if (grupoTipo) currentFormGroup = grupoTipo;
       const nombres = new Set();
       const especies = new Set();
       const familias = new Set();
       const lugares = new Set();
       const camaras = new Set();
 
+      const catsValidas = currentFormGroup && subcategoriasPorGrupo[currentFormGroup] ? subcategoriasPorGrupo[currentFormGroup].map(s => s.value) : null;
+
       listaPeces.forEach(pez => {
+        if (catsValidas && !catsValidas.includes(pez.categoria)) return;
         if (pez.nombre) nombres.add(pez.nombre.trim());
         if (pez.especie) especies.add(pez.especie.trim());
         if (pez.familia) familias.add(pez.familia.trim());
@@ -1073,13 +1148,13 @@
         elem.innerHTML = html;
       };
 
-      rellenar('addNombreSelect', nombres, 'Selec. nombre...', '🐟');
-      rellenar('addEspecieSelect', especies, 'Selec. especie...', '🧬');
-      rellenar('addFamiliaSelect', familias, 'Selec. familia...', '🏷️');
-      rellenar('addLugarSelect', lugares, 'Lugar...', '📍');
-      rellenar('addCamaraSelect', camaras, 'Cámara...', '📷');
+      rellenar('addNombreSelect', nombres, 'Nombre común...', '');
+      rellenar('addEspecieSelect', especies, 'Especie / Científico...', '');
+      rellenar('addFamiliaSelect', familias, 'Familia...', '');
+      rellenar('addLugarSelect', lugares, 'Lugar...', '');
+      rellenar('addCamaraSelect', camaras, 'Cámara...', '');
 
-      rellenar('editLugarSelect', lugares, 'Lugar', '📍');
+      rellenar('editLugarSelect', lugares, 'Lugar', '');
       rellenar('editCamaraSelect', camaras, 'Cámara', '📷');
     }
 
@@ -1224,10 +1299,12 @@
           imagenFinalUrl = urlInput.trim();
         }
 
+        const categoriaVal = document.getElementById('addCategoria').value || 'Pez';
         const nuevoPez = {
           nombre: nombreFinal,
           especie: especieFinal || "Especie no especificada",
           familia: familiaFinal || "No especificada",
+          categoria: categoriaVal,
           user_id: usuarioActual.id,
           fotos: [{
             url: imagenFinalUrl,
@@ -1247,6 +1324,7 @@
           mostrarNotificacion({ titulo: "Error", mensaje: error.message, tipo: "danger" });
         } else {
           document.getElementById('formEspecie').reset();
+          document.getElementById('addCategoria').selectedIndex = 0;
           document.getElementById('addNombreCustom').style.display = 'none';
           document.getElementById('addEspecieCustom').style.display = 'none';
           document.getElementById('addFamiliaCustom').style.display = 'none';
@@ -1351,12 +1429,12 @@
       document.getElementById('editNombre').value = pez.nombre || '';
       document.getElementById('editEspecie').value = pez.especie || '';
       document.getElementById('editFamilia').value = pez.familia || '';
+      document.getElementById('editCategoria').value = pez.categoria || 'Pez';
 
       fotosTemporalesEdicion = JSON.parse(JSON.stringify(pez.fotos || []));
       
       fotosTemporalesEdicion.forEach(f => {
         if (!f.sexo) f.sexo = pez.sexo || 'No especificado';
-        // Asegurar que si no hay etapa guardada o si viene vacía se mantenga limpia para mostrar "Selec. Etapa"
         if (!f.etapa) f.etapa = '';
       });
 
@@ -1440,6 +1518,49 @@
     async function guardarCambiosEspecie(e) {
       e.preventDefault();
 
+      const fileInput = document.getElementById('editFile');
+      const urlInputElem = document.getElementById('editUrl');
+      const urlInput = urlInputElem ? urlInputElem.value : '';
+      let nuevaImagenUrl = null;
+
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        nuevaImagenUrl = await subirImagenAStorage(fileInput.files[0]);
+      } else if (urlInput && urlInput.trim() !== '') {
+        nuevaImagenUrl = urlInput.trim();
+      }
+
+      if (nuevaImagenUrl) {
+        const selectLugar = document.getElementById('editLugarSelect');
+        const customLugarElem = document.getElementById('editLugarCustom');
+        let lugarFinal = (selectLugar && selectLugar.value === '__NUEVO__' && customLugarElem) ? customLugarElem.value.trim() : (selectLugar ? selectLugar.value : '');
+        if (!lugarFinal) lugarFinal = "Ubicación desconocida";
+
+        const gmapsElem = document.getElementById('editGmaps');
+        let coords = gmapsElem ? obtenerCoordenadasDeUrl(gmapsElem.value) : null;
+        if (!coords && mapaLugaresInfo[lugarFinal]) coords = { lat: mapaLugaresInfo[lugarFinal].lat, lng: mapaLugaresInfo[lugarFinal].lng };
+        if (!coords) coords = { lat: 36.7342, lng: -3.7378 };
+
+        const selectCamara = document.getElementById('editCamaraSelect');
+        let camaraFinal = selectCamara ? selectCamara.value : "No especificada";
+        if (camaraFinal === '__NUEVO__') camaraFinal = "Cámara nueva";
+
+        const tipoElem = document.getElementById('editTipo');
+        const profElem = document.getElementById('editProfundidad');
+        const sexoElem = document.getElementById('editSexo');
+
+        fotosTemporalesEdicion.push({
+          url: nuevaImagenUrl, 
+          lugar: lugarFinal, 
+          tipo: tipoElem ? tipoElem.value : 'Playa',
+          profundidad: profElem ? profElem.value : '0-2m', 
+          camara: camaraFinal || "No especificada",
+          sexo: sexoElem ? sexoElem.value : 'No especificado',
+          etapa: "Adulto",
+          lat: coords.lat, 
+          lng: coords.lng
+        });
+      }
+
       for (let i = 0; i < fotosTemporalesEdicion.length; i++) {
         if (!fotosTemporalesEdicion[i].etapa) {
           mostrarNotificacion({ titulo: "Etapa requerida", mensaje: `La foto #${i + 1} no tiene una etapa seleccionada.`, tipo: "warning" });
@@ -1447,45 +1568,20 @@
         }
       }
 
-      const id = parseInt(document.getElementById('editPezId').value);
-      const fileInput = document.getElementById('editFile');
-      const urlInput = document.getElementById('editUrl').value;
-      let nuevaImagenUrl = null;
+      const idPezInput = document.getElementById('editPezId');
+      const id = idPezInput ? parseInt(idPezInput.value) : null;
+      if (!id) return;
 
-      if (fileInput.files && fileInput.files[0]) nuevaImagenUrl = await subirImagenAStorage(fileInput.files[0]);
-      else if (urlInput.trim() !== '') nuevaImagenUrl = urlInput.trim();
+      const nombreElem = document.getElementById('editNombre');
+      const especieElem = document.getElementById('editEspecie');
+      const familiaElem = document.getElementById('editFamilia');
 
-      if (nuevaImagenUrl) {
-        const selectLugar = document.getElementById('editLugarSelect').value;
-        const customLugar = document.getElementById('editLugarCustom').value.trim();
-        let lugarFinal = selectLugar === '__NUEVO__' ? customLugar : selectLugar;
-        if (!lugarFinal) lugarFinal = "Ubicación desconocida";
-
-        let coords = obtenerCoordenadasDeUrl(document.getElementById('editGmaps').value);
-        if (!coords && mapaLugaresInfo[lugarFinal]) coords = { lat: mapaLugaresInfo[lugarFinal].lat, lng: mapaLugaresInfo[lugarFinal].lng };
-        if (!coords) coords = { lat: 36.7342, lng: -3.7378 };
-
-        const selectCamara = document.getElementById('editCamaraSelect').value;
-        const customCamara = document.getElementById('editCamaraCustom').value.trim();
-        let camaraFinal = selectCamara === '__NUEVO__' ? customCamara : selectCamara;
-
-        fotosTemporalesEdicion.push({
-          url: nuevaImagenUrl, 
-          lugar: lugarFinal, 
-          tipo: document.getElementById('editTipo').value,
-          profundidad: document.getElementById('editProfundidad').value, 
-          camara: camaraFinal || "No especificada",
-          sexo: document.getElementById('editSexo').value,
-          etapa: "", // Deja la opción vacía para forzar que el usuario elija "Selec. Etapa" en nuevas fotos si se desea, o puedes predefinirla
-          lat: coords.lat, 
-          lng: coords.lng
-        });
-      }
-
+      const categoriaElem = document.getElementById('editCategoria');
       const { error } = await supabaseClient.from('peces').update({
-        nombre: document.getElementById('editNombre').value, 
-        especie: document.getElementById('editEspecie').value || "Especie no especificada",
-        familia: document.getElementById('editFamilia').value || "No especificada",
+        nombre: nombreElem ? nombreElem.value : '', 
+        especie: (especieElem && especieElem.value) ? especieElem.value : "Especie no especificada",
+        familia: (familiaElem && familiaElem.value) ? familiaElem.value : "No especificada",
+        categoria: categoriaElem ? categoriaElem.value : 'Pez',
         fotos: fotosTemporalesEdicion
       }).eq('id', id);
 
@@ -1495,6 +1591,8 @@
         cerrarModalDirecto(); 
         cargarPeces(); 
         mostrarNotificacion({ titulo: "Éxito", mensaje: "Especie actualizada correctamente.", tipo: "success" });
+      } else {
+        mostrarNotificacion({ titulo: "Error", mensaje: error.message, tipo: "danger" });
       }
     }
 
@@ -1565,7 +1663,8 @@
             <button class="fav-btn ${esFav ? 'active' : ''}" onclick="toggleFav(event, ${pez.id})">${esFav ? '❤️' : '🤍'}</button>
             ${esPopular ? '<span class="badge-popular">🔥 Popular</span>' : ''}
             <div class="img-container" onclick="abrirModal(${pez.id})">
-              <span class="badge">${f0.tipo}</span>
+              <span class="badge" style="bottom: 10px; left: 10px; top: auto; right: auto;">🏷️ ${pez.categoria || 'Pez'}</span>
+              <span class="badge" style="bottom: 10px; right: 10px; top: auto; left: auto;">${f0.tipo}</span>
               <img src="${f0.url}" alt="${pez.nombre}" loading="lazy">
             </div>
             <div class="info" onclick="abrirModal(${pez.id})">
@@ -1583,13 +1682,93 @@
       });
     }
 
-    function toggleFormulario() {
+    const subcategoriasPorGrupo = {
+      Marina: [
+        { value: "Pez", label: "🐟 Pez" },
+        { value: "Invertebrado y Molusco", label: "🦀 Invertebrados y Moluscos" },
+        { value: "Alga y Vegetación", label: "🌿 Algas y Vegetación Acuática" }
+      ],
+      Flora: [
+        { value: "Árbol", label: "🌳 Árbol" },
+        { value: "Planta y Arbusto", label: "🪴 Planta y Arbusto" }
+      ],
+      Terrestre: [
+        { value: "Ave", label: "🦅 Ave" },
+        { value: "Reptil y Anfibio", label: "🦎 Reptil y Anfibio" },
+        { value: "Mamífero Terrestre", label: "🐇 Mamífero Terrestre" },
+        { value: "Insecto", label: "🦋 Insecto y Arácnido" }
+      ]
+    };
+
+    function abrirModalSeleccionTipo() {
       if (!usuarioActual) { 
-        mostrarNotificacion({ titulo: "Atención", mensaje: "Inicia sesión para poder registrar especies.", tipo: "warning" }); 
+        mostrarNotificacion({ titulo: "Atención", mensaje: "Inicia sesión para poder registrar avistamientos.", tipo: "warning" }); 
         abrirModalAuth(); 
         return; 
       }
-      const p = document.getElementById('panelFormulario'); p.style.display = p.style.display === 'block' ? 'none' : 'block';
+      document.getElementById('modalSeleccionTipo').style.display = 'flex';
+    }
+
+    function cerrarModalSeleccionTipo() {
+      document.getElementById('modalSeleccionTipo').style.display = 'none';
+    }
+
+    function seleccionarTipoPrincipalModal(tipo) {
+      cerrarModalSeleccionTipo();
+      abrirFormularioTipo(tipo);
+    }
+
+    function abrirFormularioTipo(tipo) {
+      if (!usuarioActual) { 
+        mostrarNotificacion({ titulo: "Atención", mensaje: "Inicia sesión para poder registrar avistamientos.", tipo: "warning" }); 
+        abrirModalAuth(); 
+        return; 
+      }
+
+      const panel = document.getElementById('panelFormulario');
+      const subSelect = document.getElementById('addCategoria');
+      const tipoSelect = document.getElementById('addTipo');
+      const profundidadSelect = document.getElementById('addProfundidad');
+      
+      const opciones = subcategoriasPorGrupo[tipo] || [];
+      let html = '<option value="" disabled selected>🏷️ Selecciona la subcategoría exacta...</option>';
+      opciones.forEach(sub => {
+        html += `<option value="${sub.value}">${sub.label}</option>`;
+      });
+      subSelect.innerHTML = html;
+
+      if (tipo === 'Marina') {
+        profundidadSelect.style.display = 'block';
+        tipoSelect.innerHTML = `
+          <option value="Playa">🏖️ Playa</option>
+          <option value="Cala">🪨 Cala</option>
+          <option value="Mar Abierto">🌊 Mar Abierto</option>
+        `;
+      } else if (tipo === 'Flora') {
+        profundidadSelect.style.display = 'none';
+        tipoSelect.innerHTML = `
+          <option value="Parque / Jardín">🌳 Parque / Jardín</option>
+          <option value="Bosque / Monte">🌲 Bosque / Monte</option>
+          <option value="Costa / Duna">🏖️ Costa / Duna</option>
+          <option value="Urbano">🏙️ Urbano</option>
+        `;
+      } else if (tipo === 'Terrestre') {
+        profundidadSelect.style.display = 'none';
+        tipoSelect.innerHTML = `
+          <option value="Bosque / Campo">🌲 Bosque / Campo</option>
+          <option value="Montaña">⛰️ Montaña</option>
+          <option value="Parque / Urbano">🌳 Parque / Urbano</option>
+          <option value="Pradera">🌾 Pradera</option>
+        `;
+      }
+
+      poblarDesplegablesFormulario(tipo);
+      panel.style.display = 'block';
+      panel.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleFormulario() {
+      abrirModalSeleccionTipo();
     }
 
     function toggleFiltroFav() { 
@@ -1690,7 +1869,7 @@
       const sexoMostrado = f.sexo || pez.sexo || 'No especificado';
       const etapaMostrada = f.etapa || pez.etapa || 'No especificada';
 
-      document.getElementById('modalFamilia').innerText = `🏷️ Familia: ${pez.familia || 'No especificada'} | ⚧️ Sexo: ${sexoMostrado} | 🦈 Etapa: ${etapaMostrada}`;
+      document.getElementById('modalFamilia').innerText = `🏷️ Cat: ${pez.categoria || 'Pez'} | Familia: ${pez.familia || 'No especificada'} | ⚧️ Sexo: ${sexoMostrado} | 🦈 Etapa: ${etapaMostrada}`;
 
       document.getElementById('modalMeta').innerHTML = `
         📷 <strong>Cámara:</strong> ${f.camara} | 
@@ -1706,27 +1885,26 @@
 
     function actualizarMapa(lat, lng, t) { 
       setTimeout(() => { 
+        const contenedor = document.getElementById('mapaAvistamiento');
+        if (!contenedor) return;
+
         const esOculto = !t || t.toLowerCase().includes('secreto') || t.toLowerCase().includes('privado') || t.trim() === '';
-        const centroLat = esOculto ? 20 : lat;
-        const centroLng = esOculto ? 0 : lng;
-        const zoomLevel = esOculto ? 2 : 13;
-
-        if (!mapInstance) { 
-          mapInstance = L.map('mapaAvistamiento').setView([centroLat, centroLng], zoomLevel); 
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance); 
-          markerInstance = L.marker([centroLat, centroLng]).addTo(mapInstance); 
-        } else { 
-          mapInstance.setView([centroLat, centroLng], zoomLevel); 
-          markerInstance.setLatLng([centroLat, centroLng]); 
-        } 
-
+        
         if (esOculto) {
-          markerInstance.setOpacity(0);
-        } else {
-          markerInstance.setOpacity(1);
-          markerInstance.bindPopup(t).openPopup(); 
+          contenedor.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; color:var(--text-muted); font-size:0.85rem;">🔒 Ubicación privada o secreta</div>';
+          return;
         }
-        mapInstance.invalidateSize(); 
+
+        contenedor.innerHTML = `
+          <iframe 
+            width="100%" 
+            height="100%" 
+            style="border:0; border-radius: 12px;" 
+            loading="lazy" 
+            allowfullscreen 
+            src="https://maps.google.com/maps?q=${lat},${lng}&z=14&output=embed">
+          </iframe>
+        `;
       }, 200); 
     }
 
@@ -1793,4 +1971,4 @@
     chequearSesion();
   </script>
 </body>
-</html> 
+</html>
