@@ -1467,7 +1467,7 @@
 
         const selectCamara = document.getElementById('editCamaraSelect').value;
         const customCamara = document.getElementById('editCamaraCustom').value.trim();
-        let camaraFinal = selectCamara === '__NUEVO__' ? customCamara : camaraFinal;
+        let camaraFinal = selectCamara === '__NUEVO__' ? customCamara : selectCamara;
 
         fotosTemporalesEdicion.push({
           url: nuevaImagenUrl, 
